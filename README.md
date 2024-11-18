@@ -64,9 +64,9 @@ Abbiamo tre tipi di utenti:
   - **GET**: Può visualizzare solo i dati pubblici. Il backend invia solo i dati pubblici.
 
 
+DB Show
+![image](https://github.com/user-attachments/assets/9e78a1d4-bb41-4913-9b38-74e57d25acb8)
 
-# API list:
-- /api/user
 
 ## Struttura delle Tabelle
 
