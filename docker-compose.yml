@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  laravel-docker:
+    container_name: laravel-docker
+    build:
+      context: .
+    volumes:
+      - ./:/var/www/html:cached
+    ports:
+      - 9000:80
+
+  mysql_db:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: josh_db
+    ports:
+      - 3306:3306
+    volumes:
+      - mysql_data:/var/lib/mysql  # Persistenza dei dati
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    environment:
+      PMA_HOST: mysql_db  # Aggiungi questo per puntare a MySQL
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - 9001:80
+
+volumes:
+  mysql_data:  # Definizione del volume per la persistenza dei dati
