@@ -90,7 +90,8 @@ Delete:
 
 
 ## DB Show
-![image](https://github.com/user-attachments/assets/9e78a1d4-bb41-4913-9b38-74e57d25acb8)
+![image](https://github.com/user-attachments/assets/a202c6c9-6882-4c52-b305-bb7570ce3258)
+
 
 
 ## Struttura delle Tabelle
