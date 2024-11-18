@@ -89,13 +89,13 @@ Delete:
 ancora da aggiungere: ...
 
 ## Relazioni logiche
-Un utente può possedere più appartamenti, quindi la relazione è: `user` 1 a molti `apartments`.
-Un utente può inviare più messaggi, quindi la relazione è: `user` 1 a molti `messages`.
+- Un utente può possedere più appartamenti, quindi la relazione è: `user` 1 a molti `apartments`.
+- Un utente può inviare più messaggi, quindi la relazione è: `user` 1 a molti `messages`.
 
-Un appartamento può ricevere più messaggi, quindi la relazione è: `apartments` 1 a molti `messages`.
-Un appartamento può essere associato a più sponsorizzazioni, quindi la relazione è: `apartments` 1 a molti `sponsorships`.
-Un appartamento può avere molteplici registrazioni statistiche, quindi la relazione è: `apartments` 1 a molti `statistics`.
-Un appartamento può offrire diversi servizi aggiuntivi, quindi la relazione è: `apartments` 1 a molti `property services`.
+- Un appartamento può ricevere più messaggi, quindi la relazione è: `apartments` 1 a molti `messages`.
+- Un appartamento può essere associato a più sponsorizzazioni, quindi la relazione è: `apartments` 1 a molti `sponsorships`.
+- Un appartamento può avere molteplici registrazioni statistiche, quindi la relazione è: `apartments` 1 a molti `statistics`.
+- Un appartamento può offrire diversi servizi aggiuntivi, quindi la relazione è: `apartments` 1 a molti `property services`.
 
 ## DB Show
 ![image](https://github.com/user-attachments/assets/06ce7e05-7411-4bb5-b812-f3b483f7230d)
