@@ -145,6 +145,9 @@ Delete:
 - **Data Inizio**: `start_date`
 - **Data Fine**: `end_date`
 
+![image](https://github.com/user-attachments/assets/b121c5db-f8b7-4c36-871a-afa001beb6b1)
+
+
 ## Relazioni tra le Tabelle
 
 - **`users`** può avere molti **`apartments`** (relazione uno-a-molti).
