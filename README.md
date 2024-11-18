@@ -63,8 +63,33 @@ Abbiamo tre tipi di utenti:
 - **UI (Utente Interessato)**:
   - **GET**: Può visualizzare solo i dati pubblici. Il backend invia solo i dati pubblici.
 
+# API list:
+### API nostri di laravel
+Post: 
+- /api/login -> effettua il login
+- /api/register -> effettua la registrazione
+- /api/logout -> effettua il logout
+- /api/message -> invia un messaggio
+- /api/apartments -> crea un nuovo appartamento (solo per URA)
 
-DB Show
+Get:
+- /api/user -> mostra i dati dell'utente registrato, inclusi nome, email e ruolo
+- /api/apartments -> mostra tutti gli appartamenti pubblici disponibili
+- /api/messages -> mostra tutti i messaggi inviati e ricevuti dall'utente
+- /api/apartments/{id} -> mostra i dettagli di un appartamento specifico (solo per URA e UR)
+
+Put:
+- /api/apartments/{id} -> modifica un appartamento specifico (solo per URA)
+- /api/user -> modifica i dati dell'utente registrato (solo per UR)
+
+Delete:
+- /api/apartments/{id} -> cancella un appartamento specifico (solo per URA)
+
+### API esterne
+
+
+
+## DB Show
 ![image](https://github.com/user-attachments/assets/9e78a1d4-bb41-4913-9b38-74e57d25acb8)
 
 
