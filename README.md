@@ -122,6 +122,7 @@ Delete:
 
 ### Tabella `services`
 - **ID**: `id` (Primary Key)
+- **Appartamento**: `apartment_id` (Foreign Key, references `apartments.id`)
 - **Nome**: `name`
 
 ### Tabella `messages`
@@ -140,9 +141,9 @@ Delete:
 ### Tabella `sponsorships`
 - **ID**: `id` (Primary Key)
 - **Appartamento**: `apartment_id` (Foreign Key, references `apartments.id`)
+- **Evento**: `evento`
 - **Data Inizio**: `start_date`
 - **Data Fine**: `end_date`
-- **Pacchetto**: `package_type`
 
 ## Relazioni tra le Tabelle
 
