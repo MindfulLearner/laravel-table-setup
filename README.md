@@ -145,7 +145,7 @@ Delete:
 - **Data Inizio**: `start_date`
 - **Data Fine**: `end_date`
 
-![image](https://github.com/user-attachments/assets/b121c5db-f8b7-4c36-871a-afa001beb6b1)
+![image](https://github.com/user-attachments/assets/fbc5eb5c-48ae-40ca-a4e9-9a20738cf971)
 
 
 ## Relazioni tra le Tabelle
