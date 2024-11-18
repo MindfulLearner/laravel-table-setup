@@ -90,7 +90,8 @@ Delete:
 
 
 ## DB Show
-![image](https://github.com/user-attachments/assets/a202c6c9-6882-4c52-b305-bb7570ce3258)
+![image](https://github.com/user-attachments/assets/06ce7e05-7411-4bb5-b812-f3b483f7230d)
+
 
 
 
@@ -145,7 +146,7 @@ Delete:
 - **Data Inizio**: `start_date`
 - **Data Fine**: `end_date`
 
-![image](https://github.com/user-attachments/assets/fbc5eb5c-48ae-40ca-a4e9-9a20738cf971)
+![image](https://github.com/user-attachments/assets/63a09993-4dd8-478b-9e5a-bd0e3b6a2cc3)
 
 
 ## Relazioni tra le Tabelle
