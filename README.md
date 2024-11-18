@@ -27,6 +27,16 @@ Abbiamo tre tipi di utenti:
 - **UI (Utente Interessato)**:
   - **GET**: `api/apartments` - Visualizza i dati pubblici.
 
+  ### Struttura degli appartamenti per il frontend
+  - **id**: ID dell'appartamento
+  - **stanze**: Numero di stanze
+  - **letti**: Numero di letti
+  - **bagni**: Numero di bagni
+  - **metri_quadrati**: Metri quadrati
+  - **indirizzo**: Indirizzo completo con latitudine e longitudine
+  - **immagine**: Immagine rappresentativa
+  - **servizi_aggiuntivi**: Uno o più servizi aggiuntivi (es. WiFi, piscina, portineria, vista mare)
+  - **visibile**: Sì o No
 
 
 # MVP backend
@@ -66,11 +76,13 @@ Abbiamo tre tipi di utenti:
 - **Password**: `password`
 - **Nome**: `first_name`
 - **Cognome**: `last_name`
+- **Ruolo**: `role` // UI, UR, URA
 - **Data di Nascita**: `birth_date`
 
 ### Tabella `apartments`
 - **ID**: `id` (Primary Key)
 - **Proprietario**: `user_id` (Foreign Key, references `users.id`)
+- **Servizi Aggiuntivi**: `additional_services` (Foreign Key, references `services.id`)
 - **Titolo**: `title`
 - **Numero di Stanze**: `rooms`
 - **Numero di Letti**: `beds`
@@ -82,11 +94,22 @@ Abbiamo tre tipi di utenti:
 - **Immagine**: `image`
 - **Visibile**: `is_visible`
 
+### Tabella `services`
+- **ID**: `id` (Primary Key)
+- **Nome**: `name`
+
 ### Tabella `messages`
 - **ID**: `id` (Primary Key)
 - **Appartamento**: `apartment_id` (Foreign Key, references `apartments.id`)
+- **Utente Mittente**: `user_id` (Foreign Key, references `users.id`)
 - **Email Mittente**: `sender_email`
 - **Messaggio**: `message`
+
+### Tabella `statistics`
+- **ID**: `id` (Primary Key)
+- **Appartamento**: `apartment_id` (Foreign Key, references `apartments.id`)
+- **Data**: `date`
+- **Visite**: `views`
 
 ### Tabella `sponsorships`
 - **ID**: `id` (Primary Key)
