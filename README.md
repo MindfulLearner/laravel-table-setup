@@ -101,9 +101,7 @@ ancora da aggiungere: ...
 - Un appartamento può offrire diversi servizi aggiuntivi, quindi la relazione è: `apartments` 1 a molti `property services`.
 
 ## DB Show
-![image](https://github.com/user-attachments/assets/06ce7e05-7411-4bb5-b812-f3b483f7230d)
-
-
+![image](https://github.com/user-attachments/assets/5fa37bcd-0d03-4547-95dd-50fabbd2e9e0)
 
 
 ## Struttura delle Tabelle
