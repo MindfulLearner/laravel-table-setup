@@ -92,6 +92,8 @@ ancora da aggiungere: ...
 - Un utente può possedere più appartamenti, quindi la relazione è: `user` 1 a molti `apartments`.
 - Un utente può inviare più messaggi, quindi la relazione è: `user` 1 a molti `messages`.
 
+
+
 - Un appartamento può ricevere più messaggi, quindi la relazione è: `apartments` 1 a molti `messages`.
 - Un appartamento può essere associato a più sponsorizzazioni, quindi la relazione è: `apartments` 1 a molti `sponsorships`.
 - Un appartamento può avere molteplici registrazioni statistiche, quindi la relazione è: `apartments` 1 a molti `statistics`.
