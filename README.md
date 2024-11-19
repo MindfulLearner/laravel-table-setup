@@ -101,7 +101,8 @@ ancora da aggiungere: ...
 - Un appartamento può offrire diversi servizi aggiuntivi, quindi la relazione è: `apartments` 1 a molti `property services`.
 
 ## DB Show
-![image](https://github.com/user-attachments/assets/5fa37bcd-0d03-4547-95dd-50fabbd2e9e0)
+![image](https://github.com/user-attachments/assets/7ef23e00-86ac-4fad-be70-2070203a50ea)
+
 
 
 ## Struttura delle Tabelle
@@ -155,7 +156,7 @@ ancora da aggiungere: ...
 - **Data Inizio**: `start_date`
 - **Data Fine**: `end_date`
 
-![image](https://github.com/user-attachments/assets/63a09993-4dd8-478b-9e5a-bd0e3b6a2cc3)
+![image](https://github.com/user-attachments/assets/643745f8-739e-4c21-8772-1266a14b81cb)
 
 
 ## Relazioni tra le Tabelle
