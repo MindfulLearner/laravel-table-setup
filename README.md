@@ -170,10 +170,6 @@ ancora da aggiungere: ...
 ![image](https://github.com/user-attachments/assets/643745f8-739e-4c21-8772-1266a14b81cb)
 
 
-## Relazioni tra le Tabelle
 
-- **`users`** può avere molti **`apartments`** (relazione uno-a-molti).
-- **`apartments`** può avere molti **`messages`** (relazione uno-a-molti).
-- **`apartments`** può avere molte **`sponsorships`** (relazione uno-a-molti).
 
 
