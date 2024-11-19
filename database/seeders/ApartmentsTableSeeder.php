@@ -41,9 +41,11 @@ class ApartmentsTableSeeder extends Seeder
 
         foreach ($apartments as $apartment) {
             $newApartment = Apartment::create($apartment);
-            
-            $services = Service::inRandomOrder()->take(rand(2, 5))->pluck('id');
-            $newApartment->services()->attach($services);
+            $services = Service::inRandomOrder()->take(rand(2, 5))->get();
+            foreach ($services as $service) {
+                $service->apartment_id = $newApartment->id;
+                $service->save();
+            }
         }
     }
 }

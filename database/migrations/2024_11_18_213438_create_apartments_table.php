@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('apartments', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users');
-            $table->foreignId('service_id')->constrained('services');
             $table->string('title');
             $table->integer('rooms');
             $table->integer('beds');

@@ -16,6 +16,7 @@ class StatisticsTableSeeder extends Seeder
     {
         $apartments = Apartment::all();
         foreach ($apartments as $apartment) {
+            $date = now()->subDays(rand(1, 30));
             $views = rand(1, 100);
             $messages = rand(1, 10);
             $clicks = rand(1, 100);
@@ -24,6 +25,7 @@ class StatisticsTableSeeder extends Seeder
                 'views' => $views,
                 'messages' => $messages,
                 'clicks' => $clicks,
+                'date' => $date,
             ]);
         }
     }
