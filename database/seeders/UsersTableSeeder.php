@@ -5,10 +5,10 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-
+use Faker\Generator as Faker;
 class UsersTableSeeder extends Seeder
 {
-    public function run(): void
+    public function run(Faker $faker): void
     {
         $users = [
             [
@@ -18,16 +18,19 @@ class UsersTableSeeder extends Seeder
                 'last_name' => 'Rossi',
                 'role' => 'URA',
                 'birth_date' => '1990-01-01',
-            ],
-            [
-                'email' => 'user2@example.com',
-                'password' => Hash::make('password123'),
-                'first_name' => 'Luigi',
-                'last_name' => 'Verdi',
-                'role' => 'UR',
-                'birth_date' => '1992-05-15',
-            ],
+            ]
         ];
+
+        for ($i = 0; $i < 9; $i++) {
+            $users[] = [
+                'email' => $faker->email,
+                'password' => Hash::make('password123'),
+                'first_name' => $faker->firstName,
+                'last_name' => $faker->lastName,
+                'role' => 'URA',
+                'birth_date' => $faker->date,
+            ];
+        }
 
         foreach ($users as $user) {
             User::create($user);

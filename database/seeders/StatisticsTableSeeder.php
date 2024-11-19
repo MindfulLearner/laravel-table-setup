@@ -6,22 +6,21 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Apartment;
 use App\Models\Statistics;
-
+use Faker\Generator as Faker;
 class StatisticsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
-    public function run(): void
+    public function run(Faker $faker): void
     {
-        $apartments = Apartment::all();
-        foreach ($apartments as $apartment) {
+        for ($i = 0; $i < 50; $i++) {
             $date = now()->subDays(rand(1, 30));
-            $views = rand(1, 100);
-            $messages = rand(1, 10);
-            $clicks = rand(1, 100);
+            $views = $faker->numberBetween(1, 100);
+            $messages = $faker->numberBetween(1, 10);
+            $clicks = $faker->numberBetween(1, 100);
             Statistics::create([
-                'apartment_id' => $apartment->id,
+                'apartment_id' => $faker->numberBetween(1, 50),
                 'views' => $views,
                 'messages' => $messages,
                 'clicks' => $clicks,

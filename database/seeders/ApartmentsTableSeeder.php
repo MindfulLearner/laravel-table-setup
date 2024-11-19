@@ -5,41 +5,27 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\Apartment;
 use App\Models\Service;
+use Faker\Generator as Faker;
 
 class ApartmentsTableSeeder extends Seeder
 {
-    public function run(): void
+    public function run(Faker $faker): void
     {
-        $apartments = [
-            [
-                'user_id' => 1,
-                'title' => 'Appartamento nel centro storico',
-                'rooms' => 3,
-                'beds' => 2,
-                'bathrooms' => 1,
-                'square_meters' => 75,
-                'address' => 'Via Roma 123, Milano',
-                'latitude' => 45.4642,
-                'longitude' => 9.1900,
-                'image' => 'apartments/default1.jpg',
-                'is_visible' => true,
-            ],
-            [
-                'user_id' => 2,
-                'title' => 'Attico con vista mare',
-                'rooms' => 4,
-                'beds' => 3,
-                'bathrooms' => 2,
-                'square_meters' => 120,
-                'address' => 'Via Napoli 45, Roma',
-                'latitude' => 41.9028,
-                'longitude' => 12.4964,
-                'image' => 'apartments/default2.jpg',
-                'is_visible' => true,
-            ],
-        ];
+        for ($i = 0; $i < 50; $i++) {
+            $apartment = [
+                'user_id' => $faker->numberBetween(1, 10),
+                'title' => 'Appartamento ' . ($i + 1),
+                'rooms' => $faker->numberBetween(1, 5),
+                'beds' => $faker->numberBetween(1, 5),
+                'bathrooms' => $faker->numberBetween(1, 3),
+                'square_meters' => $faker->numberBetween(30, 150),
+                'address' => $faker->streetAddress,
+                'latitude' => $faker->latitude,
+                'longitude' => $faker->longitude,
+                'image' => 'apartments/default' . $faker->numberBetween(1, 5) . '.jpg',
+                'is_visible' => $faker->boolean,
+            ];
 
-        foreach ($apartments as $apartment) {
             $newApartment = Apartment::create($apartment);
             $services = Service::inRandomOrder()->take(rand(2, 5))->get();
             foreach ($services as $service) {
