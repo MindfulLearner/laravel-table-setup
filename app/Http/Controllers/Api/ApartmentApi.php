@@ -27,7 +27,7 @@ class ApartmentApi extends Controller
      */
     public function store(Request $request)
     {
-
+        
         $request->validate([
             "user_id" => "required|exists:users,id",
             "title" => "required|string|max:255",
@@ -42,7 +42,13 @@ class ApartmentApi extends Controller
             "is_visible" => "required|boolean",
         ]);
 
-        return response()->json(Apartment::create($request->all()));
+        $apartment = Apartment::create($request->all());
+
+        return response()->json([
+            'success' => true,
+            'data' => $apartment,
+            'message' => 'Apartment created successfully'
+        ]);
     }
 
 
@@ -65,9 +71,10 @@ class ApartmentApi extends Controller
             "is_visible" => "required|boolean",
         ]);
 
-        //ciao
+        $apartment = Apartment::find($id);
+        $apartment->update($request->all());
 
-        return response()->json(Apartment::find($id)->update($request->all()));
+        return response()->json($apartment);
     }
 
     /**
@@ -75,6 +82,8 @@ class ApartmentApi extends Controller
      */
     public function destroy($id)
     {
-        return response()->json(Apartment::find($id)->delete());
+        $apartment = Apartment::find($id);
+        $apartment->delete();
+        return response()->json($apartment);
     }
 }
