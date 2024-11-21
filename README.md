@@ -118,8 +118,9 @@ ancora da aggiungere: ...
 - Un appartamento può avere molteplici registrazioni statistiche, quindi la relazione è: `apartments` 1 a molti `statistics`.
 - Un appartamento può offrire diversi servizi aggiuntivi, quindi la relazione è: `apartments` 1 a molti `property services`.
 
-## DB Show
-![image](https://github.com/user-attachments/assets/7ef23e00-86ac-4fad-be70-2070203a50ea)
+## DB Show - @dartio
+![image](https://github.com/user-attachments/assets/a1ce0931-b798-46d4-a923-71e097109148)
+
 
 
 ## Struttura delle Tabelle
