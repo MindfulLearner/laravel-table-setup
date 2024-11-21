@@ -30,10 +30,30 @@ Abbiamo tre tipi di utenti:
 
   **Base link per le API**:
   - **GET**: `api/apartments` - Visualizza i dati pubblici. http://ilvostrolink.test/api/apartments
-  - **POST**: `api/messages` - Invia un messaggio al backend che verrà salvato nel database delle chat. http://ilvostrolink.test/api/messages
-  - **PUT**: `api/apartments/{id}` - Modifica i dati dell'appartamento. http://ilvostrolink.test/api/apartments/{id}
-  - **DELETE**: `api/apartments/{id}` - Cancella i dati dell'appartamento. http://ilvostrolink.test/api/apartments/{id}
-
+  - **POST**: `api/apartments` - Crea un nuovo appartamento. 
+    Utilizza il seguente JSON:
+    ```json
+    {
+        "user_id": 1,
+        "title": "Beautiful Apartment",
+        "rooms": 3,
+        "beds": 2,
+        "bathrooms": 1,
+        "square_meters": 75,
+        "address": "123 Main St, Anytown",
+        "latitude": 40.7128,
+        "longitude": -74.0060,
+        "image": "image_url_or_path",
+        "is_visible": true
+    }
+    ```
+    URL: [http://ilvostrolink.test/api/apartments](http://ilvostrolink.test/api/apartments)
+  
+  - **PUT**: `api/apartments/{id}` - Modifica i dati dell'appartamento. 
+    URL: [http://ilvostrolink.test/api/apartments/{id}](http://ilvostrolink.test/api/apartments/{id})
+  
+  - **DELETE**: `api/apartments/{id}` - Cancella i dati dell'appartamento. 
+    URL: [http://ilvostrolink.test/api/apartments/{id}](http://ilvostrolink.test/api/apartments/{id})
 
   ### Struttura degli appartamenti per il frontend
   - **id**: ID dell'appartamento
