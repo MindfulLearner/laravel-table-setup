@@ -28,7 +28,7 @@ Abbiamo tre tipi di utenti:
   - **GET**: `api/apartments` - Visualizza i dati pubblici.
 
 
-  **Base link per le API**:
+## Base link per le API
   - **GET**: `api/apartments` - Visualizza i dati pubblici. http://ilvostrolink.test/api/apartments
   - **POST**: `api/apartments` - Crea un nuovo appartamento. 
     Utilizza il seguente JSON:
