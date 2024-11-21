@@ -65,6 +65,8 @@ class ApartmentApi extends Controller
             "is_visible" => "required|boolean",
         ]);
 
+        //ciao
+
         return response()->json(Apartment::find($id)->update($request->all()));
     }
 
