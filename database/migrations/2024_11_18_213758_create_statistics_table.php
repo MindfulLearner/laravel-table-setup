@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('statistics', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('apartment_id')->constrained('apartments');
+            $table->foreignId('apartment_id')->nullable()->constrained('apartments')->onDelete('cascade');
             $table->date('date');
             $table->integer('views');
             $table->integer('messages');

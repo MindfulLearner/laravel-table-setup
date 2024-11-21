@@ -74,7 +74,11 @@ class ApartmentApi extends Controller
         $apartment = Apartment::find($id);
         $apartment->update($request->all());
 
-        return response()->json($apartment);
+        return response()->json([
+            'success' => true,
+            'data' => $apartment,
+            'message' => 'Apartment updated successfully'
+        ]);
     }
 
     /**
@@ -84,6 +88,10 @@ class ApartmentApi extends Controller
     {
         $apartment = Apartment::find($id);
         $apartment->delete();
-        return response()->json($apartment);
+        return response()->json([
+            'success' => true,
+            'data' => $apartment,
+            'message' => 'Apartment deleted successfully'
+        ]);
     }
 }
