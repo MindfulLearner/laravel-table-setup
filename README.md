@@ -15,7 +15,7 @@ Prima di procedeere alle cose complicate, è importante capire MVP (Minimum Viab
 Abbiamo tre tipi di utenti:
 
 - **UR (Utente Registrato)**:
-  - **GET**: `api/apartments` - Visualizza tutti gli appartamenti pubblici.
+  - **GET**: `api/apartments` - Visualizza tutti gli appartamenti pubblici. 
   - **POST**: `api/messages` - Invia un messaggio al backend che verrà salvato nel database delle chat.
 
 - **URA (Utente Registrato con Appartamento)**:
@@ -26,6 +26,14 @@ Abbiamo tre tipi di utenti:
 
 - **UI (Utente Interessato)**:
   - **GET**: `api/apartments` - Visualizza i dati pubblici.
+
+
+  **Base link per le API**:
+  - **GET**: `api/apartments` - [Visualizza i dati pubblici.](http://ilvostrolink.test/api/apartments)
+  - **POST**: `api/messages` - [Invia un messaggio al backend che verrà salvato nel database delle chat.](http://ilvostrolink.test/api/messages)
+  - **PUT**: `api/apartments/{id}` - [Modifica i dati dell'appartamento.](http://ilvostrolink.test/api/apartments/{id})
+  - **DELETE**: `api/apartments/{id}` - [Cancella i dati dell'appartamento.](http://ilvostrolink.test/api/apartments/{id})
+
 
   ### Struttura degli appartamenti per il frontend
   - **id**: ID dell'appartamento
@@ -55,7 +63,6 @@ Abbiamo tre tipi di utenti:
   - **POST**: Può inviare messaggi ad altri utenti. I messaggi vengono gestiti dal backend e salvati nel database delle chat.
 
 ![image](https://github.com/user-attachments/assets/d68546bf-f440-4976-870e-1983e609607a)
-
 
 
 
@@ -113,7 +120,6 @@ ancora da aggiungere: ...
 
 ## DB Show
 ![image](https://github.com/user-attachments/assets/7ef23e00-86ac-4fad-be70-2070203a50ea)
-
 
 
 ## Struttura delle Tabelle

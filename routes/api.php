@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\ApartmentController;
+use App\Http\Controllers\Api\ApartmentApi;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -18,4 +18,15 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/apartments', [ApartmentController::class, 'index']);
+
+// Read
+Route::get('/apartments', [ApartmentApi::class, 'index']);
+
+// Create
+Route::post('/apartments', [ApartmentApi::class, 'store']);
+
+// Update
+Route::put('/apartments/{id}', [ApartmentApi::class, 'update']);
+
+// Delete
+Route::delete('/apartments/{id}', [ApartmentApi::class, 'destroy']);
