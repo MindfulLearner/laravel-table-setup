@@ -29,10 +29,10 @@ Abbiamo tre tipi di utenti:
 
 
   **Base link per le API**:
-  - **GET**: `api/apartments` - [Visualizza i dati pubblici.](http://ilvostrolink.test/api/apartments)
-  - **POST**: `api/messages` - [Invia un messaggio al backend che verrà salvato nel database delle chat.](http://ilvostrolink.test/api/messages)
-  - **PUT**: `api/apartments/{id}` - [Modifica i dati dell'appartamento.](http://ilvostrolink.test/api/apartments/{id})
-  - **DELETE**: `api/apartments/{id}` - [Cancella i dati dell'appartamento.](http://ilvostrolink.test/api/apartments/{id})
+  - **GET**: `api/apartments` - Visualizza i dati pubblici. http://ilvostrolink.test/api/apartments
+  - **POST**: `api/messages` - Invia un messaggio al backend che verrà salvato nel database delle chat. http://ilvostrolink.test/api/messages
+  - **PUT**: `api/apartments/{id}` - Modifica i dati dell'appartamento. http://ilvostrolink.test/api/apartments/{id}
+  - **DELETE**: `api/apartments/{id}` - Cancella i dati dell'appartamento. http://ilvostrolink.test/api/apartments/{id}
 
 
   ### Struttura degli appartamenti per il frontend
