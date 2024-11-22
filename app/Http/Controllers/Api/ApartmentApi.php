@@ -94,4 +94,17 @@ class ApartmentApi extends Controller
             'message' => 'Apartment deleted successfully'
         ]);
     }
+
+    /**
+     * Show an apartment
+     */
+    public function show($id)
+    {
+        $apartment = Apartment::find($id);
+        return response()->json([
+            'success' => true,
+            'data' => $apartment,
+            'message' => 'Apartment retrieved successfully'
+        ]);
+    }
 }
