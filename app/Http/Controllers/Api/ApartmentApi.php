@@ -18,7 +18,12 @@ class ApartmentApi extends Controller
      */
     public function index()
     {
-        return response()->json(Apartment::all());
+        $apartments = Apartment::all();
+        return response()->json([
+            'success' => true,
+            'data' => $apartments,
+            'message' => 'Apartments retrieved successfully'
+        ]);
     }
 
 
