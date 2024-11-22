@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Apartment;
+use App\Models\Service;
+use App\Models\Sponsorship;
+
 class ApartmentApi extends Controller
 {
 /**
@@ -18,7 +21,7 @@ class ApartmentApi extends Controller
      */
     public function index()
     {
-        $apartments = Apartment::all();
+        $apartments = Apartment::with('services', 'sponsorships')->get();
         return response()->json([
             'success' => true,
             'data' => $apartments,
@@ -33,6 +36,7 @@ class ApartmentApi extends Controller
     public function store(Request $request)
     {
         
+
         $request->validate([
             "user_id" => "required|exists:users,id",
             "title" => "required|string|max:255",
@@ -49,9 +53,16 @@ class ApartmentApi extends Controller
 
         $apartment = Apartment::create($request->all());
 
+        if ($request->has('services')) {
+            $apartment->services()->sync($request->input('services'));
+        }
+        if ($request->has('sponsorships')) {
+            $apartment->sponsorships()->sync($request->input('sponsorships'));
+        }
+
         return response()->json([
             'success' => true,
-            'data' => $apartment,
+            'data' => $apartment = Apartment::with('services', 'sponsorships')->find($apartment->id),
             'message' => 'Apartment created successfully'
         ]);
     }
@@ -74,14 +85,23 @@ class ApartmentApi extends Controller
             "longitude" => "required|numeric",
             "image" => "required|string",
             "is_visible" => "required|boolean",
+      
         ]);
 
         $apartment = Apartment::find($id);
         $apartment->update($request->all());
 
+        if ($request->has('services')) {
+            $apartment->services()->sync($request->input('services'));
+        }
+        if ($request->has('sponsorships')) {
+            $apartment->sponsorships()->sync($request->input('sponsorships'));
+        }
+        
+
         return response()->json([
             'success' => true,
-            'data' => $apartment,
+            'data' => $apartment = Apartment::with('services', 'sponsorships')->find($apartment->id),
             'message' => 'Apartment updated successfully'
         ]);
     }
@@ -105,7 +125,7 @@ class ApartmentApi extends Controller
      */
     public function show($id)
     {
-        $apartment = Apartment::find($id);
+        $apartment = Apartment::with('services', 'sponsorships')->find($id);
         return response()->json([
             'success' => true,
             'data' => $apartment,
