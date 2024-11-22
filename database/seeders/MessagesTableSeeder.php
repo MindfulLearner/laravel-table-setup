@@ -15,20 +15,22 @@ class MessagesTableSeeder extends Seeder
      */
     public function run(Faker $faker): void
     {
-        $users = User::all();
+       
+        // get all apartments to send messages to 
         foreach (Apartment::all() as $apartment) {
             $apartmentId = $apartment->id;
-            foreach ($users as $user) {
-                $user_id = $user->id;
+            // get all users 
+            foreach (User::all() as $user) {
+                $recipient_name = $user->name;
                 // Create multiple messages for each user
                 for ($i = 0; $i < rand(1, 3); $i++) {
-                    $sender_email = $faker->email;
                     $message = $faker->sentence;
+                    $sender_name = $faker->name;
                     Message::create([
-                        'apartment_id' => $apartmentId,
-                        'user_id' => $user_id,
-                        'sender_email' => $sender_email,
                         'message' => $message,
+                        'sender_name' => $sender_name,
+                        'recipient_name' => $recipient_name,
+                        'apartment_id' => $apartmentId,
                     ]);
                 }
             }
