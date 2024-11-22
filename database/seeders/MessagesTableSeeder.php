@@ -21,7 +21,7 @@ class MessagesTableSeeder extends Seeder
             $apartmentId = $apartment->id;
             // get all users 
             foreach (User::all() as $user) {
-                $recipient_name = $user->name;
+                $recipient_name = $user->first_name . ' ' . $user->last_name;
                 // Create multiple messages for each user
                 for ($i = 0; $i < rand(1, 3); $i++) {
                     $message = $faker->sentence;

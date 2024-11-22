@@ -19,6 +19,7 @@ class SponsorshipsTableSeeder extends Seeder
             Sponsorship::create([
                 'name' => 'Sponsorship ' . ($i + 1),
                 'price' => $faker->numberBetween(1, 100),
+                'apartment_id' => $faker->numberBetween(1, 50),
             ]);
         }
     }

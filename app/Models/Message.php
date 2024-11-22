@@ -11,8 +11,8 @@ class Message extends Model
 
     protected $fillable = [
         'apartment_id',
-        'user_id',
-        'sender_email',
+        'sender_name',
+        'recipient_name',
         'message',
     ];
 }
