@@ -6,7 +6,6 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Faker\Generator as Faker;
 use App\Models\Sponsorship;
-use App\Models\Apartment;
 
 class SponsorshipsTableSeeder extends Seeder
 {
@@ -19,7 +18,6 @@ class SponsorshipsTableSeeder extends Seeder
             Sponsorship::create([
                 'name' => 'Sponsorship ' . ($i + 1),
                 'price' => $faker->numberBetween(1, 100),
-                'apartment_id' => $faker->numberBetween(1, 50),
             ]);
         }
     }

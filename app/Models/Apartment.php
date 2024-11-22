@@ -4,8 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class Apartment extends Model
 {
     use HasFactory;
@@ -24,9 +24,15 @@ class Apartment extends Model
         'is_visible',
     ];
 
-    public function services(): HasMany
+
+    public function services(): BelongsToMany
     {
-        return $this->hasMany(Service::class);
+        return $this->belongsToMany(Service::class, 'services_apartments', 'apartment_id', 'service_id');
+    }
+
+    public function sponsorships(): BelongsToMany
+    {
+        return $this->belongsToMany(Sponsorship::class, 'sponsorships_apartments', 'apartment_id', 'sponsorship_id');
     }
 
     public function user(): BelongsTo
