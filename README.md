@@ -194,7 +194,7 @@ ancora da aggiungere: ...
 - **Data Inizio**: `start_date`
 - **Data Fine**: `end_date`
 
-![image](https://github.com/user-attachments/assets/643745f8-739e-4c21-8772-1266a14b81cb)
+![image](https://github.com/user-attachments/assets/00eca0c4-22cb-43f4-957b-123a7c97b181)
 
 
 
