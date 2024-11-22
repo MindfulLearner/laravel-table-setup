@@ -31,3 +31,6 @@ Route::put('/apartments/{id}', [ApartmentApi::class, 'update']);
 // Delete
 Route::delete('/apartments/{id}', [ApartmentApi::class, 'destroy']);
 
+// Show
+Route::get('/apartments/{id}', [ApartmentApi::class, 'show']);
+

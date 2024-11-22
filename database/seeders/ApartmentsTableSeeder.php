@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Apartment;
-use App\Models\Service;
 use Faker\Generator as Faker;
 
 class ApartmentsTableSeeder extends Seeder
@@ -26,12 +25,7 @@ class ApartmentsTableSeeder extends Seeder
                 'is_visible' => $faker->boolean,
             ];
 
-            $newApartment = Apartment::create($apartment);
-            $services = Service::inRandomOrder()->take(rand(2, 5))->get();
-            foreach ($services as $service) {
-                $service->apartment_id = $newApartment->id;
-                $service->save();
-            }
+            Apartment::create($apartment);
         }
     }
 }
