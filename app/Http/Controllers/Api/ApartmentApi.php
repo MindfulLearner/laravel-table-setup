@@ -138,7 +138,7 @@ class ApartmentApi extends Controller
      */
     public function filter(Request $request)
     {
-        $filters = $request->only(['rooms', 'beds', 'bathrooms', 'square_meters', 'price_min', 'price_max']);
+        $filters = $request->only(['rooms', 'beds', 'bathrooms', 'square_meters', 'price_min', 'price_max', 'services', 'sponsorships']);
 
 
         $query = Apartment::query();
@@ -174,7 +174,11 @@ class ApartmentApi extends Controller
         }
 
 
+
+
+
         // filtri avanzati servizi e sponsorizzazioni
+        // il problema qui e' che non so come filtrare gli array.
         if (isset($filters['services'])) {
             $query->whereHas('services', function ($query) use ($filters) {
                 $query->whereIn('id', $filters['services']);
@@ -187,7 +191,10 @@ class ApartmentApi extends Controller
             });
         }
 
-        $apartments = $query->get();
+        // stampa con i servizi e sponsorizzazioni
+        $apartments = $query->with(['services', 'sponsorships'])->get();
+
+      
 
         return response()->json($apartments);
     }
