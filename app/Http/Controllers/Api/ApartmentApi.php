@@ -140,39 +140,43 @@ class ApartmentApi extends Controller
     {
         $filters = $request->only(['rooms', 'beds', 'bathrooms', 'square_meters', 'price_min', 'price_max', 'services', 'sponsorships']);
 
-
         $query = Apartment::query();
 
         //Numero di stanze
         if (isset($filters['rooms'])) {
+            dd($filters['rooms']); // Debugging
             $query->where('rooms', $filters['rooms']);
         }
 
         //Letti
         if (isset($filters['beds'])) {
+            dd($filters['beds']); // Debugging
             $query->where('beds', $filters['beds']);
         }
 
         //Bagni
         if (isset($filters['bathrooms'])) {
+            dd($filters['bathrooms']); // Debugging
             $query->where('bathrooms', $filters['bathrooms']);
         }
 
         //Metri quadrati
         if (isset($filters['square_meters'])) {
+            dd($filters['square_meters']); // Debugging
             $query->where('square_meters', $filters['square_meters']);
         }
 
         // Prezzo minimo
         if (isset($filters['price_min'])) {
+            dd($filters['price_min']); // Debugging
             $query->where('price', '>=', $filters['price_min']);
         }
 
         //Prezzo massimo
         if (isset($filters['price_max'])) {
+            dd($filters['price_max']); // Debugging
             $query->where('price', '<=', $filters['price_max']);
         }
-
 
 
 
@@ -180,12 +184,14 @@ class ApartmentApi extends Controller
         // filtri avanzati servizi e sponsorizzazioni
         // il problema qui e' che non so come filtrare gli array.
         if (isset($filters['services'])) {
+            dd($filters['services']); // Debugging
             $query->whereHas('services', function ($query) use ($filters) {
                 $query->whereIn('id', $filters['services']);
             });
         }
 
         if (isset($filters['sponsorships'])) {
+            dd($filters['sponsorships']); // Debugging
             $query->whereHas('sponsorships', function ($query) use ($filters) {
                 $query->whereIn('id', $filters['sponsorships']);
             });
@@ -195,7 +201,6 @@ class ApartmentApi extends Controller
         $apartments = $query->with(['services', 'sponsorships'])->get();
 
       
-
         return response()->json($apartments);
     }
 }
