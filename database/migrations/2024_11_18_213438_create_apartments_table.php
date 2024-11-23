@@ -20,8 +20,8 @@ return new class extends Migration
             $table->integer('bathrooms');
             $table->integer('square_meters');
             $table->string('address');
-            $table->float('latitude', 10, 6);
-            $table->float('longitude', 10, 6);
+            $table->float('latitude', 10, 6)->nullable();
+            $table->float('longitude', 10, 6)->nullable();
             $table->string('image');
             $table->boolean('is_visible');
             $table->timestamps();

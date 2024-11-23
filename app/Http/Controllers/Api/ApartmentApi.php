@@ -70,9 +70,9 @@ class ApartmentApi extends Controller
             "bathrooms" => "required|integer",
             "square_meters" => "required|integer",
             "address" => "required|string",
-            "latitude" => "required|numeric",
-            "longitude" => "required|numeric",
-            "image" => "required|string",
+            "latitude" => "nullable|numeric",
+            "longitude" => "nullable|numeric",
+            "image" => "nullable|string",
             "is_visible" => "required|boolean",
         ]);
 
