@@ -19,17 +19,28 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-// Read
-Route::get('/apartments', [ApartmentApi::class, 'index']);
+Route::group(['prefix' => 'apartments'], function () {
 
-// Create
-Route::post('/apartments', [ApartmentApi::class, 'store']);
+    // Filter
+    //how to use? /api/apartments/filter?rooms=2
+    Route::get('/filter', [ApartmentApi::class, 'filter']);
 
-// Update
-Route::put('/apartments/{id}', [ApartmentApi::class, 'update']);
+    // Read
+    Route::get('/', [ApartmentApi::class, 'index']);
 
-// Delete
-Route::delete('/apartments/{id}', [ApartmentApi::class, 'destroy']);
+    // Create
+    Route::post('/', [ApartmentApi::class, 'store']);
 
-//show
-Route::get('/apartments/{id}', [ApartmentApi::class, 'show']);
+    // Update
+    Route::put('/{id}', [ApartmentApi::class, 'update']);
+
+    // Delete
+    Route::delete('/{id}', [ApartmentApi::class, 'destroy']);
+
+    // Show
+    Route::get('/{id}', [ApartmentApi::class, 'show']);
+
+    
+});
+
+
