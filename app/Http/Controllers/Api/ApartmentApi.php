@@ -140,7 +140,6 @@ class ApartmentApi extends Controller
     {
         $filters = $request->only(['rooms', 'beds', 'bathrooms', 'square_meters', 'price_min', 'price_max']);
 
-        dd($filters);
 
         $query = Apartment::query();
 
@@ -174,7 +173,19 @@ class ApartmentApi extends Controller
             $query->where('price', '<=', $filters['price_max']);
         }
 
-        
+
+        // filtri avanzati servizi e sponsorizzazioni
+        if (isset($filters['services'])) {
+            $query->whereHas('services', function ($query) use ($filters) {
+                $query->whereIn('id', $filters['services']);
+            });
+        }
+
+        if (isset($filters['sponsorships'])) {
+            $query->whereHas('sponsorships', function ($query) use ($filters) {
+                $query->whereIn('id', $filters['sponsorships']);
+            });
+        }
 
         $apartments = $query->get();
 
