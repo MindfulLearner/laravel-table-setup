@@ -9,28 +9,32 @@ use App\Http\Controllers\Api\ApartmentApi;
 |--------------------------------------------------------------------------
 |
 | Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "api" middleware group. Make something great!
+| routes are loaded by the RouteServiceProvider within a group which
+| is assigned the "api" middleware group. Enjoy building your API!
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
 });
 
 
-// Read
-Route::get('/apartments', [ApartmentApi::class, 'index']);
+Route::group(['prefix' => 'apartments'], function () {
 
-// Create
-Route::post('/apartments', [ApartmentApi::class, 'store']);
+    // Read
+    Route::get('/', [ApartmentApi::class, 'index']);
 
-// Update
-Route::put('/apartments/{id}', [ApartmentApi::class, 'update']);
+    // Create
+    Route::post('/', [ApartmentApi::class, 'store']);
 
-// Delete
-Route::delete('/apartments/{id}', [ApartmentApi::class, 'destroy']);
+    // Update
+    Route::put('/{id}', [ApartmentApi::class, 'update']);
 
-// Show
-Route::get('/apartments/{id}', [ApartmentApi::class, 'show']);
+    // Delete
+    Route::delete('/{id}', [ApartmentApi::class, 'destroy']);
 
+    // Show
+    Route::get('/{id}', [ApartmentApi::class, 'show']);
+
+    
+});

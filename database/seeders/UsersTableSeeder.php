@@ -12,23 +12,21 @@ class UsersTableSeeder extends Seeder
     {
         $users = [
             [
+                'name' => 'Mario',
                 'email' => 'user1@example.com',
                 'password' => Hash::make('password123'),
-                'first_name' => 'Mario',
-                'last_name' => 'Rossi',
-                'role' => 'URA',
-                'birth_date' => '1990-01-01',
+                'created_at' => now(),
+                'updated_at' => now(),
             ]
         ];
 
         for ($i = 0; $i < 9; $i++) {
             $users[] = [
+                'name' => $faker->name,
                 'email' => $faker->email,
                 'password' => Hash::make('password123'),
-                'first_name' => $faker->firstName,
-                'last_name' => $faker->lastName,
-                'role' => 'URA',
-                'birth_date' => $faker->date,
+                'created_at' => now(),
+                'updated_at' => now(),
             ];
         }
 
