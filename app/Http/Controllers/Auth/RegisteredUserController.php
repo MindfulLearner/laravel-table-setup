@@ -40,6 +40,13 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return response()->noContent();
+        // TODO: risposta temporanea
+        $response = new Response(
+            'User registered successfully',
+            Response::HTTP_OK,
+            ['content-type' => 'text/html']
+        );
+
+        return $response;
     }
 }
