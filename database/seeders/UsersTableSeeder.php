@@ -15,6 +15,8 @@ class UsersTableSeeder extends Seeder
                 'name' => 'Mario',
                 'email' => 'user1@example.com',
                 'password' => Hash::make('password123'),
+                'surname' => 'Rossi',
+                'birth_date' => '1990-01-01',
                 'created_at' => now(),
                 'updated_at' => now(),
             ]
@@ -25,6 +27,8 @@ class UsersTableSeeder extends Seeder
                 'name' => $faker->name,
                 'email' => $faker->email,
                 'password' => Hash::make('password123'),
+                'surname' => $faker->lastName,
+                'birth_date' => $faker->date,
                 'created_at' => now(),
                 'updated_at' => now(),
             ];
