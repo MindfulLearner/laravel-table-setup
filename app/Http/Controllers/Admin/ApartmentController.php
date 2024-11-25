@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Apartment;
+use Illuminate\Auth\Events\Validated;
+use Illuminate\Support\Facades\Auth;
 
 class ApartmentController extends Controller
 {
@@ -14,7 +16,7 @@ class ApartmentController extends Controller
     public function index()
     {
         $apartments = Apartment::all();
-        return view('dashboard', compact('apartments'));
+        return view('apartments.index', compact('apartments'));
     }
 
     /**
@@ -30,8 +32,10 @@ class ApartmentController extends Controller
      */
     public function store(Request $request)
     {
+        $user = Auth::user();
         $data = $request->all();
-        $apartment = Apartment::create($data);
+        $data['user_id'] = $user->id;
+        Apartment::create($data);
         return redirect()->route('dashboard');
     }
 
@@ -40,6 +44,8 @@ class ApartmentController extends Controller
      */
     public function show(string $id)
     {
+
+       
         $apartment = Apartment::findOrFail($id);
         return view('apartments.show', compact('apartment'));
     }

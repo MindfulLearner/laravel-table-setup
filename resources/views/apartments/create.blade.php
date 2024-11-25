@@ -1,7 +1,11 @@
-</x-app-layout>
+<!-- Start of Selection -->
+@extends('dashboard')
+
+@section('content')
 <div class="max-w-3xl mx-auto bg-white shadow-lg rounded-lg p-8 mt-10">
   <h1 class="text-2xl font-bold text-gray-800 mb-6 text-center">Crea un Nuovo Appartamento</h1>
-  <form @submit.prevent="createApartment">
+  <form action="{{ route('apartments.store') }}" method="POST">
+    @csrf
     <div class="grid grid-cols-1 gap-6">
       <!-- Titolo -->
       <div>
@@ -9,10 +13,11 @@
         <input
           type="text"
           id="title"
-          v-model="form.title"
+          name="title"
           placeholder="Inserisci un titolo..."
           class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
           required
+          value="Appartamento in Centro"
         />
       </div>
 
@@ -22,10 +27,11 @@
         <input
           type="number"
           id="rooms"
-          v-model="form.rooms"
+          name="rooms"
           placeholder="Inserisci il numero di stanze..."
           class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
           required
+          value="3"
         />
       </div>
 
@@ -35,10 +41,11 @@
         <input
           type="number"
           id="beds"
-          v-model="form.beds"
+          name="beds"
           placeholder="Inserisci il numero di letti..."
           class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
           required
+          value="2"
         />
       </div>
 
@@ -48,10 +55,11 @@
         <input
           type="number"
           id="bathrooms"
-          v-model="form.bathrooms"
+          name="bathrooms"
           placeholder="Inserisci il numero di bagni..."
           class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
           required
+          value="1"
         />
       </div>
 
@@ -61,10 +69,11 @@
         <input
           type="number"
           id="square_meters"
-          v-model="form.square_meters"
+          name="square_meters"
           placeholder="Inserisci i metri quadri..."
           class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
           required
+          value="75"
         />
       </div>
 
@@ -74,10 +83,11 @@
         <input
           type="text"
           id="address"
-          v-model="form.address"
+          name="address"
           placeholder="Inserisci l'indirizzo..."
           class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
           required
+          value="Via Roma, 123"
         />
       </div>
 
@@ -87,9 +97,10 @@
         <input
           type="text"
           id="latitude"
-          v-model="form.latitude"
+          name="latitude"
           placeholder="Inserisci la latitudine..."
           class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
+          value="41.9028"
         />
       </div>
 
@@ -99,9 +110,10 @@
         <input
           type="text"
           id="longitude"
-          v-model="form.longitude"
+          name="longitude"
           placeholder="Inserisci la longitudine..."
           class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
+          value="12.4964"
         />
       </div>
 
@@ -111,21 +123,18 @@
         <input
           type="text"
           id="image"
-          v-model="form.image"
+          name="image"
           placeholder="Inserisci l'URL dell'immagine..."
           class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
           required
+          value="https://example.com/image.jpg"
         />
       </div>
 
       <!-- Visibilità -->
       <div class="flex items-center">
-        <input
-          id="is_visible"
-          type="checkbox"
-          v-model="form.is_visible"
-          class="h-4 w-4 text-yellow-500 focus:ring-yellow-500 border-gray-300 rounded"
-        />
+        <input type="hidden" name="is_visible" value="0"> 
+        <input type="checkbox" name="is_visible" id="is_visible" value="1" class="mr-2 h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring focus:ring-blue-200">
         <label for="is_visible" class="ml-2 text-sm font-medium text-gray-700">Visibile</label>
       </div>
 
@@ -134,11 +143,11 @@
         <label for="description" class="block text-sm font-medium text-gray-700">Descrizione</label>
         <textarea
           id="description"
-          v-model="form.description"
+          name="description"
           placeholder="Inserisci una descrizione dell'appartamento..."
           class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
           required
-        ></textarea>
+        >Appartamento luminoso e spazioso nel cuore della città.</textarea>
       </div>
 
       <!-- Pulsante Submit -->
@@ -154,8 +163,8 @@
   </form>
 
   <!-- Messaggio di successo -->
-  <div v-if="apartmentCreated" class="mt-6 p-4 bg-green-100 text-green-700 rounded-md">
+  <div class="mt-6 p-4 bg-green-100 text-green-700 rounded-md">
     <p>Appartamento creato con successo!</p>
   </div>
 </div>
-</x-app-layout>
+@endsection

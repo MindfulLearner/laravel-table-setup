@@ -19,6 +19,7 @@ class ApartmentsTableSeeder extends Seeder
                 'bathrooms' => $faker->numberBetween(1, 3),
                 'square_meters' => $faker->numberBetween(30, 150),
                 'address' => $faker->streetAddress,
+                'description' => $faker->paragraph,
                 'latitude' => $faker->latitude,
                 'longitude' => $faker->longitude,
                 'image' => 'apartments/default' . $faker->numberBetween(1, 5) . '.jpg',

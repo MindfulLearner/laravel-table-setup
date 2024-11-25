@@ -1,6 +1,8 @@
+@extends('dashboard')
+
+@section('content')
 {{-- form per editare un appartamento --}}
 
-<x-app-layout>
 <div class="max-w-3xl mx-auto bg-white shadow-lg rounded-lg p-8 mt-10">
     <h1 class="text-2xl font-bold text-gray-800 mb-6 text-center">Aggiorna Appartamento</h1>
     <form action="{{ route('apartments.update', $apartment->id) }}" method="POST">
@@ -162,4 +164,4 @@
       </div>
     @endif
   </div>
-</x-app-layout>
+@endsection

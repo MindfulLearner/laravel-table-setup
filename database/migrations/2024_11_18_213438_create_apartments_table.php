@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('rooms');
             $table->integer('beds');
             $table->integer('bathrooms');
+            $table->text('description');
             $table->integer('square_meters');
             $table->string('address');
             $table->float('latitude', 10, 6)->nullable();
