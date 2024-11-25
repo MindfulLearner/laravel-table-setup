@@ -25,10 +25,10 @@ class MessagesTableSeeder extends Seeder
                 // Create multiple messages for each user
                 for ($i = 0; $i < rand(1, 3); $i++) {
                     $message = $faker->sentence;
-                    $sender_name = $faker->name;
+                    $email_sender = $faker->email;
                     Message::create([
                         'message' => $message,
-                        'sender_name' => $sender_name,
+                        'email_sender' => $email_sender,
                         'recipient_name' => $recipient_name,
                         'apartment_id' => $apartmentId,
                     ]);
