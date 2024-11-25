@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        <h2 class="font-semibold text-xl text-red-800 dark:text-gray-200 leading-tight">
             {{ __('Dashboard') }}
         </h2>
     </x-slot>
@@ -8,8 +8,11 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
+                <div class="p-6 text-gray-900 dark:text-red-200">
                     {{ __("You're logged in!") }}
+                    <a href="{{ route('apartments.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded mr-2">
+                      Crea Appartamento
+                    </a>
 
                     @foreach ($apartments as $apartment)
                     <div
@@ -35,11 +38,14 @@
                         <p><strong>Coordinate:</strong> {{ $apartment->latitude }}, {{ $apartment->longitude }}</p>
                       </div>
                       <div class="mt-4 flex justify-between">
-                        <a href="{{ route('apartments.edit', ['apartment' => $apartment->id]) }}" class="bg-yellow-500 text-white px-4 py-2 rounded mr-2" @click.stop>
+                        <a href="{{ route('apartments.edit', $apartment->id) }}" class="bg-blue-500 text-white px-4 py-2 rounded mr-2" @click>
                           Modifica
                         </a>
-                        <a href="{{ route('apartments.destroy', ['apartment' => $apartment->id]) }}" class="bg-red-500 text-white px-4 py-2 rounded" @click.stop>
+                        <a href="{{ route('apartments.destroy', $apartment->id) }}" class="bg-red-500 text-white px-4 py-2 rounded" @click>
                           Cancella
+                        </a>
+                        <a href="{{ route('apartments.show', $apartment->id) }}" class="bg-green-500 text-white px-4 py-2 rounded" @click>
+                          Vai
                         </a>
                       </div>
                     </div>

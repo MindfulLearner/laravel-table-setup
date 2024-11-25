@@ -22,7 +22,7 @@ class ApartmentController extends Controller
      */
     public function create()
     {
-        return view('admin.apartments.create');
+        return view('apartments.create');
     }
 
     /**
@@ -32,7 +32,7 @@ class ApartmentController extends Controller
     {
         $data = $request->all();
         $apartment = Apartment::create($data);
-        return redirect()->route('admin.apartments.index');
+        return redirect()->route('dashboard');
     }
 
     /**
@@ -41,7 +41,7 @@ class ApartmentController extends Controller
     public function show(string $id)
     {
         $apartment = Apartment::findOrFail($id);
-        return view('admin.apartments.show', compact('apartment'));
+        return view('apartments.show', compact('apartment'));
     }
 
     /**
@@ -50,7 +50,7 @@ class ApartmentController extends Controller
     public function edit(string $id)
     {
         $apartment = Apartment::findOrFail($id);
-        return view('admin.apartments.edit', compact('apartment'));
+        return view('apartments.edit', compact('apartment'));
     }
 
     /**
@@ -58,10 +58,14 @@ class ApartmentController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $data = $request->all();
-        $apartment = Apartment::findOrFail($id);
-        $apartment->update($data);
-        return redirect()->route('admin.apartments.index');
+        try {
+            $data = $request->all();
+            $apartment = Apartment::findOrFail($id);
+            $apartment->update($data);
+            return redirect()->route('dashboard')->with('success', 'Appartamento aggiornato con successo');
+        } catch (\Exception $e) {
+            throw new \Exception('Error updating apartment: ' . $e->getMessage());
+        }
     }
 
     /**
@@ -71,6 +75,6 @@ class ApartmentController extends Controller
     {
         $apartment = Apartment::findOrFail($id);
         $apartment->delete();
-        return redirect()->route('admin.apartments.index');
+        return redirect()->route('dashboard');
     }
 }
