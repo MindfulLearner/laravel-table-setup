@@ -14,10 +14,7 @@ class UsersTableSeeder extends Seeder
             [
                 'email' => 'user1@example.com',
                 'password' => Hash::make('password123'),
-                'first_name' => 'Mario',
-                'last_name' => 'Rossi',
-                'role' => 'URA',
-                'birth_date' => '1990-01-01',
+                'name' => 'Mario',
             ]
         ];
 
@@ -25,10 +22,7 @@ class UsersTableSeeder extends Seeder
             $users[] = [
                 'email' => $faker->email,
                 'password' => Hash::make('password123'),
-                'first_name' => $faker->firstName,
-                'last_name' => $faker->lastName,
-                'role' => 'URA',
-                'birth_date' => $faker->date,
+                'name' => $faker->firstName,
             ];
         }
 
