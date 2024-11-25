@@ -10,6 +10,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
+use Illuminate\Support\Str;
 
 class RegisteredUserController extends Controller
 {
@@ -33,6 +34,7 @@ class RegisteredUserController extends Controller
             'surname' => $request->surname,
             'birth_date' => $request->birth_date,
             'email' => $request->email,
+            'remember_token' => Str::random(10),
             'password' => Hash::make($request->password),
         ]);
 
