@@ -94,32 +94,7 @@
         />
       </div>
 
-      <!-- Latitudine -->
-      <div>
-        <label for="latitude" class="block text-sm font-medium text-gray-700">Latitudine</label>
-        <input
-          type="text"
-          id="latitude"
-          name="latitude"
-          placeholder="Inserisci la latitudine..."
-          class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
-          value="41.9028"
-        />
-      </div>
-
-      <!-- Longitudine -->
-      <div>
-        <label for="longitude" class="block text-sm font-medium text-gray-700">Longitudine</label>
-        <input
-          type="text"
-          id="longitude"
-          name="longitude"
-          placeholder="Inserisci la longitudine..."
-          class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
-          value="12.4964"
-        />
-      </div>
-
+      
       <!-- Immagine -->
       <div>
         <label for="image" class="block text-sm font-medium text-gray-700">Immagine (URL/Path)</label>
