@@ -2,8 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\ApartmentApi;
-
+use App\Http\Controllers\Admin\ApartmentController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,11 +18,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [ApartmentController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::resource('apartments', ApartmentApi::class)->middleware(['auth', 'verified']);
+Route::resource('apartments', ApartmentController::class)->middleware(['auth', 'verified']);
 
 
 Route::middleware('auth')->group(function () {
