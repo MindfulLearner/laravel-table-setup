@@ -18,7 +18,7 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request)
+    public function store(Request $request) : Response
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -40,11 +40,14 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-       
 
-        return response(
-            content: 'autenticazione avvenuta con successo',
-            status: 204
+        $response = new Response(
+            'autenticazione avvenuta con successo',
+            headers: [
+                'Content-Type' => 'application/json',
+            ],
         );
+
+        return $response;
     }
 }
