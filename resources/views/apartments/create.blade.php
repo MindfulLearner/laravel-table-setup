@@ -31,6 +31,7 @@
           placeholder="Inserisci il numero di stanze..."
           class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
           required
+          min="1"
           value="3"
         />
       </div>
@@ -45,6 +46,7 @@
           placeholder="Inserisci il numero di letti..."
           class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
           required
+          min="1"
           value="2"
         />
       </div>
@@ -59,6 +61,7 @@
           placeholder="Inserisci il numero di bagni..."
           class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
           required
+          min="1"
           value="1"
         />
       </div>
