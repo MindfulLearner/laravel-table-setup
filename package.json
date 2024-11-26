@@ -14,5 +14,8 @@
         "postcss": "^8.4.49",
         "tailwindcss": "^3.4.15",
         "vite": "^5.0.0"
+    },
+    "dependencies": {
+        "@tomtom-international/web-sdk-maps": "^6.25.0"
     }
 }

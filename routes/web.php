@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\ApartmentController;
 use App\Http\Controllers\UserContentController;
+use App\Http\Controllers\MapController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,6 +19,9 @@ use App\Http\Controllers\UserContentController;
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+Route::get('/map', [MapController::class, 'index'])->name('map');
 
 
 
