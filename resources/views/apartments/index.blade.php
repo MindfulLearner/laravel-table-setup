@@ -10,9 +10,10 @@
                 Crea Appartamento
               </a>
 
+              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-3">
               @foreach ($apartments as $apartment)
               <div
-              class="w-full mx-auto bg-white shadow-md rounded-lg overflow-hidden transform hover:scale-105 transition-transform duration-300 cursor-pointer"
+              class="w-full mx-auto bg-white shadow-md rounded-lg overflow-hidden transform transition-transform duration-300 cursor-pointer hover:scale-95"
               x-show="isVisible"
             >
               <img
@@ -50,6 +51,7 @@
               </div>
             </div>
               @endforeach
+              </div>
               <script>
                 // logica conferma cancellazione
                 document.querySelectorAll(".deleteButton").forEach(function(button) {
