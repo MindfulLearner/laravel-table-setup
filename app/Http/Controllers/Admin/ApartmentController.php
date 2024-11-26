@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Apartment;
 use Illuminate\Auth\Events\Validated;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 
 class ApartmentController extends Controller
 {
@@ -35,6 +36,10 @@ class ApartmentController extends Controller
         $user = Auth::user();
         $data = $request->all();
         $data['user_id'] = $user->id;
+        $arrayAddress = $this->getAddress($data['address']);
+        $data['address'] = $arrayAddress['address'];
+        $data['latitude'] = $arrayAddress['latitude'];
+        $data['longitude'] = $arrayAddress['longitude'];
         Apartment::create($data);
         return redirect()->route('dashboard');
     }
@@ -82,5 +87,21 @@ class ApartmentController extends Controller
         $apartment = Apartment::findOrFail($id);
         $apartment->delete();
         return redirect()->route('dashboard');
+    }
+
+    public function getAddress($indirizzo) {
+        $apiTomTomKey = env('API_TOMTOM_KEY');
+        $infoArrayAddress = [];
+        $url = "https://api.tomtom.com/search/2/geocode/" . urlencode($indirizzo) . ".json?key=$apiTomTomKey&limit=1&countrySet=IT&language=it-IT";
+        $response = Http::get($url);
+        $response = $response->json();
+        $infoArrayAddress['latitude'] = $response['results'][0]['position']['lat'];
+        $infoArrayAddress['longitude'] = $response['results'][0]['position']['lon'];
+        $infoArrayAddress['address'] = $response['results'][0]['address']['freeformAddress'];
+        return $infoArrayAddress;
+    }
+    public function getLatitude($indirizzo) {
+    }
+    public function getLongitude($indirizzo) {
     }
 }
