@@ -81,6 +81,8 @@ class ApartmentApi extends Controller
             "address" => "required|string",
             "latitude" => "nullable|numeric",
             "longitude" => "nullable|numeric",
+            "services" => "nullable|array",
+            "sponsorships" => "nullable|array",
             "image" => "nullable|string",
             "is_visible" => "required|boolean",
         ]);

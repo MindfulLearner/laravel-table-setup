@@ -16,7 +16,7 @@ class SponsorshipsTableSeeder extends Seeder
     {
         $sponsorships = [
             [
-                'type' => null,
+                'type' => 'No sponsorship',
                 'price' => 0,
             ],
             [
