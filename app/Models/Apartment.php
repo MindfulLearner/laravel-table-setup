@@ -23,6 +23,7 @@ class Apartment extends Model
         'longitude',
         'image',
         'is_visible',
+      
     ];
 
 
