@@ -87,10 +87,16 @@ class ApartmentApi extends Controller
 
         $apartment = Apartment::find($id);
         $apartment->update($request->all());
+        if ($request->has('services')) {
+            $apartment->services()->sync($request->input('services'));
+        }
+        if ($request->has('sponsorships')) {
+            $apartment->sponsorships()->sync($request->input('sponsorships'));
+        }
 
         return response()->json([
             'success' => true,
-            'data' => $apartment,
+            'data' => $apartment = Apartment::with('services', 'sponsorships')->find($apartment->id),
             'message' => 'Apartment updated successfully'
         ]);
     }
@@ -114,10 +120,12 @@ class ApartmentApi extends Controller
      */
     public function show($id)
     {
-        $apartment = Apartment::find($id);
+        $apartment = Apartment::with('services', 'sponsorships')->find($id);
         return response()->json([
             'success' => true,
             'data' => $apartment,
+            'services' => $apartment->services,
+            'sponsorships' => $apartment->sponsorships,
             'message' => 'Apartment retrieved successfully'
         ]);
     }

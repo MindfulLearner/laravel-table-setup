@@ -16,10 +16,12 @@ class ApartmentSponsorshipSeeder extends Seeder
     {
         $apartments = Apartment::all();
         $sponsorships = Sponsorship::all();
+
         foreach ($apartments as $apartment) {
-            $max = min(3, $sponsorships->count());
-            $randomSponsorships = $sponsorships->random(rand(0, $max));
-            $apartment->sponsorships()->attach($randomSponsorships);
+            $randomSponsorships = $sponsorships->random(rand(0, 3));
+            if ($randomSponsorships > 0) {
+                $apartment->sponsorships()->attach($randomSponsorships);
+            }
         }
     }
 }
