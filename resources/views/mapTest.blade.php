@@ -1,21 +1,22 @@
-@extends('htmlTest')
+@extends('dashboard')
 
 
 @section('content')
     <h2>Mappa degli Appartamenti</h2>
-    <div id="map"></div>
+    <div id="map" style="height: 400px; width: 100%;"></div>
 
-    <script src="https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.15.0/maps/maps-web.min.js"></script>
-    <script src="https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.15.0/services/services-web.min.js"></script>
+
 
     <script>
 
-
+        const tomTomApiKey = "SooRbYbji9V5qUxAh3i2ijnD8m9ZWVZ7";
         // Dati passati dal controller Laravel
         const apartments = @json($apartments);
+        var map = tt.map({
+            key: tomTomApiKey,
+            container: "map",
+        })
 
-
-        const tt = window.tt;
 
         // Aggiunta dei marker
         // apartments.forEach(apartment => {

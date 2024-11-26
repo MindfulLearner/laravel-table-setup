@@ -4,13 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title')</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tomtom-international/web-sdk-maps"></script>
-    <style>
-        #map {
-            height: 400px;
-            width: 100%; 
-        }
-    </style>
+  <script src="https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.25.0/maps/maps-web.min.js"></script>
 </head>
 <body>
     <div class="container">
