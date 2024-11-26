@@ -14,12 +14,29 @@ class SponsorshipsTableSeeder extends Seeder
      */
     public function run(Faker $faker): void
     {
+        $sponsorships = [
+            [
+                'type' => null,
+                'price' => 0,
+            ],
+            [
+                'type' => 'Bronze',
+                'price' => 2.99,
+            ],
+            [
+                'type' => 'Silver',
+                'price' => 5.99,
+            ],
+            [
+                'type' => 'Gold',
+                'price' => 9.99,
+            ],
+        ];
 
-        for ($i = 0; $i < 50; $i++) {
+        foreach ($sponsorships as $sponsorship) {
             Sponsorship::create([
-                'name'  => $faker->word . ' Sponsorship',
-                // prezzo in euro
-                'price' => $faker->randomFloat(2, 1, 100),
+                'name'  => $sponsorship['type'],
+                'price' => $sponsorship['price'],
             ]);
         }
     }

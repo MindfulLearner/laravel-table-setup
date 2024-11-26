@@ -18,7 +18,7 @@ class ApartmentApi extends Controller
      */
     public function index()
     {
-        $apartments = Apartment::all();
+        $apartments = Apartment::with('services', 'sponsorships')->get();
         return response()->json([
             'success' => true,
             'data' => $apartments,
@@ -32,7 +32,15 @@ class ApartmentApi extends Controller
      */
     public function store(Request $request)
     {
-        
+        $apartment = Apartment::create($request->all());
+        if ($request->has('services')) {
+            $apartment->services()->sync($request->input('services'));
+        }
+        if ($request->has('sponsorships')) {
+            $apartment->sponsorships()->sync($request->input('sponsorships'));
+        }
+
+
         $request->validate([
             "user_id" => "required|exists:users,id",
             "title" => "required|string|max:255",
@@ -51,7 +59,8 @@ class ApartmentApi extends Controller
 
         return response()->json([
             'success' => true,
-            'data' => $apartment,
+            'data' => $apartment = Apartment::with('services', 'sponsorships')->find($apartment->id),
+
             'message' => 'Apartment created successfully'
         ]);
     }
