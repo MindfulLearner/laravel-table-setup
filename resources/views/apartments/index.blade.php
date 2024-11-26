@@ -34,16 +34,6 @@
                   <p><strong>Coordinate:</strong> {{ $apartment->latitude }}, {{ $apartment->longitude }}</p>
                 </div>
                 <div class="mt-4 flex justify-between">
-                  <a href="{{ route('apartments.edit', $apartment->id) }}" class="bg-blue-500 text-white px-4 py-2 rounded mr-2">
-                    Modifica
-                  </a>
-                  <form action="{{ route('apartments.destroy', $apartment->id) }}" method="POST">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded deleteButton">
-                      Cancella
-                    </button>
-                  </form>
                   <a href="{{ route('apartments.show', $apartment->id) }}" class="bg-green-500 text-white px-4 py-2 rounded">
                     Vai
                   </a>
@@ -52,18 +42,6 @@
             </div>
               @endforeach
               </div>
-              <script>
-                // logica conferma cancellazione
-                document.querySelectorAll(".deleteButton").forEach(function(button) {
-                    button.addEventListener("click", function(event) {
-                        if (!confirm("Sei sicuro di voler cancellare questo appartamento?")) {
-                            event.preventDefault();
-                            //manda a url di cancellazione
-                            // esce solo se si clicca cancel
-                        }
-                    });
-                });
-            </script>
           </div>
       </div>
   </div>

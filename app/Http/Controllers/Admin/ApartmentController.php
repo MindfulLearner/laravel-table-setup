@@ -17,6 +17,7 @@ class ApartmentController extends Controller
     public function index()
     {
         $apartments = Apartment::all();
+
         return view('apartments.index', compact('apartments'));
     }
 
@@ -50,7 +51,7 @@ class ApartmentController extends Controller
     public function show(string $id)
     {
 
-       
+
         $apartment = Apartment::findOrFail($id);
         return view('apartments.show', compact('apartment'));
     }
