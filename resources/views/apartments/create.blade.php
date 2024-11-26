@@ -21,63 +21,64 @@
         />
       </div>
 
-      <!-- Stanze -->
-      <div>
-        <label for="rooms" class="block text-sm font-medium text-gray-700">Stanze</label>
-        <input
-          type="number"
-          id="rooms"
-          name="rooms"
-          placeholder="Inserisci il numero di stanze..."
-          class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
-          required
-          min="1"
-          value="3"
-        />
+      <div class="grid grid-cols-3 gap-6">
+        <!-- Stanze -->
+        <div>
+          <label for="rooms" class="block text-sm font-medium text-gray-700">Stanze</label>
+          <input
+            type="number"
+            id="rooms"
+            name="rooms"
+            placeholder="Inserisci il numero di stanze..."
+            class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
+            required
+            value="3"
+          />
+        </div>
+
+        <!-- Letti -->
+        <div>
+          <label for="beds" class="block text-sm font-medium text-gray-700">Letti</label>
+          <input
+            type="number"
+            id="beds"
+            name="beds"
+            placeholder="Inserisci il numero di letti..."
+            class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
+            required
+            value="2"
+          />
+        </div>
+
+        <!-- Bagni -->
+        <div>
+          <label for="bathrooms" class="block text-sm font-medium text-gray-700">Bagni</label>
+          <input
+            type="number"
+            id="bathrooms"
+            name="bathrooms"
+            placeholder="Inserisci il numero di bagni..."
+            class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
+            required
+            value="1"
+          />
+        </div>
       </div>
 
-      <!-- Letti -->
-      <div>
-        <label for="beds" class="block text-sm font-medium text-gray-700">Letti</label>
-        <input
-          type="number"
-          id="beds"
-          name="beds"
-          placeholder="Inserisci il numero di letti..."
-          class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
-          required
-          min="1"
-          value="2"
-        />
-      </div>
-
-      <!-- Bagni -->
-      <div>
-        <label for="bathrooms" class="block text-sm font-medium text-gray-700">Bagni</label>
-        <input
-          type="number"
-          id="bathrooms"
-          name="bathrooms"
-          placeholder="Inserisci il numero di bagni..."
-          class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
-          required
-          min="1"
-          value="1"
-        />
-      </div>
-
-      <!-- Metri Quadri -->
+      <!-- Metri Quadri con linea trascinabile -->
       <div>
         <label for="square_meters" class="block text-sm font-medium text-gray-700">Metri Quadri</label>
         <input
-          type="number"
+          type="range"
           id="square_meters"
           name="square_meters"
-          placeholder="Inserisci i metri quadri..."
-          class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
-          required
+          min="20"
+          max="200"
           value="75"
+          class="mt-1 w-full"
+          oninput="this.nextElementSibling.value = this.value"
         />
+        <output>75</output> m²
       </div>
 
       <!-- Indirizzo -->
@@ -94,7 +95,32 @@
         />
       </div>
 
-      
+      <!-- Latitudine -->
+      <div>
+        <label for="latitude" class="block text-sm font-medium text-gray-700">Latitudine</label>
+        <input
+          type="text"
+          id="latitude"
+          name="latitude"
+          placeholder="Inserisci la latitudine..."
+          class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
+          value="41.9028"
+        />
+      </div>
+
+      <!-- Longitudine -->
+      <div>
+        <label for="longitude" class="block text-sm font-medium text-gray-700">Longitudine</label>
+        <input
+          type="text"
+          id="longitude"
+          name="longitude"
+          placeholder="Inserisci la longitudine..."
+          class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
+          value="12.4964"
+        />
+      </div>
+
       <!-- Immagine -->
       <div>
         <label for="image" class="block text-sm font-medium text-gray-700">Immagine (URL/Path)</label>
