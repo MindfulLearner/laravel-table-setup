@@ -19,7 +19,7 @@
 
                 <!-- Cose del utente -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('apartments.indexUtente')" :active="request()->routeIs('apartments.indexUtente')">
+                    <x-nav-link :href="route('user.index')" :active="request()->routeIs('user.index')">
                         {{ __('indexUtente') }}
                     </x-nav-link>
                 </div>

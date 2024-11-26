@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\ApartmentController;
+use App\Http\Controllers\UserContentController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,15 +23,19 @@ Route::get('/', function () {
 
 Route::get('/dashboard', [ApartmentController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::resource('apartments', ApartmentController::class)->middleware(['auth', 'verified']);
 
-Route::get('/apartments/indexUtente', [ApartmentController::class, 'indexUtente'])->middleware(['auth', 'verified'])->name('apartments.indexUtente');
 
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::resource('apartments', ApartmentController::class)->middleware(['auth', 'verified']);
+
+    Route::resource('user', UserContentController::class)->middleware(['auth', 'verified']);
 });
 
 require __DIR__.'/auth.php';
