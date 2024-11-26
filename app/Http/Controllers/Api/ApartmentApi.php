@@ -112,4 +112,9 @@ class ApartmentApi extends Controller
             'message' => 'Apartment retrieved successfully'
         ]);
     }
+
+    public function indexUtente()
+    {
+        return view('apartments.indexUtente');
+    }
 }

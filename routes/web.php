@@ -18,9 +18,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+
 Route::get('/dashboard', [ApartmentController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::resource('apartments', ApartmentController::class)->middleware(['auth', 'verified']);
+
+Route::get('/apartments/indexUtente', [ApartmentController::class, 'indexUtente'])->middleware(['auth', 'verified'])->name('apartments.indexUtente');
 
 
 Route::middleware('auth')->group(function () {
