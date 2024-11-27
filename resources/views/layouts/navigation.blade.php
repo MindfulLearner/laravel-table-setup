@@ -46,16 +46,30 @@
                             {{ __('Profile') }}
                         </x-dropdown-link>
 
-                        <!-- Authentication -->
+                        <!-- Aggiungi un link al logout -->
+                        {{-- <x-dropdown-link :href="'http://192.168.1.101:5173'">
+                            {{ __('Vai a localhost') }}
+                        </x-dropdown-link> --}}
+
+                        <!-- link localhost -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
+                            <x-dropdown-link :href="'http://localhost:5173'">
+                                {{ __('logout') }}
+                            </x-dropdown-link>
+                        </form>
 
+
+                        <!-- normal one -->
+                        {{-- <form method="POST" action="{{ route('logout') }}">
+                            @csrf
                             <x-dropdown-link :href="route('logout')"
                                     onclick="event.preventDefault();
                                                 this.closest('form').submit();">
                                 {{ __('Log Out') }}
                             </x-dropdown-link>
-                        </form>
+                        </form> --}}
+
                     </x-slot>
                 </x-dropdown>
             </div>
