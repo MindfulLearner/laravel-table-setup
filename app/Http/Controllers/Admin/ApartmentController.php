@@ -35,6 +35,19 @@ class ApartmentController extends Controller
      */
     public function store(Request $request)
     {
+
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'rooms' => 'required|integer|min:1|max:10',
+            'beds' => 'required|integer|min:1|max:10',
+            'bathrooms' => 'required|integer|min:1|max:10',
+            'description' => 'required|string|max:255',
+            'address' => 'required|string|max:255',
+            // 'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'is_visible' => 'required|boolean',
+        ]);
+
+
         $user = Auth::user();
         $data = $request->all();
         $data['user_id'] = $user->id;
@@ -100,10 +113,12 @@ class ApartmentController extends Controller
         $infoArrayAddress['latitude'] = $response['results'][0]['position']['lat'];
         $infoArrayAddress['longitude'] = $response['results'][0]['position']['lon'];
         $infoArrayAddress['address'] = $response['results'][0]['address']['freeformAddress'];
+
         return $infoArrayAddress;
     }
-    public function getLatitude($indirizzo) {
+
+    public function controlIfAdressIsCorrect($indirizzo) {
+
     }
-    public function getLongitude($indirizzo) {
-    }
+
 }

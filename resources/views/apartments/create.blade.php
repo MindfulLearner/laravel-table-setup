@@ -3,6 +3,17 @@
 
 @section('content')
 <div class="max-w-3xl mx-auto bg-white shadow-lg rounded-lg p-8 mt-10">
+
+    @if ($errors->any())
+        <div class="bg-red-100 text-red-700 p-4 rounded-md mb-4">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
   <h1 class="text-2xl font-bold text-gray-800 mb-6 text-center">Crea un Nuovo Appartamento</h1>
   <form action="{{ route('apartments.store') }}" method="POST">
     @csrf
@@ -93,33 +104,12 @@
           required
           value="Via Roma, 123"
         />
+        <p id="address-result">
+            Cercavi l'indirizzo: <span id="address-result-text"></span>
+        </p>
       </div>
 
-      <!-- Latitudine -->
-      <div>
-        <label for="latitude" class="block text-sm font-medium text-gray-700">Latitudine</label>
-        <input
-          type="text"
-          id="latitude"
-          name="latitude"
-          placeholder="Inserisci la latitudine..."
-          class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
-          value="41.9028"
-        />
-      </div>
 
-      <!-- Longitudine -->
-      <div>
-        <label for="longitude" class="block text-sm font-medium text-gray-700">Longitudine</label>
-        <input
-          type="text"
-          id="longitude"
-          name="longitude"
-          placeholder="Inserisci la longitudine..."
-          class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
-          value="12.4964"
-        />
-      </div>
 
       <!-- Immagine -->
       <div>
@@ -137,7 +127,7 @@
 
       <!-- Visibilità -->
       <div class="flex items-center">
-        <input type="hidden" name="is_visible" value="0"> 
+        <input type="hidden" name="is_visible" value="0">
         <input type="checkbox" name="is_visible" id="is_visible" value="1" class="mr-2 h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring focus:ring-blue-200">
         <label for="is_visible" class="ml-2 text-sm font-medium text-gray-700">Visibile</label>
       </div>
@@ -171,4 +161,14 @@
     <p>Appartamento creato con successo!</p>
   </div>
 </div>
+
+<script>
+  document.getElementById('address').addEventListener('input', async function() {
+    const apiTomTomKey = "{{ env('API_TOMTOM_KEY') }}";
+    const url = "https://api.tomtom.com/search/2/geocode/" + encodeURIComponent(this.value) + ".json?key=" + apiTomTomKey + "&limit=1&countrySet=IT&language=it-IT";
+    const response = await fetch(url);
+    const data = await response.json();
+    document.getElementById('address-result-text').innerHTML = data['results'][0]['address']['freeformAddress'];
+  });
+</script>
 @endsection
