@@ -10,19 +10,26 @@
                     </a>
                 </div>
 
-                <!-- Navigation Links -->
+                {{-- <!-- Navigation Links -->
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                        {{ __('dashboard') }}
+                    </x-nav-link>
+                </div> --}}
+
+                {{-- dashboard con utente --}}
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('dashboard') }}
                     </x-nav-link>
                 </div>
 
-                <!-- Cose del utente -->
+                {{-- <!-- Cose del utente -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('user.index')" :active="request()->routeIs('user.index')">
                         {{ __('indexUtente') }}
                     </x-nav-link>
-                </div>
+                </div> --}}
 
             </div>
 

@@ -16,10 +16,16 @@ class ApartmentController extends Controller
      */
     public function index()
     {
-        $apartments = Apartment::all();
+        // $apartments = Apartment::all();
+        // $superId = Auth::user()->id;
+        // // query che prende tutti gli appartamenti dell'utente
+        // return view('apartments.index', compact('apartments', 'superId'));
+
+        // query che prende tutti gli appartamenti dell'utente
         $superId = Auth::user()->id;
         // query che prende tutti gli appartamenti dell'utente
-        return view('apartments.index', compact('apartments', 'superId'));
+        $apartments = Apartment::where('user_id', $superId)->get();
+         return view('apartments.index', compact('superId', 'apartments'));
     }
 
     /**
