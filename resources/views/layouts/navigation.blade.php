@@ -5,8 +5,10 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
+                    <a href="http://localhost:5173">
+                        <div class="text-teal-600 text-2xl font-bold">
+                              MilanBnB
+                          </div>
                     </a>
                 </div>
 
@@ -59,23 +61,23 @@
                         </x-dropdown-link> --}}
 
                         <!-- link localhost -->
-                        <form method="POST" action="{{ route('logout') }}">
+                        {{-- <form method="POST" action="{{ route('logout') }}">
                             @csrf
                             <x-dropdown-link :href="'http://localhost:5173'">
                                 {{ __('logout') }}
                             </x-dropdown-link>
-                        </form>
+                        </form> --}}
 
 
                         <!-- normal one -->
-                        {{-- <form method="POST" action="{{ route('logout') }}">
+                        <form method="POST" action="{{ route('logout') }}">
                             @csrf
                             <x-dropdown-link :href="route('logout')"
                                     onclick="event.preventDefault();
                                                 this.closest('form').submit();">
                                 {{ __('Log Out') }}
                             </x-dropdown-link>
-                        </form> --}}
+                        </form>
 
                     </x-slot>
                 </x-dropdown>
