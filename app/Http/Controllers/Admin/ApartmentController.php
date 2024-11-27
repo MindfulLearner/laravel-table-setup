@@ -54,6 +54,7 @@ class ApartmentController extends Controller
         ]);
 
 
+
         $user = Auth::user();
         $data = $request->all();
         $data['user_id'] = $user->id;
@@ -61,6 +62,13 @@ class ApartmentController extends Controller
         $data['address'] = $arrayAddress['address'];
         $data['latitude'] = $arrayAddress['latitude'];
         $data['longitude'] = $arrayAddress['longitude'];
+
+        //  controllo se l'indirizzo esiste già nel database
+        $existingApartment = Apartment::where('address', $data['address'])->first();
+        if ($existingApartment) {
+            return redirect()->back()->withErrors(['address' => 'Questo indirizzo esiste già nel database.']);
+        }
+
         Apartment::create($data);
         return redirect()->route('dashboard');
     }
