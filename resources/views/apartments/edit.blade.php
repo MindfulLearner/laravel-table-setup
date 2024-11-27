@@ -116,15 +116,10 @@
 
         <!-- Visibilità -->
         <div class="flex items-center">
-          <input
-            id="is_visible"
-            type="checkbox"
-            name="is_visible"
-            {{ $apartment->is_visible ? 'checked' : '' }}
-            class="h-4 w-4 text-yellow-500 focus:ring-yellow-500 border-gray-300 rounded"
-          />
-          <label for="is_visible" class="ml-2 text-sm font-medium text-gray-700">Visibile</label>
-        </div>
+            <input type="hidden" name="is_visible" value="0">
+            <input type="checkbox" name="is_visible" id="is_visible" value="1" class="mr-2 h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring focus:ring-blue-200">
+            <label for="is_visible" class="ml-2 text-sm font-medium text-gray-700">Visibile</label>
+          </div>
 
         <!-- Pulsante Submit -->
         <div class="text-center">
