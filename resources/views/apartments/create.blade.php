@@ -27,7 +27,6 @@
           placeholder="Es. Appartamento in Centro"
           class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
           required
-          value="Appartamento in Centro"
         />
       </div>
 
@@ -42,7 +41,6 @@
             placeholder="Es. 3"
             class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
             required
-            value="3"
           />
         </div>
 
@@ -56,7 +54,6 @@
             placeholder="Es. 2"
             class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
             required
-            value="2"
           />
         </div>
 
@@ -70,7 +67,6 @@
             placeholder="Es. 1"
             class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
             required
-            value="1"
           />
         </div>
       </div>
@@ -84,7 +80,6 @@
           name="square_meters"
           min="20"
           max="200"
-          value="75"
           class="mt-1 w-full"
           oninput="this.nextElementSibling.value = this.value"
         />
@@ -101,7 +96,6 @@
           placeholder="Es. Via Roma, 123"
           class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
           required
-          value="Via Roma, 123"
         />
         <p id="address-result">
             Cercavi l'indirizzo: <span id="address-result-text"></span>
@@ -118,7 +112,6 @@
           placeholder="Es. https://example.com/image.jpg"
           class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
           required
-          value="https://example.com/image.jpg"
         />
       </div>
 
@@ -138,7 +131,7 @@
           placeholder="Es. Appartamento luminoso e spazioso nel cuore della città."
           class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
           required
-        >Appartamento luminoso e spazioso nel cuore della città.</textarea>
+        ></textarea>
       </div>
 
       <!-- Pulsante Submit -->
@@ -153,10 +146,6 @@
     </div>
   </form>
 
-  <!-- Messaggio di successo -->
-  <div class="mt-6 p-4 bg-green-100 text-green-700 rounded-md">
-    <p>Appartamento creato con successo!</p>
-  </div>
 </div>
 
 <script>
