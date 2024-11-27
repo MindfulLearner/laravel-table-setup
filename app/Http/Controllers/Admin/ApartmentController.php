@@ -17,8 +17,9 @@ class ApartmentController extends Controller
     public function index()
     {
         $apartments = Apartment::all();
-
-        return view('apartments.index', compact('apartments'));
+        $superId = Auth::user()->id;
+        // query che prende tutti gli appartamenti dell'utente
+        return view('apartments.index', compact('apartments', 'superId'));
     }
 
     /**

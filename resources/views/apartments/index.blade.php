@@ -6,7 +6,9 @@
       <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
           <div class="p-6 text-gray-900 dark:text-red-200">
               {{ __("You're logged in!") }}
-
+              <a href="{{ route('apartments.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded mr-2">
+                Crea Appartamento
+              </a>
 
               <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-3">
               @foreach ($apartments as $apartment)
@@ -32,6 +34,18 @@
                   <p><strong>Coordinate:</strong> {{ $apartment->latitude }}, {{ $apartment->longitude }}</p>
                 </div>
                 <div class="mt-4 flex justify-between">
+                  @if ($apartment->user_id === $superId)
+                    <a href="{{ route('apartments.edit', $apartment->id) }}" class="bg-blue-500 text-white px-4 py-2 rounded mr-2">
+                      Modifica
+                    </a>
+                    <form action="{{ route('apartments.destroy', $apartment->id) }}" method="POST" class="inline">
+                      @csrf
+                      @method('DELETE')
+                      <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded deleteButton">
+                        Cancella
+                      </button>
+                    </form>
+                  @endif
                   <a href="{{ route('apartments.show', $apartment->id) }}" class="bg-green-500 text-white px-4 py-2 rounded">
                     Vai
                   </a>
@@ -40,6 +54,18 @@
             </div>
               @endforeach
               </div>
+              <script>
+                // Logica conferma cancellazione
+                document.querySelectorAll(".deleteButton").forEach(function(button) {
+                    button.addEventListener("click", function(event) {
+                        if (!confirm("Sei sicuro di voler cancellare questo appartamento?")) {
+                            event.preventDefault();
+                            // Manda a url di cancellazione
+                            // Esce solo se si clicca cancel
+                        }
+                    });
+                });
+            </script>
           </div>
       </div>
   </div>

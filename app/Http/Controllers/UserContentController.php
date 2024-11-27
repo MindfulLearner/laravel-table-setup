@@ -13,10 +13,10 @@ class UserContentController extends Controller
      */
     public function index()
     {
-       $id = Auth::user()->id;
+       $superId = Auth::user()->id;
        // query che prende tutti gli appartamenti dell'utente
-       $apartments = Apartment::where('user_id', $id)->get();
-        return view('privateauth.indexUtente', compact('id', 'apartments'));
+       $apartments = Apartment::where('user_id', $superId)->get();
+        return view('privateauth.indexUtente', compact('superId', 'apartments'));
     }
 
 
