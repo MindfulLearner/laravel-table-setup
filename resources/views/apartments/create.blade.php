@@ -1,4 +1,3 @@
-<!-- Start of Selection -->
 @extends('dashboard')
 
 @section('content')
@@ -25,7 +24,7 @@
           type="text"
           id="title"
           name="title"
-          placeholder="Inserisci un titolo..."
+          placeholder="Es. Appartamento in Centro"
           class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
           required
           value="Appartamento in Centro"
@@ -40,7 +39,7 @@
             type="number"
             id="rooms"
             name="rooms"
-            placeholder="Inserisci il numero di stanze..."
+            placeholder="Es. 3"
             class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
             required
             value="3"
@@ -54,7 +53,7 @@
             type="number"
             id="beds"
             name="beds"
-            placeholder="Inserisci il numero di letti..."
+            placeholder="Es. 2"
             class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
             required
             value="2"
@@ -68,7 +67,7 @@
             type="number"
             id="bathrooms"
             name="bathrooms"
-            placeholder="Inserisci il numero di bagni..."
+            placeholder="Es. 1"
             class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
             required
             value="1"
@@ -99,7 +98,7 @@
           type="text"
           id="address"
           name="address"
-          placeholder="Inserisci l'indirizzo..."
+          placeholder="Es. Via Roma, 123"
           class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
           required
           value="Via Roma, 123"
@@ -109,8 +108,6 @@
         </p>
       </div>
 
-
-
       <!-- Immagine -->
       <div>
         <label for="image" class="block text-sm font-medium text-gray-700">Immagine (URL/Path)</label>
@@ -118,7 +115,7 @@
           type="text"
           id="image"
           name="image"
-          placeholder="Inserisci l'URL dell'immagine..."
+          placeholder="Es. https://example.com/image.jpg"
           class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
           required
           value="https://example.com/image.jpg"
@@ -138,7 +135,7 @@
         <textarea
           id="description"
           name="description"
-          placeholder="Inserisci una descrizione dell'appartamento..."
+          placeholder="Es. Appartamento luminoso e spazioso nel cuore della città."
           class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
           required
         >Appartamento luminoso e spazioso nel cuore della città.</textarea>

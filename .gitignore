@@ -19,3 +19,5 @@ yarn-error.log
 
 docker-compose.yml
 Dockerfile
+
+mysql_data
