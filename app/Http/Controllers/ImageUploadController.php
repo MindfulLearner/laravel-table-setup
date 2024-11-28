@@ -20,6 +20,22 @@ class ImageUploadController extends Controller
     }
 
     /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $image_string)
+    {
+
+        $path = "images/$image_string"; // idfunziona!!!
+
+        if (Storage::disk('s3')->exists($path)) {
+            Storage::disk('s3')->delete($path);
+            return response()->json(['message' => 'Image deleted successfully']);
+        }
+
+        return response()->json(['message' => 'Image not found'], 404);
+    }
+
+    /**
      * Display a listing of the resource.
      */
     public function index()
@@ -70,11 +86,5 @@ class ImageUploadController extends Controller
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
+
 }

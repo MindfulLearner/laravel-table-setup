@@ -22,6 +22,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 //upload
 Route::post('/upload', [ImageUploadController::class, '__invoke'])->name('apartments.upload');
+//delete
+Route::delete('/delete/{image_string}', [ImageUploadController::class, 'destroy'])->name('apartments.destroy');
 
 // Read
 Route::get('/apartments', [ApartmentApi::class, 'index']);
