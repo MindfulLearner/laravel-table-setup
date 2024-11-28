@@ -17,7 +17,7 @@
     <body class="font-sans text-gray-900 antialiased">
         <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100 dark:bg-gray-900">
             <div class="shrink-0 flex items-center">
-                <a href="http://192.168.1.101:5173">
+                <a href="http://localhost:5173">
                     <div class="text-teal-600 text-2xl font-bold">
                           MilanBnB
                       </div>
