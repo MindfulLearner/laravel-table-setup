@@ -102,6 +102,27 @@
         </p>
       </div>
 
+         <!-- Servizi -->
+         <div>
+            <label for="services" class="block text-sm font-medium text-gray-700">Servizi</label>
+            <div class="space-y-2">
+              @foreach ($services as $service)
+                <div class="flex items-center">
+                  <input type="checkbox" id="service_{{ $service->id }}" name="services[]" value="{{ $service->id }}" class="mr-2 h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring focus:ring-blue-200">
+                  <label for="service_{{ $service->id }}" class="ml-2 text-sm font-medium text-gray-700">{{ $service->name }}</label>
+                </div>
+              @endforeach
+              <br>
+              <label for="sponsorships" class="block text-sm font-medium text-gray-700">Sponsorizzazioni</label>
+              @foreach ($sponsorships as $sponsorship)
+                <div class="flex items-center">
+                  <input type="radio" id="sponsorship_{{ $sponsorship->id }}" name="sponsorship" value="{{ $sponsorship->id }}" class="mr-2 h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring focus:ring-blue-200">
+                  <label for="sponsorship_{{ $sponsorship->id }}" class="ml-2 text-sm font-medium text-gray-700">{{ $sponsorship->name }}</label>
+                </div>
+              @endforeach
+            </div>
+          </div>
+
       <!-- Immagine -->
       <div>
         <label for="image" class="block text-sm font-medium text-gray-700">Immagine (URL/Path)</label>

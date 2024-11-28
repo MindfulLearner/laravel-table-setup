@@ -8,7 +8,8 @@ use App\Models\Apartment;
 use Illuminate\Auth\Events\Validated;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
-
+use App\Models\Sponsorship;
+use App\Models\Service;
 class ApartmentController extends Controller
 {
     /**
@@ -24,7 +25,14 @@ class ApartmentController extends Controller
         // query che prende tutti gli appartamenti dell'utente
         $superId = Auth::user()->id;
         // query che prende tutti gli appartamenti dell'utente
-        $apartments = Apartment::where('user_id', $superId)->get();
+        $apartments = Apartment::where('user_id', $superId)->with('sponsorships', 'services')->get();
+
+        // passiamo i dati sponsorship che tipologie di sponsorizzazione hanno
+        // Modifica per ottenere solo le sponsorizzazioni legate agli appartamenti dell'utente
+
+
+
+
          return view('apartments.index', compact('superId', 'apartments'));
     }
 
@@ -33,7 +41,9 @@ class ApartmentController extends Controller
      */
     public function create()
     {
-        return view('apartments.create');
+        $services = Service::all();
+        $sponsorships = Sponsorship::all();
+        return view('apartments.create', compact('services', 'sponsorships'));
     }
 
     /**
@@ -54,7 +64,6 @@ class ApartmentController extends Controller
         ]);
 
 
-
         $user = Auth::user();
         $data = $request->all();
         $data['user_id'] = $user->id;
@@ -69,7 +78,10 @@ class ApartmentController extends Controller
             return redirect()->back()->withErrors(['address' => 'Questo indirizzo esiste già nel database.']);
         }
 
-        Apartment::create($data);
+        // creo l'appartamento
+        $apartment = Apartment::create($data);
+        $apartment->services()->sync($data['services']);
+        $apartment->sponsorships()->sync($data['sponsorship']);
         return redirect()->route('dashboard');
     }
 
@@ -80,7 +92,11 @@ class ApartmentController extends Controller
     {
 
 
+
         $apartment = Apartment::findOrFail($id);
+        $services = Service::all();
+        $sponsorships = Sponsorship::all();
+
         return view('apartments.show', compact('apartment'));
     }
 
@@ -89,8 +105,15 @@ class ApartmentController extends Controller
      */
     public function edit(string $id)
     {
+
+        $services = Service::all();
+        $sponsorships = Sponsorship::all();
+
+
         $apartment = Apartment::findOrFail($id);
-        return view('apartments.edit', compact('apartment'));
+
+
+        return view('apartments.edit', compact('apartment', 'services', 'sponsorships'));
     }
 
     /**
@@ -98,14 +121,13 @@ class ApartmentController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        try {
-            $data = $request->all();
-            $apartment = Apartment::findOrFail($id);
-            $apartment->update($data);
-            return redirect()->route('dashboard')->with('success', 'Appartamento aggiornato con successo');
-        } catch (\Exception $e) {
-            throw new \Exception('Error updating apartment: ' . $e->getMessage());
-        }
+        $data = $request->all();
+        $apartment = Apartment::findOrFail($id);
+        $apartment->update($data);
+        $apartment->services()->sync($data['services']);
+        $apartment->sponsorships()->sync($data['sponsorship']);
+        return redirect()->route('dashboard')->with('success', 'Appartamento aggiornato con successo');
+
     }
 
     /**

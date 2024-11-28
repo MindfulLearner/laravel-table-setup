@@ -17,12 +17,10 @@ class ApartmentSponsorshipSeeder extends Seeder
         $sponsorships = Sponsorship::all();
 
         foreach ($apartments as $apartment) {
-            // check if the apartment has a sponsorship
-            $randomNumber = rand(0, 3);
             // random random sponsorships
             $randomSponsorships = rand(1, 4);
 
-            if ($randomNumber > 0) {
+            if ($randomSponsorships > 0) {
                 $selectedSponsorship = $sponsorships->where('id', $randomSponsorships)->first();
 
                 if ($selectedSponsorship) {

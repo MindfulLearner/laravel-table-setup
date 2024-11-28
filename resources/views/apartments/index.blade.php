@@ -32,6 +32,18 @@
                   <p><strong>Metri Quadri:</strong> {{ $apartment->square_meters }} m²</p>
                   <p><strong>Indirizzo:</strong> {{ $apartment->address }}</p>
                   <p><strong>Coordinate:</strong> {{ $apartment->latitude }}, {{ $apartment->longitude }}</p>
+                  <p><strong>Servizi:</strong>
+                      <span class="text-gray-700">
+                          @foreach ($apartment->services->sortBy('id') as $service)
+                              {{ $service->name }}@if (!$loop->last), @endif
+                          @endforeach
+                      </span>
+                  </p>
+                  <p>
+                      @foreach ($apartment->sponsorships as $sponsorship)
+                          <span class="text-green-500 font-semibold">Sponsorizzato: {{ $sponsorship->name }}</span>@if (!$loop->last)<span class="text-gray-500"> | </span>@endif
+                      @endforeach
+                  </p>
                 </div>
                 <div class="mt-4 flex justify-between">
                   @if ($apartment->user_id === $superId)

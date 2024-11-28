@@ -10,6 +10,7 @@ class Service extends Model
 {
     use HasFactory;
 
+
     public function apartments(): BelongsToMany
     {
         return $this->belongsToMany(Apartment::class);
