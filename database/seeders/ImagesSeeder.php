@@ -72,6 +72,7 @@ class ImagesSeeder extends Seeder
             for ($i = 0; $i < rand(1, 5); $i++) {
                 Image::create([
                     'image_path' => $faker->randomElement($apartmentImages),
+                    'description' => $faker->sentence(),
                     'apartment_id' => $apartmentId,
                 ]);
             }
