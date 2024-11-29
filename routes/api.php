@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ApartmentApi;
+use App\Http\Controllers\ImageUploadController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -18,6 +19,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+
+//upload
+Route::post('/upload', [ImageUploadController::class, '__invoke'])->name('apartments.upload');
+//delete
+Route::delete('/delete/{image_string}', [ImageUploadController::class, 'destroy'])->name('apartments.destroy');
 
 // Read
 Route::get('/apartments', [ApartmentApi::class, 'index']);

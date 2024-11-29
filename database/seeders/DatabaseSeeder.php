@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             // Separation
             ViewsTableSeeder::class,
             MessagesTableSeeder::class,
+            ImagesSeeder::class,
         ]);
     }
 }
