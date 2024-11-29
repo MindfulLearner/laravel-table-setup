@@ -247,6 +247,7 @@
   });
   /**
    * Funzione per resetare l'immagine copertina
+   * sembra ridondante ma l'ho aggiunto perche altrimenti se io apro esplorarisorse per caricare immagine e poi rimane a caso
    */
   function resetFileInput() {
     document.getElementById('cover_image').value = '';
@@ -287,6 +288,11 @@
     });
     event.target.value = '';
   }
+
+  /**
+   * Funzione per vedere le immagini non copertina
+   */
+
 
 
 
