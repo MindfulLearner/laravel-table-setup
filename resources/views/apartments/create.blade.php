@@ -14,7 +14,7 @@
     @endif
 
   <h1 class="text-2xl font-bold text-gray-800 mb-6 text-center">Crea un Nuovo Appartamento</h1>
-  <form action="{{ route('apartments.store') }}" method="POST">
+  <form action="{{ route('apartments.store') }}" enctype="multipart/form-data" method="POST">
     @csrf
     <div class="grid grid-cols-1 gap-6">
       <!-- Titolo -->
@@ -24,7 +24,7 @@
           type="text"
           id="title"
           name="title"
-          placeholder="Es. Appartamento in Centro"
+          value="Appartamento in Centro"
           class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
           required
         />
@@ -38,7 +38,7 @@
             type="number"
             id="rooms"
             name="rooms"
-            placeholder="Es. 3"
+            value="3"
             class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
             required
           />
@@ -51,7 +51,7 @@
             type="number"
             id="beds"
             name="beds"
-            placeholder="Es. 2"
+            value="2"
             class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
             required
           />
@@ -64,7 +64,7 @@
             type="number"
             id="bathrooms"
             name="bathrooms"
-            placeholder="Es. 1"
+            value="1"
             class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
             required
           />
@@ -80,6 +80,7 @@
           name="square_meters"
           min="20"
           max="200"
+          value="75"
           class="mt-1 w-full"
           oninput="this.nextElementSibling.value = this.value"
         />
@@ -93,7 +94,7 @@
           type="text"
           id="address"
           name="address"
-          placeholder="Es. Via Roma, 123"
+          value="Via Roma, 123"
           class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
           required
         />
@@ -123,23 +124,45 @@
             </div>
           </div>
 
-      <!-- Immagine -->
+      <!-- Immagine Copertina -->
       <div>
-        <label for="image" class="block text-sm font-medium text-gray-700">Immagine (URL/Path)</label>
+        <label for="cover_image" class="block text-sm font-medium text-gray-700">Carica Immagine di copertina (Upload)</label>
         <input
-          type="text"
-          id="image"
-          name="image"
-          placeholder="Es. https://example.com/image.jpg"
+          type="file"
+          id="cover_image"
+          name="cover_image"
+          accept="image/*"
           class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
           required
+          onchange="previewImage(event)"
         />
+      </div>
+      <div>
+        <img id="image-preview" alt="Immagine Copertina" class="w-1/2 h-auto" style="display: none;">
+        <button id="remove-image-button" class="bg-red-500 text-white px-4 py-2 rounded-md shadow hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2" style="display: none;" onclick="resetFileInput()">Rimuovi Immagine</button>
+      </div>
+
+      <!-- carica altre immagini non copertina -->
+      <div>
+        <label for="other_images" class="block text-sm font-medium text-gray-700">Carica altre immagini (Upload)</label>
+        <input
+          type="file"
+          id="other_images"
+          name="other_images"
+          accept="image/*"
+          class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
+          multiple
+          onchange="previewListImage(event)"
+        />
+      </div>
+      <div id="image-list-preview-container">
+        <!--  chiama previewListImage() e verra caricato qui -->
       </div>
 
       <!-- Visibilità -->
       <div class="flex items-center">
         <input type="hidden" name="is_visible" value="0">
-        <input type="checkbox" name="is_visible" id="is_visible" value="1" class="mr-2 h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring focus:ring-blue-200">
+        <input type="checkbox" name="is_visible" id="is_visible" value="1" class="mr-2 h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring focus:ring-blue-200" checked>
         <label for="is_visible" class="ml-2 text-sm font-medium text-gray-700">Visibile</label>
       </div>
 
@@ -152,7 +175,7 @@
           placeholder="Es. Appartamento luminoso e spazioso nel cuore della città."
           class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
           required
-        ></textarea>
+        >Appartamento luminoso e spazioso nel cuore della città.</textarea>
       </div>
 
       <!-- Pulsante Submit -->
@@ -177,5 +200,130 @@
     const data = await response.json();
     document.getElementById('address-result-text').innerHTML = data['results'][0]['address']['freeformAddress'];
   });
+
+  /**
+   * Funzione per vedere l'immagine copertina
+   */
+  function previewImage(event) {
+    const imagePreview = document.getElementById('image-preview');
+    const file = event.target.files[0];
+    const reader = new FileReader();
+
+    reader.onload = function(e) {
+      imagePreview.src = e.target.result;
+      imagePreview.style.display = 'block';
+
+      if (imagePreview.style.display === 'block') {
+        document.getElementById('remove-image-button').style.display = 'block';
+      }
+    }
+    if (file) {
+      reader.readAsDataURL(file);
+    } else {
+      imagePreview.src = '';
+      imagePreview.style.display = 'none';
+    }
+  }
+  /**
+   * Funzione per rimuovere l'immagine copertina
+   */
+  document.getElementById('remove-image-button').addEventListener('click', function() {
+    event.preventDefault();
+    document.getElementById('image-preview').src = '';
+    document.getElementById('image-preview').style.display = 'none';
+    document.getElementById('remove-image-button').style.display = 'none';
+  });
+  /**
+   * Funzione per resetare l'immagine copertina
+   */
+  function resetFileInput() {
+    document.getElementById('cover_image').value = '';
+    document.getElementById('image-preview').src = '';
+    document.getElementById('image-preview').style.display = 'none';
+    document.getElementById('remove-image-button').style.display = 'none';
+  }
+
+
+
+
+
+  /**
+   * Funzione per vedere le immagini non copertina
+   */
+  function previewListImage(event) {
+    const imageListPreviewContainer = document.getElementById('image-list-preview-container');
+    const files = event.target.files;
+
+    // uso un array per salvare le immagini esistenti
+    const existingImages = Array.from(imageListPreviewContainer.children).map(container => container.querySelector('img').src);
+
+    // itera su ciascun file selezionato
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      const reader = new FileReader();
+
+      // quando il file è caricato, crea un'anteprima dell'immagine
+      reader.onload = function(e) {
+        // crea un contenitore per l'immagine
+        const imgContainer = document.createElement('div');
+        imgContainer.classList.add('inline-block', 'm-2');
+
+        // crea l'elemento immagine e impostane la sorgente
+        const img = document.createElement('img');
+        img.src = e.target.result;
+        img.classList.add('w-1/4', 'h-auto');
+
+        // Controlla se l'immagine è già presente
+        if (!existingImages.includes(img.src)) {
+          // crea un pulsante per rimuovere l'immagine
+          const removeButton = document.createElement('button');
+          removeButton.textContent = 'Rimuovi';
+
+          // aggiungi un evento al pulsante per rimuovere l'immagine dal contenitore
+          removeButton.onclick = function() {
+            imgContainer.remove(); // rimuovi il contenitore dell'immagine
+            const dataTransfer = new DataTransfer(); // crea un nuovo oggetto dataTransfer
+            // aggiungi i file rimanenti all'oggetto DataTransfer
+            for (let j = 0; j < files.length; j++) {
+              if (j !== i) {
+                dataTransfer.items.add(files[j]);
+              }
+            }
+            // aggiorna l'input file con i file rimanenti
+            document.getElementById('other_images').files = dataTransfer.files;
+          };
+
+          // aggiungi l'immagine e il pulsante al contenitore
+          imgContainer.appendChild(img);
+          imgContainer.appendChild(removeButton);
+          // aggiungi il contenitore all'anteprima delle immagini
+          imageListPreviewContainer.appendChild(imgContainer);
+        }
+      }
+
+      // se il file esiste, inizia a leggerlo come URL di dati
+      if (file) {
+        reader.readAsDataURL(file);
+      }
+    }
+
+    // aggiungi le immagini esistenti all'input file
+    existingImages.forEach(src => {
+      const imgContainer = document.createElement('div');
+      imgContainer.classList.add('inline-block', 'm-2');
+
+      const img = document.createElement('img');
+      img.src = src;
+      img.classList.add('w-1/4', 'h-auto');
+
+      // aggiungi l'immagine esistente al contenitore
+      imgContainer.appendChild(img);
+      // aggiungi il contenitore all'anteprima delle immagini
+      imageListPreviewContainer.appendChild(imgContainer);
+    });
+  }
+
+
+
 </script>
 @endsection

@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use App\Models\Sponsorship;
 use App\Models\Service;
+use App\Models\Image;
+use Illuminate\Support\Facades\Storage;
+
 class ApartmentController extends Controller
 {
     /**
@@ -25,7 +28,7 @@ class ApartmentController extends Controller
         // query che prende tutti gli appartamenti dell'utente
         $superId = Auth::user()->id;
         // query che prende tutti gli appartamenti dell'utente
-        $apartments = Apartment::where('user_id', $superId)->with('sponsorships', 'services')->get();
+        $apartments = Apartment::where('user_id', $superId)->with('sponsorships', 'services', 'images')->get();
 
         // passiamo i dati sponsorship che tipologie di sponsorizzazione hanno
         // Modifica per ottenere solo le sponsorizzazioni legate agli appartamenti dell'utente
@@ -52,31 +55,38 @@ class ApartmentController extends Controller
     public function store(Request $request)
     {
 
+        $request->file('cover_image');
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'rooms' => 'required|integer|min:1|max:10',
             'beds' => 'required|integer|min:1|max:10',
             'bathrooms' => 'required|integer|min:1|max:10',
+            'services' => 'required|array',
+            'sponsorship' => 'required|integer',
             'description' => 'required|string|max:255',
+            'cover_image' => 'required|image|mimes:jpeg,jpg,png,gif,svg|max:2048',
             'address' => 'required|string|max:255',
-            // 'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'is_visible' => 'required|boolean',
         ]);
 
+        $existingApartment = Apartment::where('address', $request->address)->first();
+        if ($existingApartment) {
+            return redirect()->back()->withErrors(['address' => 'Questo indirizzo esiste già nel database.']);
+        }
+
+        $imageUrl = $this->addImage($request->file('cover_image'));
 
         $user = Auth::user();
         $data = $request->all();
         $data['user_id'] = $user->id;
+        $data['cover_image'] = $imageUrl;
         $arrayAddress = $this->getAddress($data['address']);
         $data['address'] = $arrayAddress['address'];
         $data['latitude'] = $arrayAddress['latitude'];
         $data['longitude'] = $arrayAddress['longitude'];
 
         //  controllo se l'indirizzo esiste già nel database
-        $existingApartment = Apartment::where('address', $data['address'])->first();
-        if ($existingApartment) {
-            return redirect()->back()->withErrors(['address' => 'Questo indirizzo esiste già nel database.']);
-        }
+
 
         // creo l'appartamento
         $apartment = Apartment::create($data);
@@ -96,8 +106,9 @@ class ApartmentController extends Controller
         $apartment = Apartment::findOrFail($id);
         $services = Service::all();
         $sponsorships = Sponsorship::all();
+        $images = Image::where('apartment_id', $id)->get();
 
-        return view('apartments.show', compact('apartment'));
+        return view('apartments.show', compact('apartment', 'services', 'sponsorships', 'images'));
     }
 
     /**
@@ -136,6 +147,15 @@ class ApartmentController extends Controller
     public function destroy(string $id)
     {
         $apartment = Apartment::findOrFail($id);
+
+
+        $urlCheck = "https://mybucketlaravel.s3.eu-west-3.amazonaws.com/";
+
+        if (strpos($apartment->cover_image, $urlCheck) !== false) {
+            $this->deleteImage($apartment->cover_image);
+        }
+
+
         $apartment->delete();
         return redirect()->route('dashboard');
     }
@@ -153,8 +173,29 @@ class ApartmentController extends Controller
         return $infoArrayAddress;
     }
 
-    public function controlIfAdressIsCorrect($indirizzo) {
 
+
+    public function deleteImage($image_string) {
+        $url = $image_string;
+        $parts = explode('/images/', $url);
+        $imagePath = '/images/' . $parts[1];
+
+        if (Storage::disk('s3')->exists($imagePath)) {
+            Storage::disk('s3')->delete($imagePath);
+            return response()->json(['message' => 'Image deleted successfully']);
+        }
+
+        return response()->json(['message' => 'Image not found'], 404);
     }
+
+    public function addImage($image_string) {
+        $path = $image_string->storePublicly('images');
+        $imageUrl = "https://mybucketlaravel.s3.eu-west-3.amazonaws.com/$path";
+        return $imageUrl;
+    }
+
+
+
+
 
 }

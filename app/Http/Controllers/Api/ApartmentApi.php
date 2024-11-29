@@ -18,7 +18,7 @@ class ApartmentApi extends Controller
      */
     public function index()
     {
-        $apartments = Apartment::with('services', 'sponsorships')->get();
+        $apartments = Apartment::with('services', 'sponsorships', 'images')->get();
         return response()->json([
             'success' => true,
             'data' => $apartments,

@@ -2,16 +2,20 @@
 
 namespace Database\Seeders;
 
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Apartment;
+use App\Models\Image;
 use Faker\Generator as Faker;
-use Illuminate\Support\Facades\Http;
 
-class ApartmentsTableSeeder extends Seeder
+class ImagesSeeder extends Seeder
 {
+    /**
+     * Run the database seeds.
+     */
     public function run(Faker $faker): void
     {
-       $apartmentImages = [
+         $apartmentImages = [
             "https://images.pexels.com/photos/1643383/pexels-photo-1643383.jpeg",
             "https://images.pexels.com/photos/439391/pexels-photo-439391.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
             "https://images.pexels.com/photos/129494/pexels-photo-129494.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
@@ -61,56 +65,16 @@ class ApartmentsTableSeeder extends Seeder
             "https://images.pexels.com/photos/271800/pexels-photo-271800.jpeg"
           ];
 
+        foreach (Apartment::all() as $apartment) {
+            $apartmentId = $apartment->id;
 
-        for ($i = 0; $i < 50; $i++) {
-            $latitude = $this->createLatitude($faker);
-            $longitude = $this->createLongitude($faker);
-            $address = $this->findAdress($latitude, $longitude);
-            $apartment = [
-                'user_id' => $faker->numberBetween(1, 10),
-                'title' => 'Appartamento ' . ($i + 1),
-                'rooms' => $faker->numberBetween(1, 5),
-                'beds' => $faker->numberBetween(1, 5),
-                'bathrooms' => $faker->numberBetween(1, 3),
-                'square_meters' => $faker->numberBetween(30, 150),
-                'description' => $faker->paragraph,
-                'latitude' => $latitude,
-                'longitude' => $longitude,
-                'address' => $address,
-                'cover_image' => $apartmentImages[$faker->numberBetween(0, count($apartmentImages) - 1)],
-                'is_visible' => $faker->boolean,
-            ];
-
-
-            Apartment::create($apartment);
+            // create between 1 and 5 images for each apartment
+            for ($i = 0; $i < rand(1, 5); $i++) {
+                Image::create([
+                    'image_path' => $faker->randomElement($apartmentImages),
+                    'apartment_id' => $apartmentId,
+                ]);
+            }
         }
-
-    }
-
-    /**
-     * funzione che crea le coordinate intorno a Milano fake
-     * genera una latitudine casuale intorno a Milano (45.4642) con un raggio di 20 km
-     */
-    function createLatitude(Faker $faker) {
-        return $faker->randomFloat(6, 45.2642, 45.6642);
-    }
-    /**
-     * funzione che crea le coordinate intorno a Milano fake
-     * genera una longitudine casuale intorno a Milano (9.1918) con un raggio di 20 km
-     */
-    function createLongitude(Faker $faker) {
-        return $faker->randomFloat(6, 8.9900, 9.3900);
-    }
-    /**
-     * funzione che trova l'indirizzo a partire dalle coordinate
-     */
-    function findAdress($latitude, $longitude){
-        $apiTomTomKey = env('API_TOMTOM_KEY');
-        // delay per evitare di superare il limite di richieste al giorno
-        usleep(100000);
-        $response = Http::get('https://api.tomtom.com/search/2/reverseGeocode/' . $latitude . ',' . $longitude . '.json?key=' . $apiTomTomKey . '&language=it-IT');
-        $response = $response->json();
-        $freeFormAddress = $response['addresses'][0]['address']['freeformAddress'];
-        return $freeFormAddress;
     }
 }

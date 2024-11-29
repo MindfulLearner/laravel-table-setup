@@ -17,7 +17,7 @@
               x-show="isVisible"
             >
               <img
-                src="{{ $apartment->image }}"
+                src="{{ $apartment->cover_image }}"
                 alt="Property Image"
                 class="w-full h-48 object-cover"
               />
