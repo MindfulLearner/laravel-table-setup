@@ -150,13 +150,19 @@
           id="other_images"
           name="other_images"
           accept="image/*"
-          class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
+          class="hidden"
           multiple
           onchange="previewListImage(event)"
         />
+        <label for="other_images" class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500 cursor-pointer">
+          Seleziona immagini
+        </label>
       </div>
       <div id="image-list-preview-container">
         <!--  chiama previewListImage() e verra caricato qui -->
+        <div id="image-list-remove-button">
+            <!-- qui verra messo il bottone per rimuovere l'immagine -->
+        </div>
       </div>
 
       <!-- Visibilità -->
@@ -193,6 +199,10 @@
 </div>
 
 <script>
+
+  // 1. init globale reader per leggere le immagini
+  const reader = new FileReader();
+
   document.getElementById('address').addEventListener('input', async function() {
     const apiTomTomKey = "{{ env('API_TOMTOM_KEY') }}";
     const url = "https://api.tomtom.com/search/2/geocode/" + encodeURIComponent(this.value) + ".json?key=" + apiTomTomKey + "&limit=1&countrySet=IT&language=it-IT";
@@ -207,8 +217,16 @@
   function previewImage(event) {
     const imagePreview = document.getElementById('image-preview');
     const file = event.target.files[0];
-    const reader = new FileReader();
 
+
+    // 2. se c'è un file lo legge
+    if (file) {
+      reader.readAsDataURL(file);
+    } else {
+      imagePreview.src = '';
+      imagePreview.style.display = 'none';
+    }
+    // 3. reader completato ora mostra l'immagine
     reader.onload = function(e) {
       imagePreview.src = e.target.result;
       imagePreview.style.display = 'block';
@@ -216,12 +234,6 @@
       if (imagePreview.style.display === 'block') {
         document.getElementById('remove-image-button').style.display = 'block';
       }
-    }
-    if (file) {
-      reader.readAsDataURL(file);
-    } else {
-      imagePreview.src = '';
-      imagePreview.style.display = 'none';
     }
   }
   /**
@@ -244,10 +256,43 @@
     document.getElementById('remove-image-button').style.display = 'none';
   }
 
+  let files = [];
+  /**
+   * Funzione per vedere le immagini non copertina
+   */
+  function previewListImage(event) {
+    // container dove vengono mostrate le immagini
+    const imageListPreviewContainer = document.getElementById('image-list-preview-container');
+
+    // aggiungi i file all'array files
+    const newFiles = Array.from(event.target.files); // converti FileList in array
+    files.push(...newFiles); // Aggiungi i nuovi file all'array files
+    console.log(files);
+
+    imageListPreviewContainer.innerHTML = '';
+
+
+    // iteriamo su ogni file del fileList
+    files.forEach(file => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = function(e) {
+        console.log('singolo file', file);
+
+
+        const imagePreview = document.createElement('img');
+        imagePreview.src = e.target.result;
+        imagePreview.classList.add('w-1/2', 'h-auto');
+        imageListPreviewContainer.appendChild(imagePreview);
+      };
+    });
+    event.target.value = '';
+  }
 
   /**
    * Funzione per vedere le immagini non copertina
    */
+
 
 
 
