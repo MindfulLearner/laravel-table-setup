@@ -259,67 +259,70 @@
 
     // itera su ciascun file selezionato
     for (let i = 0; i < files.length; i++) {
-      const file = files[i];
-      const reader = new FileReader();
+        const file = files[i];
+        const reader = new FileReader();
 
-      // quando il file è caricato, crea un'anteprima dell'immagine
-      reader.onload = function(e) {
-        // crea un contenitore per l'immagine
-        const imgContainer = document.createElement('div');
-        imgContainer.classList.add('inline-block', 'm-2');
+        // quando il file è caricato, crea un'anteprima dell'immagine
+        reader.onload = function(e) {
+            // crea un contenitore per l'immagine
+            const imgContainer = document.createElement('div');
+            imgContainer.classList.add('inline-block', 'm-2');
 
-        // crea l'elemento immagine e impostane la sorgente
-        const img = document.createElement('img');
-        img.src = e.target.result;
-        img.classList.add('w-1/4', 'h-auto');
+            // crea l'elemento immagine e impostane la sorgente
+            const img = document.createElement('img');
+            img.src = e.target.result;
+            img.classList.add('w-1/4', 'h-auto');
 
-        // Controlla se l'immagine è già presente
-        if (!existingImages.includes(img.src)) {
-          // crea un pulsante per rimuovere l'immagine
-          const removeButton = document.createElement('button');
-          removeButton.textContent = 'Rimuovi';
+            // Controlla se l'immagine è già presente
+            if (!existingImages.includes(img.src)) {
+                // crea un pulsante per rimuovere l'immagine
+                const removeButton = document.createElement('button');
+                removeButton.textContent = 'Rimuovi';
 
-          // aggiungi un evento al pulsante per rimuovere l'immagine dal contenitore
-          removeButton.onclick = function() {
-            imgContainer.remove(); // rimuovi il contenitore dell'immagine
-            const dataTransfer = new DataTransfer(); // crea un nuovo oggetto dataTransfer
-            // aggiungi i file rimanenti all'oggetto DataTransfer
-            for (let j = 0; j < files.length; j++) {
-              if (j !== i) {
-                dataTransfer.items.add(files[j]);
-              }
+                // aggiungi un evento al pulsante per rimuovere l'immagine dal contenitore
+                removeButton.onclick = function() {
+                    imgContainer.remove(); // rimuovi il contenitore dell'immagine
+                    const dataTransfer = new DataTransfer(); // crea un nuovo oggetto dataTransfer
+                    // aggiungi i file rimanenti all'oggetto DataTransfer
+                    for (let j = 0; j < files.length; j++) {
+                        if (j !== i) {
+                            dataTransfer.items.add(files[j]);
+                        }
+                    }
+                    // aggiorna l'input file con i file rimanenti
+                    document.getElementById('other_images').files = dataTransfer.files;
+
+                    // Aggiorna l'array existingImages
+                    existingImages.splice(existingImages.indexOf(img.src), 1);
+                };
+
+                // aggiungi l'immagine e il pulsante al contenitore
+                imgContainer.appendChild(img);
+                imgContainer.appendChild(removeButton);
+                // aggiungi il contenitore all'anteprima delle immagini
+                imageListPreviewContainer.appendChild(imgContainer);
             }
-            // aggiorna l'input file con i file rimanenti
-            document.getElementById('other_images').files = dataTransfer.files;
-          };
-
-          // aggiungi l'immagine e il pulsante al contenitore
-          imgContainer.appendChild(img);
-          imgContainer.appendChild(removeButton);
-          // aggiungi il contenitore all'anteprima delle immagini
-          imageListPreviewContainer.appendChild(imgContainer);
         }
-      }
 
-      // se il file esiste, inizia a leggerlo come URL di dati
-      if (file) {
-        reader.readAsDataURL(file);
-      }
+        // se il file esiste, inizia a leggerlo come URL di dati
+        if (file) {
+            reader.readAsDataURL(file);
+        }
     }
 
     // aggiungi le immagini esistenti all'input file
     existingImages.forEach(src => {
-      const imgContainer = document.createElement('div');
-      imgContainer.classList.add('inline-block', 'm-2');
+        const imgContainer = document.createElement('div');
+        imgContainer.classList.add('inline-block', 'm-2');
 
-      const img = document.createElement('img');
-      img.src = src;
-      img.classList.add('w-1/4', 'h-auto');
+        const img = document.createElement('img');
+        img.src = src;
+        img.classList.add('w-1/4', 'h-auto');
 
-      // aggiungi l'immagine esistente al contenitore
-      imgContainer.appendChild(img);
-      // aggiungi il contenitore all'anteprima delle immagini
-      imageListPreviewContainer.appendChild(imgContainer);
+        // aggiungi l'immagine esistente al contenitore
+        imgContainer.appendChild(img);
+        // aggiungi il contenitore all'anteprima delle immagini
+        imageListPreviewContainer.appendChild(imgContainer);
     });
   }
 
