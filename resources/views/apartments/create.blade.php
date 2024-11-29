@@ -132,10 +132,13 @@
           id="cover_image"
           name="cover_image"
           accept="image/*"
-          class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
+          class="hidden"
           required
           onchange="previewImage(event)"
         />
+        <label for="cover_image" class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500 cursor-pointer">
+          Seleziona immagine
+        </label>
       </div>
       <div>
         <img id="image-preview" alt="Immagine Copertina" class="w-1/2 h-auto" style="display: none;">
@@ -256,6 +259,10 @@
     document.getElementById('remove-image-button').style.display = 'none';
   }
 
+
+
+  // FUNZIONI PER GESTIRE LE IMMAGINI NON COPERTINA
+
   let files = [];
   /**
    * Funzione per vedere le immagini non copertina
@@ -280,18 +287,35 @@
         console.log('singolo file', file);
 
 
+        // crea un elemento img e lo aggiunge al container
         const imagePreview = document.createElement('img');
         imagePreview.src = e.target.result;
         imagePreview.classList.add('w-1/2', 'h-auto');
+
+
+        // button per rimuovere l'immagine
+        const removeImageButton = document.createElement('button');
+        removeImageButton.textContent = 'Rimuovi';
+        removeImageButton.addEventListener('click', function(event) {
+          event.preventDefault();
+            var index = files.indexOf(file);
+            if (index > -1) {
+                files.splice(index, 1);
+            }
+          imageListPreviewContainer.removeChild(imagePreview);
+          imageListPreviewContainer.removeChild(removeImageButton);
+
+        });
+
+        // aggiungi l'immagine e il button al container
         imageListPreviewContainer.appendChild(imagePreview);
+        imageListPreviewContainer.appendChild(removeImageButton);
+
       };
     });
     event.target.value = '';
   }
 
-  /**
-   * Funzione per vedere le immagini non copertina
-   */
 
 
 
