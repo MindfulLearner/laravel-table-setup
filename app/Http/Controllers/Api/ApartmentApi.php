@@ -122,7 +122,7 @@ class ApartmentApi extends Controller
      */
     public function show($id)
     {
-        $apartment = Apartment::with('services', 'sponsorships')->find($id);
+        $apartment = Apartment::with('services', 'sponsorships', 'images')->find($id);
         return response()->json([
             'success' => true,
             'data' => $apartment,
