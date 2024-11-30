@@ -5,7 +5,7 @@
 
 <div class="max-w-3xl mx-auto bg-white shadow-lg rounded-lg p-8 mt-10">
     <h1 class="text-2xl font-bold text-gray-800 mb-6 text-center">Aggiorna Appartamento</h1>
-    <form action="{{ route('apartments.update', $apartment->id) }}" method="POST">
+    <form action="{{ route('apartments.update', $apartment->id) }}" method="POST" id="apartmentForm" enctype="multipart/form-data">
       @csrf
       @method('PUT')
       <div class="grid grid-cols-1 gap-6">
@@ -159,14 +159,10 @@
                                     alt="Immagine appartamento"
                                     class="w-full h-48 object-cover"
                                 />
-                                {{-- form per eliminare l'immagine --}}
-                                <form action="{{ route('apartments.destroyImage', $image->id) }}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button class="bg-red-500 text-white px-4 py-2 rounded-md shadow hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
-                                        Elimina
-                                    </button>
-                                </form>
+                                {{-- cacnella per eliminare l'immagine --}}
+                                <button type="button" class="bg-red-500 text-white px-4 py-2 rounded-md shadow hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2" onclick="deleteImage({{ $image->id }})">
+                                    Elimina
+                                </button>
                             </div>
                             <div class="p-4">
                                 <p class="text-sm text-gray-600 italic">{{ $image->description }}</p>
@@ -349,6 +345,29 @@ document.getElementById('image-group-container').addEventListener('click', funct
         rowToDelete.remove();
     }
 });
+
+function deleteImage(imageId) {
+    if (confirm("sei sicuro di voler eliminare questa immagine?")) {
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = `/images/${imageId}`;
+
+        const csrfToken = document.createElement('input');
+        csrfToken.type = 'hidden';
+        csrfToken.name = '_token';
+        csrfToken.value = '{{ csrf_token() }}';
+
+        const methodField = document.createElement('input');
+        methodField.type = 'hidden';
+        methodField.name = '_method';
+        methodField.value = 'DELETE';
+
+        form.appendChild(csrfToken);
+        form.appendChild(methodField);
+        document.body.appendChild(form);
+        form.submit();
+    }
+}
 
   </script>
 @endsection

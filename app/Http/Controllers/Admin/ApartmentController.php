@@ -150,8 +150,34 @@ class ApartmentController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $data = $request->all();
+
+        $cover_image = $request->file('cover_image');
+        $images = $request->file('images');
+
+
         $apartment = Apartment::findOrFail($id);
+
+        $data = $request->all();
+        if ($cover_image) {
+            if (strpos($apartment->cover_image, "https://mybucketlaravel.s3.eu-west-3.amazonaws.com/") !== false) {
+                $this->deleteImage($apartment->cover_image);
+            }
+            $imageUrl = $this->addImage($cover_image);
+            $data['cover_image'] = $imageUrl;
+        }
+
+        $apartment = Apartment::findOrFail($id);
+        if ($images) {
+            for ($i = 0; $i < count($images); $i++) {
+                $image = $images[$i];
+                $image_description =$request->input('image_description')[$i];
+                $imageUrl = $this->addImage($image);
+                $apartment->images()->create([
+                    'image_path' => $imageUrl,
+                    'description' => $image_description,
+                ]);
+            }
+        }
         $apartment->update($data);
         $apartment->services()->sync($data['services']);
         $apartment->sponsorships()->sync($data['sponsorship']);
@@ -164,18 +190,23 @@ class ApartmentController extends Controller
      */
     public function destroy(string $id)
     {
+
+
         $apartment = Apartment::findOrFail($id);
 
-
-        $urlCheck = "https://mybucketlaravel.s3.eu-west-3.amazonaws.com/";
-
-        if (strpos($apartment->cover_image, $urlCheck) !== false) {
-            $this->deleteImage($apartment->cover_image);
+        // Elimina tutte le immagini associate all'appartamento
+        foreach ($apartment->images as $image) {
+            // Se hai una funzione per eliminare l'immagine da S3 o da dove la stai gestendo
+            if (strpos($image->image_path, "https://mybucketlaravel.s3.eu-west-3.amazonaws.com/") !== false) {
+                $this->deleteImage($image->image_path);
+            }
+            $image->delete(); // Elimina l'immagine dal database
         }
 
-
+        // Ora puoi eliminare l'appartamento
         $apartment->delete();
-        return redirect()->route('dashboard');
+
+        return redirect()->route('apartments.index')->with('success', 'Appartamento eliminato con successo.');
     }
 
     public function getAddress($indirizzo) {
@@ -190,16 +221,6 @@ class ApartmentController extends Controller
 
         return $infoArrayAddress;
     }
-
-
-public function destroyImage(string $id) {
-    $image = Image::findOrFail($id);
-    $currentEditPage = Apartment::findOrFail($image->apartment_id);
-    $image->delete();
-    return redirect()->route('apartments.edit', $currentEditPage->id);
-}
-
-
 
     public function deleteImage($image_string) {
         $url = $image_string;
