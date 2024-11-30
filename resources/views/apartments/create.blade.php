@@ -146,27 +146,30 @@
       </div>
 
       <!-- carica altre immagini non copertina -->
-      <div>
-        <label for="other_images" class="block text-sm font-medium text-gray-700">Carica altre immagini (Upload)</label>
-        <input
-          type="file"
-          id="other_images"
-          name="other_images"
-          accept="image/*"
-          class="hidden"
-          multiple
-          onchange="previewListImage(event)"
-        />
-        <label for="other_images" class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500 cursor-pointer">
-          Seleziona immagini
-        </label>
+      <div id="image-group-container">
+          <label class="block text-sm font-medium text-gray-700">Carica altre immagini (Upload)</label>
+          <div class="row-image-group-container flex">
+
+            <img class="w-48" id="image-preview-group" alt="Immagine Copertina" style="display: none;">
+
+              <input
+                  type="file"
+                  name="images[]"
+                  class="image-group-input mt-1 block w-48 border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
+                  onchange="previewImageNonCover(event)"
+              >
+              <input
+                  class="w-48"
+                  type="text"
+                  name="image_description[]"
+                  placeholder="Descrizione dell'immagine"
+              >
+              <button id="add-row-add-image-input" class="ml-2 bg-blue-500 text-white px-4 py-2 rounded-md shadow hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Aggiungi riga</button>
+          </div>
       </div>
-      <div id="image-list-preview-container">
-        <!--  chiama previewListImage() e verra caricato qui -->
-        <div id="image-list-remove-button">
-            <!-- qui verra messo il bottone per rimuovere l'immagine -->
-        </div>
-      </div>
+
+
+
 
       <!-- Visibilità -->
       <div class="flex items-center">
@@ -190,6 +193,7 @@
       <!-- Pulsante Submit -->
       <div class="text-center">
         <button
+          id="submit-button"
           type="submit"
           class="bg-yellow-500 text-white font-medium px-6 py-2 rounded-md shadow hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2"
         >
@@ -203,8 +207,7 @@
 
 <script>
 
-  // 1. init globale reader per leggere le immagini
-  const reader = new FileReader();
+
 
   document.getElementById('address').addEventListener('input', async function() {
     const apiTomTomKey = "{{ env('API_TOMTOM_KEY') }}";
@@ -218,6 +221,8 @@
    * Funzione per vedere l'immagine copertina
    */
   function previewImage(event) {
+    // 1. init globale reader per leggere le immagini
+    const reader = new FileReader();
     const imagePreview = document.getElementById('image-preview');
     const file = event.target.files[0];
 
@@ -262,60 +267,71 @@
 
 
   // FUNZIONI PER GESTIRE LE IMMAGINI NON COPERTINA
-
-  let files = [];
   /**
-   * Funzione per vedere le immagini non copertina
+   * Funzione per aggiungere una riga
    */
-  function previewListImage(event) {
-    // container dove vengono mostrate le immagini
-    const imageListPreviewContainer = document.getElementById('image-list-preview-container');
+  document.getElementById('add-row-add-image-input').addEventListener('click', function(event) {
+    event.preventDefault();
 
-    // aggiungi i file all'array files
-    const newFiles = Array.from(event.target.files); // converti FileList in array
-    files.push(...newFiles); // Aggiungi i nuovi file all'array files
-    console.log(files);
+    const imageGroupContainer = document.querySelector('#image-group-container');
+    const newRowHTML = `
+        <div class="row-image-group-container flex">
+            <img class="w-48" alt="Immagine Copertina" style="display: none;">
+            <input
+                type="file"
+                name="images[]"
+                class="image-group-input mt-1 block w-48 border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
+                onchange="previewImageNonCover(event)"
+            >
+            <input
+                class="w-48"
+                type="text"
+                name="image_description[]"
+                placeholder="Descrizione dell'immagine"
+            >
+            <button class="ml-2 bg-red-500 text-white px-4 py-2 rounded-md shadow hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 delete-row">
+                Elimina
+            </button>
+        </div>
+    `;
+    imageGroupContainer.insertAdjacentHTML('beforeend', newRowHTML);
+});
 
-    imageListPreviewContainer.innerHTML = '';
 
+/**
+ * Funzione per mostrare l'immagine
+ */
+function previewImageNonCover(event) {
+    // 1. prendi l'input file
+    const fileInput = event.target;
 
-    // iteriamo su ogni file del fileList
-    files.forEach(file => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = function(e) {
-        console.log('singolo file', file);
+    // 2. crea un reader
+    const reader = new FileReader();
 
+    // 3. leggi l'immagine
+    reader.readAsDataURL(fileInput.files[0]);
+    reader.onload = function(e) {
+        // 4. trova il contenitore genitore e l'immagine corrispondente
+        const rowContainer = fileInput.closest('.row-image-group-container');
+        const imagePreview = rowContainer.querySelector('img');
 
-        // crea un elemento img e lo aggiunge al container
-        const imagePreview = document.createElement('img');
+        // 5. imposta l'URL dell'immagine
         imagePreview.src = e.target.result;
-        imagePreview.classList.add('w-1/2', 'h-auto');
+        // 6. rendi visibile l'immagine
+        imagePreview.style.display = 'block';
+    };
+}
 
-
-        // button per rimuovere l'immagine
-        const removeImageButton = document.createElement('button');
-        removeImageButton.textContent = 'Rimuovi';
-        removeImageButton.addEventListener('click', function(event) {
-          event.preventDefault();
-            var index = files.indexOf(file);
-            if (index > -1) {
-                files.splice(index, 1);
-            }
-          imageListPreviewContainer.removeChild(imagePreview);
-          imageListPreviewContainer.removeChild(removeImageButton);
-
-        });
-
-        // aggiungi l'immagine e il button al container
-        imageListPreviewContainer.appendChild(imagePreview);
-        imageListPreviewContainer.appendChild(removeImageButton);
-
-      };
-    });
-    event.target.value = '';
-  }
-
+/**
+ * Funzione per eliminare una riga
+ */
+document.getElementById('image-group-container').addEventListener('click', function(event) {
+    if (event.target.classList.contains('delete-row')) {
+        event.preventDefault();
+        const rowToDelete = event.target.closest('.row-image-group-container');
+        rowToDelete.remove();
+    }
+});
 
 
 
