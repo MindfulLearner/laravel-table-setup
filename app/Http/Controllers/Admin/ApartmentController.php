@@ -55,7 +55,9 @@ class ApartmentController extends Controller
     public function store(Request $request)
     {
 
+
         $request->file('cover_image');
+        $request->file('images');
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'rooms' => 'required|integer|min:1|max:10',
@@ -65,6 +67,7 @@ class ApartmentController extends Controller
             'sponsorship' => 'required|integer',
             'description' => 'required|string|max:255',
             'cover_image' => 'required|image|mimes:jpeg,jpg,png,gif,svg|max:2048',
+            'images' => 'required|array',
             'address' => 'required|string|max:255',
             'is_visible' => 'required|boolean',
         ]);
@@ -73,6 +76,12 @@ class ApartmentController extends Controller
         if ($existingApartment) {
             return redirect()->back()->withErrors(['address' => 'Questo indirizzo esiste già nel database.']);
         }
+
+        foreach ($request->file('images') as $image) {
+            $imageUrl = $this->addImage($image);
+            $images[] = $imageUrl;
+        }
+
 
         $imageUrl = $this->addImage($request->file('cover_image'));
 
@@ -92,6 +101,15 @@ class ApartmentController extends Controller
         $apartment = Apartment::create($data);
         $apartment->services()->sync($data['services']);
         $apartment->sponsorships()->sync($data['sponsorship']);
+
+   for ($i = 0; $i < count($images); $i++) {
+            $image_description = $request->input('image_description')[$i];
+            Image::create([
+                'image_path' => $images[$i],
+                'description' => $image_description,
+                'apartment_id' => $apartment->id,
+            ]);
+        }
         return redirect()->route('dashboard');
     }
 
