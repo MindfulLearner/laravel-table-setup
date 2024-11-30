@@ -58,6 +58,7 @@
     <div class="bg-white p-4 rounded-lg shadow-md mb-4">
       @foreach ($messages as $message)
         <div class="border-b border-gray-300 py-2">
+            <p class="text-gray-800 font-semibold">Data: {{ $message->created_at }}</p>
           <p class="text-gray-800 font-semibold">Inviato da: <span class="text-blue-600">{{ $message->email_sender }}</span></p>
           <p class="text-gray-700 italic">{{ $message->message }}</p>
         </div>
