@@ -120,19 +120,90 @@
           </div>
         </div>
 
-        <!-- Immagine -->
-        <div>
-          <label for="image" class="block text-sm font-medium text-gray-700">Immagine (URL/Path)</label>
-          <input
-            type="text"
-            id="image"
-            name="image"
-            value="{{ old('image', $apartment->image) }}"
-            placeholder="Inserisci l'URL dell'immagine..."
-            class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
-            required
-          />
-        </div>
+            <!-- Immagine copertina -->
+            <div>
+                <label for="cover_image" class="block text-sm font-medium text-gray-700">Immagine di copertina</label>
+                <!-- Immagine corrente -->
+                <img id="current-cover" src="{{ $apartment->cover_image }}" alt="Immagine Copertina" class="w-full h-64 object-cover mb-4 rounded-lg border-2 border-yellow-300" />
+                <!-- Upload nuova immagine -->
+                <input
+                  type="file"
+                  id="cover_image"
+                  name="cover_image"
+                  accept="image/*"
+                  class="hidden"
+                  onchange="previewImage(event)"
+                />
+                <label for="cover_image" class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500 cursor-pointer">
+                  Cambia immagine
+                </label>
+
+                <!-- Preview nuova immagine -->
+                <img id="image-preview" alt="Anteprima nuova immagine" class="w-full h-64 object-cover mt-4 rounded-lg border-2 border-yellow-300" style="display: none;">
+
+                <!-- Pulsante rimuovi -->
+                <button id="remove-image-button" class="mt-2 bg-red-500 text-white px-4 py-2 rounded-md shadow hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2" style="display: none;" onclick="resetFileInput()">
+                    Annulla modifica
+                </button>
+            </div>
+
+            <!-- Immagini non copertina -->
+            <div class="space-y-8">
+                <label class="block text-lg font-semibold text-gray-800 mb-4">Le tue immagini caricate</label>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    @foreach ($images as $image)
+                        <div class="bg-white rounded-xl shadow-lg overflow-hidden transition-transform hover:scale-105">
+                            <div class="relative">
+                                <img
+                                    src="{{ $image->image_path }}"
+                                    alt="Immagine appartamento"
+                                    class="w-full h-48 object-cover"
+                                />
+                                {{-- form per eliminare l'immagine --}}
+                                <form action="{{ route('apartments.destroyImage', $image->id) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="bg-red-500 text-white px-4 py-2 rounded-md shadow hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
+                                        Elimina
+                                    </button>
+                                </form>
+                            </div>
+                            <div class="p-4">
+                                <p class="text-sm text-gray-600 italic">{{ $image->description }}</p>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+
+            <!-- Carica nuove immagini -->
+            <div id="image-group-container" class="mt-8">
+                <label class="block text-sm font-medium text-gray-700 mb-4">Aggiungi nuove immagini</label>
+                <div class="row-image-group-container flex items-center space-x-4">
+                    <img class="w-48 h-32 object-cover rounded-lg border-2 border-yellow-300" id="image-preview-group" alt="Anteprima immagine" style="display: none;">
+
+                    <div class="flex-1 space-y-2">
+                        <input
+                            type="file"
+                            name="images[]"
+                            class="image-group-input w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
+                            onchange="previewImageNonCover(event)"
+                        >
+                        <input
+                            type="text"
+                            name="image_description[]"
+                            class="w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
+                            placeholder="Descrizione dell'immagine"
+                        >
+                    </div>
+
+                    <button id="add-row-add-image-input" class="bg-blue-500 text-white px-4 py-2 rounded-md shadow hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                        Aggiungi altra immagine
+                    </button>
+                </div>
+            </div>
+
+
 
         <!-- Visibilità -->
         <div class="flex items-center">
@@ -162,6 +233,122 @@
   </div>
 
   <script>
+
+
+/**
+   * Funzione per vedere l'immagine copertina
+   */
+   function previewImage(event) {
+    // 1. init globale reader per leggere le immagini
+    const reader = new FileReader();
+    const imagePreview = document.getElementById('image-preview');
+    const file = event.target.files[0];
+
+
+    // 2. se c'è un file lo legge
+    if (file) {
+      reader.readAsDataURL(file);
+    } else {
+      imagePreview.src = '';
+      imagePreview.style.display = 'none';
+    }
+    // 3. reader completato ora mostra l'immagine
+    reader.onload = function(e) {
+      imagePreview.src = e.target.result;
+      imagePreview.style.display = 'block';
+
+      if (imagePreview.style.display === 'block') {
+        document.getElementById('remove-image-button').style.display = 'block';
+      }
+    }
+  }
+  /**
+   * Funzione per rimuovere l'immagine copertina
+   */
+  document.getElementById('remove-image-button').addEventListener('click', function() {
+    event.preventDefault();
+    document.getElementById('image-preview').src = '';
+    document.getElementById('image-preview').style.display = 'none';
+    document.getElementById('remove-image-button').style.display = 'none';
+  });
+  /**
+   * Funzione per resetare l'immagine copertina
+   * sembra ridondante ma l'ho aggiunto perche altrimenti se io apro esplorarisorse per caricare immagine e poi rimane a caso
+   */
+  function resetFileInput() {
+    document.getElementById('cover_image').value = '';
+    document.getElementById('image-preview').src = '';
+    document.getElementById('image-preview').style.display = 'none';
+    document.getElementById('remove-image-button').style.display = 'none';
+  }
+
+
+  /**
+ * Funzione per mostrare l'immagine
+ */
+function previewImageNonCover(event) {
+    // 1. prendi l'input file
+    const fileInput = event.target;
+
+    // 2. crea un reader
+    const reader = new FileReader();
+
+    // 3. leggi l'immagine
+    reader.readAsDataURL(fileInput.files[0]);
+    reader.onload = function(e) {
+        // 4. trova il contenitore genitore e l'immagine corrispondente
+        const rowContainer = fileInput.closest('.row-image-group-container');
+        const imagePreview = rowContainer.querySelector('img');
+
+        // 5. imposta l'URL dell'immagine
+        imagePreview.src = e.target.result;
+        // 6. rendi visibile l'immagine
+        imagePreview.style.display = 'block';
+    };
+}
+
+
+
+ // FUNZIONI PER GESTIRE LE IMMAGINI NON COPERTINA
+  /**
+   * Funzione per aggiungere una riga
+   */
+   document.getElementById('add-row-add-image-input').addEventListener('click', function(event) {
+    event.preventDefault();
+
+    const imageGroupContainer = document.querySelector('#image-group-container');
+    const newRowHTML = `
+        <div class="row-image-group-container flex">
+            <img class="w-48" alt="Immagine Copertina" style="display: none;">
+            <input
+                type="file"
+                name="images[]"
+                class="image-group-input mt-1 block w-48 border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
+                onchange="previewImageNonCover(event)"
+            >
+            <input
+                class="w-48"
+                type="text"
+                name="image_description[]"
+                placeholder="Descrizione dell'immagine"
+            >
+            <button class="ml-2 bg-red-500 text-white px-4 py-2 rounded-md shadow hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 delete-row">
+                Elimina
+            </button>
+        </div>
+    `;
+    imageGroupContainer.insertAdjacentHTML('beforeend', newRowHTML);
+});
+/**
+ * Funzione per eliminare una riga
+ */
+document.getElementById('image-group-container').addEventListener('click', function(event) {
+    if (event.target.classList.contains('delete-row')) {
+        event.preventDefault();
+        const rowToDelete = event.target.closest('.row-image-group-container');
+        rowToDelete.remove();
+    }
+});
 
   </script>
 @endsection

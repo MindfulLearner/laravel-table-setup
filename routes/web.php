@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\ApartmentController;
 use App\Http\Controllers\UserContentController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -36,6 +37,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('apartments', ApartmentController::class)->middleware(['auth', 'verified']);
 
     Route::resource('user', UserContentController::class)->middleware(['auth', 'verified']);
+
+    Route::delete('/apartments/images/{id}', [ApartmentController::class, 'destroyImage'])->name('apartments.destroyImage');
 
     Route::get('/sponsor', function () {
         return view('sponsor'); 

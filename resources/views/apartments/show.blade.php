@@ -6,7 +6,7 @@
     <h1 class="text-3xl font-bold text-yellow-600 mb-6 text-center">{{ $apartment->title }}</h1>
 
     <!-- Apartment Image -->
-    <img src="{{ $apartment->image }}" alt="Property Image" class="w-full h-64 object-cover mb-4 rounded-lg border-2 border-yellow-300" />
+    <img src="{{ $apartment->cover_image }}" alt="Property Image" class="w-full h-64 object-cover mb-4 rounded-lg border-2 border-yellow-300" />
 
     <!-- Apartment Details -->
     <div class="mb-4 p-4 bg-gray-100 rounded-lg">
