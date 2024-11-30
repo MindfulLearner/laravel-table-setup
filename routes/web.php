@@ -40,6 +40,11 @@ Route::middleware('auth')->group(function () {
 
     Route::delete('/apartments/images/{id}', [ApartmentController::class, 'destroyImage'])->name('apartments.destroyImage');
 
+    Route::get('/sponsor', function () {
+        return view('sponsor'); 
+    });
+    
+
 });
 
 require __DIR__.'/auth.php';
