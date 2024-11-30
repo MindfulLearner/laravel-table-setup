@@ -9,6 +9,7 @@ use Illuminate\Auth\Events\Validated;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use App\Models\Sponsorship;
+use App\Models\Message;
 use App\Models\Service;
 use App\Models\Image;
 use Illuminate\Support\Facades\Storage;
@@ -118,15 +119,13 @@ class ApartmentController extends Controller
      */
     public function show(string $id)
     {
-
-
-
         $apartment = Apartment::findOrFail($id);
         $services = Service::all();
         $sponsorships = Sponsorship::all();
+        $messages = Message::where('apartment_id', $id)->get();
         $images = Image::where('apartment_id', $id)->get();
 
-        return view('apartments.show', compact('apartment', 'services', 'sponsorships', 'images'));
+        return view('apartments.show', compact('apartment', 'services', 'sponsorships', 'images', 'messages'));
     }
 
     /**

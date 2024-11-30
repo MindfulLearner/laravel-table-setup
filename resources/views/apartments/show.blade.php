@@ -50,6 +50,17 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
       @foreach ($images as $image)
         <img src="{{ $image->image_path }}" alt="Property Image" class="w-full h-32 object-cover rounded-lg border-2 border-yellow-300" />
+        <p class="text-gray-800">{{ $image->description }}</p>
+      @endforeach
+    </div>
+
+    <!-- messaggi ricebuti -->
+    <div class="bg-white p-4 rounded-lg shadow-md mb-4">
+      @foreach ($messages as $message)
+        <div class="border-b border-gray-300 py-2">
+          <p class="text-gray-800 font-semibold">Inviato da: <span class="text-blue-600">{{ $message->email_sender }}</span></p>
+          <p class="text-gray-700 italic">{{ $message->message }}</p>
+        </div>
       @endforeach
     </div>
 
