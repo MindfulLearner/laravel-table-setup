@@ -137,12 +137,13 @@ class ApartmentController extends Controller
 
         $services = Service::all();
         $sponsorships = Sponsorship::all();
+        $images = Image::where('apartment_id', $id)->get();
 
 
         $apartment = Apartment::findOrFail($id);
 
 
-        return view('apartments.edit', compact('apartment', 'services', 'sponsorships'));
+        return view('apartments.edit', compact('apartment', 'services', 'sponsorships', 'images'));
     }
 
     /**
@@ -190,6 +191,14 @@ class ApartmentController extends Controller
 
         return $infoArrayAddress;
     }
+
+
+public function destroyImage(string $id) {
+    $image = Image::findOrFail($id);
+    $currentEditPage = Apartment::findOrFail($image->apartment_id);
+    $image->delete();
+    return redirect()->route('apartments.edit', $currentEditPage->id);
+}
 
 
 
