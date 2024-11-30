@@ -87,20 +87,19 @@ class ApartmentsTableSeeder extends Seeder
 
     }
 
-    /**
-     * funzione che crea le coordinate intorno a Milano fake
-     * genera una latitudine casuale intorno a Milano (45.4642) con un raggio di 20 km
-     */
-    function createLatitude(Faker $faker) {
-        return $faker->randomFloat(6, 45.2642, 45.6642);
+   /**
+ * genera una latitudine casuale all'interno della Lombardia.
+ */
+function createLatitude(Faker $faker) {
+        return $faker->randomFloat(6, 45.2, 46.5);
     }
+
     /**
-     * funzione che crea le coordinate intorno a Milano fake
-     * genera una longitudine casuale intorno a Milano (9.1918) con un raggio di 20 km
+     * genera una longitudine casuale all'interno della Lombardia.
      */
-    function createLongitude(Faker $faker) {
-        return $faker->randomFloat(6, 8.9900, 9.3900);
-    }
+function createLongitude(Faker $faker) {
+    return $faker->randomFloat(6, 8.5, 10.5);
+}
     /**
      * funzione che trova l'indirizzo a partire dalle coordinate
      */
