@@ -37,6 +37,10 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('user', UserContentController::class)->middleware(['auth', 'verified']);
 
+    Route::get('/sponsor', function () {
+        return view('sponsor'); 
+    });
+    
 
 });
 
