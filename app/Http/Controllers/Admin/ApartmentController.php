@@ -37,7 +37,7 @@ class ApartmentController extends Controller
 
 
 
-         return view('apartments.index', compact('superId', 'apartments'));
+        return view('apartments.index', compact('superId', 'apartments'));
     }
 
     /**
@@ -58,7 +58,12 @@ class ApartmentController extends Controller
 
 
         $request->file('cover_image');
+        if (!$request->file('cover_image')) {
+            return redirect()->back()->withErrors(['cover_image' => 'carica almeno un immagine di copertina per l\'appartamento']);
+        }
+
         $request->file('images');
+
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'rooms' => 'required|integer|min:1|max:10',
@@ -68,7 +73,6 @@ class ApartmentController extends Controller
             'sponsorship' => 'required|integer',
             'description' => 'required|string|max:255',
             'cover_image' => 'required|image|mimes:jpeg,jpg,png,gif,svg|max:2048',
-            'images' => 'required|array',
             'address' => 'required|string|max:255',
             'is_visible' => 'required|boolean',
         ]);
@@ -78,9 +82,12 @@ class ApartmentController extends Controller
             return redirect()->back()->withErrors(['address' => 'Questo indirizzo esiste già nel database.']);
         }
 
-        foreach ($request->file('images') as $image) {
-            $imageUrl = $this->addImage($image);
-            $images[] = $imageUrl;
+
+        if ($request->file('images')) {
+            foreach ($request->file('images') as $image) {
+                $imageUrl = $this->addImage($image);
+                $images[] = $imageUrl;
+            }
         }
 
 
@@ -103,13 +110,15 @@ class ApartmentController extends Controller
         $apartment->services()->sync($data['services']);
         $apartment->sponsorships()->sync($data['sponsorship']);
 
-   for ($i = 0; $i < count($images); $i++) {
-            $image_description = $request->input('image_description')[$i];
-            Image::create([
-                'image_path' => $images[$i],
-                'description' => $image_description,
-                'apartment_id' => $apartment->id,
-            ]);
+        if ($request->file('images')) {
+            for ($i = 0; $i < count($images); $i++) {
+                $image_description = $request->input('image_description')[$i];
+                Image::create([
+                    'image_path' => $images[$i],
+                    'description' => $image_description,
+                    'apartment_id' => $apartment->id,
+                ]);
+            }
         }
         return redirect()->route('dashboard');
     }
@@ -150,13 +159,38 @@ class ApartmentController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $data = $request->all();
+
+        $cover_image = $request->file('cover_image');
+        $images = $request->file('images');
+
+
         $apartment = Apartment::findOrFail($id);
+
+        $data = $request->all();
+        if ($cover_image) {
+            if (strpos($apartment->cover_image, "https://mybucketlaravel.s3.eu-west-3.amazonaws.com/") !== false) {
+                $this->deleteImage($apartment->cover_image);
+            }
+            $imageUrl = $this->addImage($cover_image);
+            $data['cover_image'] = $imageUrl;
+        }
+
+        $apartment = Apartment::findOrFail($id);
+        if ($images) {
+            for ($i = 0; $i < count($images); $i++) {
+                $image = $images[$i];
+                $image_description = $request->input('image_description')[$i];
+                $imageUrl = $this->addImage($image);
+                $apartment->images()->create([
+                    'image_path' => $imageUrl,
+                    'description' => $image_description,
+                ]);
+            }
+        }
         $apartment->update($data);
         $apartment->services()->sync($data['services']);
         $apartment->sponsorships()->sync($data['sponsorship']);
         return redirect()->route('dashboard')->with('success', 'Appartamento aggiornato con successo');
-
     }
 
     /**
@@ -164,21 +198,28 @@ class ApartmentController extends Controller
      */
     public function destroy(string $id)
     {
+
+
         $apartment = Apartment::findOrFail($id);
 
+        foreach ($apartment->images as $image) {
+            if (strpos($image->image_path, "https://mybucketlaravel.s3.eu-west-3.amazonaws.com/") !== false) {
+                $this->deleteImage($image->image_path);
+            }
+            $image->delete();
+        }
 
-        $urlCheck = "https://mybucketlaravel.s3.eu-west-3.amazonaws.com/";
-
-        if (strpos($apartment->cover_image, $urlCheck) !== false) {
+        if (strpos($apartment->cover_image, "https://mybucketlaravel.s3.eu-west-3.amazonaws.com/") !== false) {
             $this->deleteImage($apartment->cover_image);
         }
 
-
         $apartment->delete();
-        return redirect()->route('dashboard');
+
+        return redirect()->route('apartments.index')->with('success', 'Appartamento eliminato con successo.');
     }
 
-    public function getAddress($indirizzo) {
+    public function getAddress($indirizzo)
+    {
         $apiTomTomKey = env('API_TOMTOM_KEY');
         $infoArrayAddress = [];
         $url = "https://api.tomtom.com/search/2/geocode/" . urlencode($indirizzo) . ".json?key=$apiTomTomKey&limit=1&countrySet=IT&language=it-IT";
@@ -191,17 +232,8 @@ class ApartmentController extends Controller
         return $infoArrayAddress;
     }
 
-
-public function destroyImage(string $id) {
-    $image = Image::findOrFail($id);
-    $currentEditPage = Apartment::findOrFail($image->apartment_id);
-    $image->delete();
-    return redirect()->route('apartments.edit', $currentEditPage->id);
-}
-
-
-
-    public function deleteImage($image_string) {
+    public function deleteImage($image_string)
+    {
         $url = $image_string;
         $parts = explode('/images/', $url);
         $imagePath = '/images/' . $parts[1];
@@ -214,14 +246,10 @@ public function destroyImage(string $id) {
         return response()->json(['message' => 'Image not found'], 404);
     }
 
-    public function addImage($image_string) {
+    public function addImage($image_string)
+    {
         $path = $image_string->storePublicly('images');
         $imageUrl = "https://mybucketlaravel.s3.eu-west-3.amazonaws.com/$path";
         return $imageUrl;
     }
-
-
-
-
-
 }

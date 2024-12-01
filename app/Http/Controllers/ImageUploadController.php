@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Image;
+use App\Models\Apartment;
 
 class ImageUploadController extends Controller
 {
@@ -22,18 +24,24 @@ class ImageUploadController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $image_string)
-    {
+     public function destroyImage(string $id)
+     {
+         $image = Image::findOrFail($id);
 
-        $path = "images/$image_string"; // idfunziona!!!
+         if (strpos($image->image_path, "https://mybucketlaravel.s3.eu-west-3.amazonaws.com/") !== false) {
+            $this->deleteImage($image->image_path);
+         }
+         $currentEditPage = Apartment::findOrFail($image->apartment_id);
 
-        if (Storage::disk('s3')->exists($path)) {
-            Storage::disk('s3')->delete($path);
-            return response()->json(['message' => 'Image deleted successfully']);
-        }
+         // controlla se è l'ultima immagine
+         if ($currentEditPage->images()->count() <= 1) {
+             return redirect()->route('apartments.edit', $image->apartment_id)
+                 ->withErrors(['error' => 'Devi tenere almeno un\'immagine']);
+         }
 
-        return response()->json(['message' => 'Image not found'], 404);
-    }
+         $image->delete();
+         return redirect()->route('apartments.edit', $currentEditPage->id);
+     }
 
     /**
      * Display a listing of the resource.
@@ -84,6 +92,24 @@ class ImageUploadController extends Controller
     public function update(Request $request, string $id)
     {
         //
+    }
+    public function deleteImage($image_string) {
+        $url = $image_string;
+        $parts = explode('/images/', $url);
+        $imagePath = '/images/' . $parts[1];
+
+        if (Storage::disk('s3')->exists($imagePath)) {
+            Storage::disk('s3')->delete($imagePath);
+            return response()->json(['message' => 'Image deleted successfully']);
+        }
+
+        return response()->json(['message' => 'Image not found'], 404);
+    }
+
+    public function addImage($image_string) {
+        $path = $image_string->storePublicly('images');
+        $imageUrl = "https://mybucketlaravel.s3.eu-west-3.amazonaws.com/$path";
+        return $imageUrl;
     }
 
 
