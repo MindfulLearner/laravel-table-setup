@@ -194,13 +194,6 @@
                                     alt="Immagine appartamento"
                                     class="w-full h-48 object-cover transition duration-300 ease-in-out"
                                 />
-                                <form action="{{ route('apartments.destroyImage', $image->id) }}" method="POST" class="absolute top-2 right-2">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button class="bg-red-500 text-white px-3 py-1 rounded-md shadow hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
-                                        Elimina
-                                    </button>
-                                </form>
                                 {{-- cacnella per eliminare l'immagine --}}
                                 <button type="button" class="bg-red-500 text-white px-4 py-2 rounded-md shadow hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2" onclick="deleteImage({{ $image->id }})">
                                     Elimina
