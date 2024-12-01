@@ -13,6 +13,9 @@ class Authenticate extends Middleware
      */
     protected function redirectTo(Request $request): ?string
     {
+
+
+
         $guards = empty($guards) ? [null] : $guards;
         throw new AuthenticationException(
             'Unauthenticated.',

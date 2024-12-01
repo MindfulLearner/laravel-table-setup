@@ -8,6 +8,7 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 
 class AuthenticatedSessionController extends Controller
@@ -29,7 +30,9 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+        $token = $request->session()->get('sanctum_token');
+
+        return redirect()->intended(RouteServiceProvider::HOME)->with('sanctum_token', $token);
     }
 
     /**
@@ -43,6 +46,6 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('http://localhost:5173');
+        return redirect('http://192.168.1.101:5173');
     }
 }
