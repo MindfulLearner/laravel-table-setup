@@ -21,7 +21,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('geocode', function (Request $request) {
-    $apiKey = 'SooRbYbji9V5qUxAh3i2ijnD8m9ZWVZ7';
+    $apiKey = env('TOMTOM_API_KEY');
     $url = 'https://api.tomtom.com/search/2/geocode/' . urlencode($request->indirizzo) . '.json?key=' . $apiKey . '&limit=1&countrySet=IT&language=it-IT';
 
     $client = new \GuzzleHttp\Client();

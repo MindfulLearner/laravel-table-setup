@@ -131,9 +131,7 @@
                             class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
                             required
                         />
-                        <p id="address-result">
-                            Cercavi l'indirizzo: <span id="address-result-text"></span>
-                        </p>
+                        <div id="suggestions" class="absolute bg-white border border-gray-300 rounded-md mt-1 z-10 hidden"></div>
                     </div>
 
                     <div class="justify-between">
@@ -228,10 +226,51 @@
 <script>
   document.getElementById('address').addEventListener('input', async function() {
     const apiTomTomKey = "{{ env('API_TOMTOM_KEY') }}";
-    const url = "https://api.tomtom.com/search/2/geocode/" + encodeURIComponent(this.value) + ".json?key=" + apiTomTomKey + "&limit=1&countrySet=IT&language=it-IT";
+    const inputValue = this.value;
+    const url = "https://api.tomtom.com/search/2/geocode/" + encodeURIComponent(inputValue) + ".json?key=" + apiTomTomKey + "&limit=5&countrySet=IT&language=it-IT";
+
+    if (inputValue.length < 3) {
+        document.getElementById('suggestions').innerHTML = '';
+        document.getElementById('suggestions').classList.add('hidden');
+        return;
+    }
+
     const response = await fetch(url);
     const data = await response.json();
-    document.getElementById('address-result-text').innerHTML = data['results'][0]['address']['freeformAddress'];
+
+    const suggestions = data['results'] || [];
+    const suggestionsContainer = document.getElementById('suggestions');
+    suggestionsContainer.innerHTML = '';
+
+    suggestions.forEach(result => {
+        const address = result['address']['freeformAddress'];
+        const suggestionItem = document.createElement('div');
+        suggestionItem.textContent = address;
+        suggestionItem.classList.add('p-2', 'cursor-pointer');
+
+        suggestionItem.addEventListener('click', function() {
+            document.getElementById('address').value = address;
+            suggestionsContainer.innerHTML = '';
+            suggestionsContainer.classList.add('hidden');
+        });
+
+        suggestionsContainer.appendChild(suggestionItem);
+    });
+
+    if (suggestions.length > 0) {
+        suggestionsContainer.classList.remove('hidden');
+    } else {
+        suggestionsContainer.classList.add('hidden');
+    }
+  });
+
+
+  document.addEventListener('click', function(event) {
+    const suggestionsContainer = document.getElementById('suggestions');
+    if (!suggestionsContainer.contains(event.target) && event.target.id !== 'address') {
+        suggestionsContainer.innerHTML = '';
+        suggestionsContainer.classList.add('hidden');
+    }
   });
 
   /**
