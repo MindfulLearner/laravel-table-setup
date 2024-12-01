@@ -18,12 +18,16 @@ class ApartmentApi extends Controller
      */
     public function index()
     {
-        $apartments = Apartment::with('services', 'sponsorships', 'images')->get();
-        return response()->json([
-            'success' => true,
-            'data' => $apartments,
-            'message' => 'Apartments retrieved successfully'
-        ]);
+        try {
+            $apartments = Apartment::with('services', 'sponsorships', 'images')->get();
+            return response()->json([
+                'success' => true,
+                'data' => $apartments,
+                'message' => 'Apartments retrieved successfully'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'An error occurred', 'error' => $e->getMessage()], 500);
+        }
     }
 
 
@@ -122,13 +126,17 @@ class ApartmentApi extends Controller
      */
     public function show($id)
     {
-        $apartment = Apartment::with('services', 'sponsorships', 'images')->find($id);
-        return response()->json([
+        try {
+            $apartment = Apartment::with('services', 'sponsorships', 'images')->find($id);
+            return response()->json([
             'success' => true,
             'data' => $apartment,
             'services' => $apartment->services,
             'sponsorships' => $apartment->sponsorships,
             'message' => 'Apartment retrieved successfully'
         ]);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'An error occurred', 'error' => $e->getMessage()], 500);
+        }
     }
 }
