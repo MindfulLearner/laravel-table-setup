@@ -157,9 +157,9 @@
 
             <!-- Immagine copertina -->
             <div>
-                <label for="cover_image" class="block text-sm font-medium text-gray-700">Immagine di copertina</label>
+                <label for="cover_image" class="block text-sm font-semibold text-blue-700">Immagine di copertina</label>
                 <!-- Immagine corrente -->
-                <img id="current-cover" src="{{ $apartment->cover_image }}" alt="Immagine Copertina" class="w-full h-64 object-cover mb-4 rounded-lg border-2 border-yellow-300" />
+                <img id="current-cover" src="{{ $apartment->cover_image }}" alt="Immagine Copertina" class="w-full h-64 object-cover mb-4 rounded-lg border-4 border-blue-300" />
                 <!-- Upload nuova immagine -->
                 <input
                   type="file"
@@ -169,25 +169,25 @@
                   class="hidden"
                   onchange="previewImage(event)"
                 />
-                <label for="cover_image" class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500 cursor-pointer">
+                <label for="cover_image" class="p-3 mt-1 block w-full border-blue-300 rounded-lg shadow-lg focus:border-blue-500 focus:ring-blue-500 cursor-pointer bg-blue-100 hover:bg-blue-200">
                   Cambia immagine
                 </label>
 
                 <!-- Preview nuova immagine -->
-                <img id="image-preview" alt="Anteprima nuova immagine" class="w-full h-64 object-cover mt-4 rounded-lg border-2 border-yellow-300" style="display: none;">
+                <img id="image-preview" alt="Anteprima nuova immagine" class="w-full h-64 object-cover mt-4 rounded-lg border-4 border-blue-300" style="display: none;">
 
                 <!-- Pulsante rimuovi -->
-                <button id="remove-image-button" class="mt-2 bg-red-500 text-white px-4 py-2 rounded-md shadow hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2" style="display: none;" onclick="resetFileInput()">
+                <button id="remove-image-button" class="mt-2 bg-red-600 text-white px-5 py-2 rounded-lg shadow-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-offset-2" style="display: none;" onclick="resetFileInput()">
                     Annulla modifica
                 </button>
             </div>
 
             <!-- Immagini non copertina -->
             <div class="space-y-8">
-                <label class="block text-lg font-semibold text-gray-800 mb-4">Le tue immagini caricate</label>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <label class="block text-lg font-bold text-blue-800 mb-4">Le tue immagini caricate</label>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     @foreach ($images as $image)
-                        <div class="bg-white rounded-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105">
+                        <div class="bg-white rounded-lg shadow-xl overflow-hidden transition-transform transform hover:scale-110">
                             <div class="relative">
                                 <img
                                     src="{{ $image->image_path }}"
@@ -195,12 +195,12 @@
                                     class="w-full h-48 object-cover transition duration-300 ease-in-out"
                                 />
                                 {{-- cacnella per eliminare l'immagine --}}
-                                <button type="button" class="bg-red-500 text-white px-4 py-2 rounded-md shadow hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2" onclick="deleteImage({{ $image->id }})">
+                                <button type="button" class="bg-red-600 text-white px-5 py-2 rounded-lg shadow-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-offset-2" onclick="deleteImage({{ $image->id }})">
                                     Elimina
                                 </button>
                             </div>
                             <div class="p-4">
-                                <p class="text-sm text-gray-600 italic">{{ $image->description }}</p>
+                                <p class="text-sm text-gray-700 italic">{{ $image->description }}</p>
                             </div>
                         </div>
                     @endforeach
@@ -208,29 +208,31 @@
             </div>
 
             <!-- Carica nuove immagini -->
-            <div id="image-group-container" class="mt-8">
-                <label class="block text-sm font-medium text-gray-700 mb-4">Aggiungi nuove immagini</label>
-                <div class="row-image-group-container flex items-center space-x-4">
-                    <img class="w-48 h-32 object-cover rounded-lg border-2 border-yellow-300" id="image-preview-group" alt="Anteprima immagine" style="display: none;">
+            <div id="image-group-container" class="mt-10">
+                <div class="flex justify-between items-center mb-4">
+                    <label class="block text-sm font-semibold text-blue-700">Aggiungi nuove immagini</label>
+                    <button id="add-row-add-image-input" class="bg-blue-600 text-white px-5 py-2 rounded-lg shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2">
+                        Aggiungi altra immagine
+                    </button>
+                </div>
+                <div class="row-image-group-container flex items-center mb-2">
+                    <img class="w-48 h-32 object-cover rounded-lg border-4 border-blue-300" id="image-preview-group" alt="Anteprima immagine" style="display: none;">
 
-                    <div class="flex-1 space-y-2">
+                    <div class="flex-1 space-y-3">
                         <input
                             type="file"
                             name="images[]"
-                            class="image-group-input w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
+                            class="image-group-input w-full border-blue-300 rounded-lg shadow-lg focus:border-blue-500 focus:ring-blue-500"
                             onchange="previewImageNonCover(event)"
                         >
+                        <img class="w-48 h-32 object-cover rounded-lg border-4 border-blue-300 mt-2" id="image-preview-group" alt="Anteprima immagine" style="display: none;">
                         <input
                             type="text"
                             name="image_description[]"
-                            class="w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
+                            class="w-full max-w-xs border-blue-300 rounded-lg shadow-lg focus:border-blue-500 focus:ring-blue-500 mt-2"
                             placeholder="Descrizione dell'immagine"
                         >
                     </div>
-
-                    <button id="add-row-add-image-input" class="bg-blue-500 text-white px-4 py-2 rounded-md shadow hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-                        Aggiungi altra immagine
-                    </button>
                 </div>
             </div>
 
@@ -348,16 +350,17 @@ function previewImageNonCover(event) {
     const newRowHTML = `
         <div class="row-image-group-container flex">
             <img class="w-48" alt="Immagine Copertina" style="display: none;">
+            <div class="flex-1 space-y-3">
             <input
                 type="file"
                 name="images[]"
-                class="image-group-input mt-1 block w-48 border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
+                class="image-group-input w-full border-blue-300 rounded-lg shadow-lg focus:border-blue-500 focus:ring-blue-500"
                 onchange="previewImageNonCover(event)"
             >
-            <input
-                class="w-48"
+             <input
                 type="text"
                 name="image_description[]"
+                class="w-full max-w-xs border-blue-300 rounded-lg shadow-lg focus:border-blue-500 focus:ring-blue-500 mt-2"
                 placeholder="Descrizione dell'immagine"
             >
             <button class="ml-2 bg-red-500 text-white px-4 py-2 rounded-md shadow hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 delete-row">

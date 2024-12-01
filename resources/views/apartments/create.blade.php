@@ -159,29 +159,32 @@
                         </div>
 
                           <!-- carica altre immagini non copertina -->
-      <div id="image-group-container">
-        <label class="block text-sm font-medium text-gray-700">Carica altre immagini (Upload)</label>
-        <div class="row-image-group-container flex">
+                        <div id="image-group-container">
+                          <div class="flex justify-between items-center mb-2">
+                              <label class="block text-sm font-medium text-gray-700">Carica altre immagini (Upload)</label>
+                              <button id="add-row-add-image-input" class="bg-blue-500 text-white px-4 py-2 rounded-md shadow hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Aggiungi riga</button>
+                          </div>
+                          <div class="row-image-group-container flex">
 
-          <img class="w-48" id="image-preview-group" alt="Immagine Copertina" style="display: none;">
+                            <img class="w-48" id="image-preview-group" alt="Immagine Copertina" style="display: none;">
 
-            <input
-                type="file"
-                name="images[]"
-                class="image-group-input mt-1 block w-48 border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
-                onchange="previewImageNonCover(event)"
-            >
-            <input
-                class="w-48"
-                type="text"
-                name="image_description[]"
-                placeholder="Descrizione dell'immagine"
-            >
-            <button id="add-row-add-image-input" class="ml-2 bg-blue-500 text-white px-4 py-2 rounded-md shadow hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Aggiungi riga</button>
-        </div>
-    </div>
-
-
+                              <div class="flex-1 space-y-3 mb-2"></div>
+                                <input
+                                    type="file"
+                                    name="images[]"
+                                    class="image-group-input w-full border-blue-300 rounded-lg shadow-lg focus:border-blue-500 focus:ring-blue-500"
+                                    onchange="previewImageNonCover(event)"
+                                >
+                                <img class="w-48 h-32 object-cover rounded-lg border-4 border-blue-300 mt-2" id="image-preview-group" alt="Anteprima immagine" style="display: none;">
+                                <input
+                                    type="text"
+                                    name="image_description[]"
+                                    class="w-full max-w-xs border-blue-300 rounded-lg shadow-lg focus:border-blue-500 focus:ring-blue-500 mt-2"
+                                    placeholder="Descrizione dell'immagine"
+                                    >
+                                </div>
+                          </div>
+                      </div>
 
 
                     <!-- Visibilità -->
@@ -286,17 +289,20 @@
     const imageGroupContainer = document.querySelector('#image-group-container');
     const newRowHTML = `
         <div class="row-image-group-container flex">
-            <img class="w-48" alt="Immagine Copertina" style="display: none;">
+          <img class="w-48" id="image-preview-group" alt="Immagine Copertina" style="display: none;">
+                        <div class="flex-1 space-y-3">
+        <input
+            type="file"
+            name="images[]"
+            class="image-group-input w-full border-blue-300 rounded-lg shadow-lg focus:border-blue-500 focus:ring-blue-500"
+            onchange="previewImageNonCover(event)"
+        >
+        <img class="w-48 h-32 object-cover rounded-lg border-4 border-blue-300 mt-2" id="image-preview-group" alt="Anteprima immagine" style="display: none;">
+        <div class="flex items-center">
             <input
-                type="file"
-                name="images[]"
-                class="image-group-input mt-1 block w-48 border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
-                onchange="previewImageNonCover(event)"
-            >
-            <input
-                class="w-48"
                 type="text"
                 name="image_description[]"
+                class="w-full max-w-xs border-blue-300 rounded-lg shadow-lg focus:border-blue-500 focus:ring-blue-500 mt-2"
                 placeholder="Descrizione dell'immagine"
             >
             <button class="ml-2 bg-red-500 text-white px-4 py-2 rounded-md shadow hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 delete-row">
