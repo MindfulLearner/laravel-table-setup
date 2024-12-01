@@ -143,6 +143,11 @@ class ApartmentController extends Controller
     public function edit(string $id)
     {
 
+        $user = Auth::user();
+        if (Apartment::findOrFail($id)->user_id !== $user->id) {
+            return redirect()->route('dashboard')->with('error', 'Non hai i permessi per accedere a questa pagina');
+        }
+
         $services = Service::all();
         $sponsorships = Sponsorship::all();
         $images = Image::where('apartment_id', $id)->get();
