@@ -13,202 +13,226 @@
         </div>
     @endif
 
-  <h1 class="text-2xl font-bold text-gray-800 mb-6 text-center">Crea un Nuovo Appartamento</h1>
-  <form action="{{ route('apartments.store') }}" enctype="multipart/form-data" method="POST">
-    @csrf
-    <div class="grid grid-cols-1 gap-6">
-      <!-- Titolo -->
-      <div>
-        <label for="title" class="block text-sm font-medium text-gray-700">Titolo</label>
-        <input
-          type="text"
-          id="title"
-          name="title"
-          value="Appartamento in Centro"
-          class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
-          required
-        />
-      </div>
+    <h1 class="text-2xl font-bold text-gray-800 mb-6 text-center">Crea un Nuovo Appartamento</h1>
+    <form action="{{ route('apartments.store') }}" enctype="multipart/form-data" method="POST">
+        @csrf
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Colonna Sinistra: Servizi e Sponsorizzazioni -->
+            <div class="col-span-1">
+                <fieldset class="border border-gray-300 rounded-lg p-4 mb-4">
+                    <legend class="text-sm font-medium text-gray-700">Servizi</legend>
+                    <div class="space-y-2">
+                        @foreach ($services as $service)
+                            <div class="flex items-center">
+                                <input type="checkbox" id="service_{{ $service->id }}" name="services[]" value="{{ $service->id }}" class="mr-2 h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring focus:ring-blue-200">
+                                <label for="service_{{ $service->id }}" class="ml-2 text-sm font-medium text-gray-700">
+                                    <i class="fas fa-check-circle text-blue-500"></i>
+                                    {{ $service->name }}
+                                </label>
+                            </div>
+                        @endforeach
+                    </div>
+                </fieldset>
 
-      <div class="grid grid-cols-3 gap-6">
-        <!-- Stanze -->
-        <div>
-          <label for="rooms" class="block text-sm font-medium text-gray-700">Stanze</label>
-          <input
-            type="number"
-            id="rooms"
-            name="rooms"
-            value="3"
-            class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
-            required
-          />
-        </div>
-
-        <!-- Letti -->
-        <div>
-          <label for="beds" class="block text-sm font-medium text-gray-700">Letti</label>
-          <input
-            type="number"
-            id="beds"
-            name="beds"
-            value="2"
-            class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
-            required
-          />
-        </div>
-
-        <!-- Bagni -->
-        <div>
-          <label for="bathrooms" class="block text-sm font-medium text-gray-700">Bagni</label>
-          <input
-            type="number"
-            id="bathrooms"
-            name="bathrooms"
-            value="1"
-            class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
-            required
-          />
-        </div>
-      </div>
-
-      <!-- Metri Quadri con linea trascinabile -->
-      <div>
-        <label for="square_meters" class="block text-sm font-medium text-gray-700">Metri Quadri</label>
-        <input
-          type="range"
-          id="square_meters"
-          name="square_meters"
-          min="20"
-          max="200"
-          value="75"
-          class="mt-1 w-full"
-          oninput="this.nextElementSibling.value = this.value"
-        />
-        <output>75</output> m²
-      </div>
-
-      <!-- Indirizzo -->
-      <div>
-        <label for="address" class="block text-sm font-medium text-gray-700">Indirizzo</label>
-        <input
-          type="text"
-          id="address"
-          name="address"
-          value="Via Roma, 123"
-          class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
-          required
-        />
-        <p id="address-result">
-            Cercavi l'indirizzo: <span id="address-result-text"></span>
-        </p>
-      </div>
-
-         <!-- Servizi -->
-         <div>
-            <label for="services" class="block text-sm font-medium text-gray-700">Servizi</label>
-            <div class="space-y-2">
-              @foreach ($services as $service)
-                <div class="flex items-center">
-                  <input type="checkbox" id="service_{{ $service->id }}" name="services[]" value="{{ $service->id }}" class="mr-2 h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring focus:ring-blue-200">
-                  <label for="service_{{ $service->id }}" class="ml-2 text-sm font-medium text-gray-700">{{ $service->name }}</label>
-                </div>
-              @endforeach
-              <br>
-              <label for="sponsorships" class="block text-sm font-medium text-gray-700">Sponsorizzazioni</label>
-              @foreach ($sponsorships as $sponsorship)
-                <div class="flex items-center">
-                  <input type="radio" id="sponsorship_{{ $sponsorship->id }}" name="sponsorship" value="{{ $sponsorship->id }}" class="mr-2 h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring focus:ring-blue-200">
-                  <label for="sponsorship_{{ $sponsorship->id }}" class="ml-2 text-sm font-medium text-gray-700">{{ $sponsorship->name }}</label>
-                </div>
-              @endforeach
+                <fieldset class="border border-gray-300 rounded-lg p-4 mb-4">
+                    <legend class="text-sm font-medium text-gray-700">Sponsorizzazioni</legend>
+                    <div class="space-y-2">
+                        @foreach ($sponsorships as $sponsorship)
+                            <div class="flex items-center">
+                                <input type="radio" id="sponsorship_{{ $sponsorship->id }}" name="sponsorship" value="{{ $sponsorship->id }}" class="mr-2 h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring focus:ring-blue-200">
+                                <label for="sponsorship_{{ $sponsorship->id }}" class="ml-2 text-sm font-medium text-gray-700">{{ $sponsorship->name }}</label>
+                            </div>
+                        @endforeach
+                    </div>
+                </fieldset>
             </div>
-          </div>
 
-      <!-- Immagine Copertina -->
-      <div>
-        <label for="cover_image" class="block text-sm font-medium text-gray-700">Carica Immagine di copertina (Upload)</label>
-        <input
-          type="file"
-          id="cover_image"
-          name="cover_image"
-          accept="image/*"
-          class="hidden"
-          required
-          onchange="previewImage(event)"
-        />
-        <label for="cover_image" class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500 cursor-pointer">
-          Seleziona immagine
-        </label>
-      </div>
-      <div>
-        <img id="image-preview" alt="Immagine Copertina" class="w-1/2 h-auto" style="display: none;">
-        <button id="remove-image-button" class="bg-red-500 text-white px-4 py-2 rounded-md shadow hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2" style="display: none;" onclick="resetFileInput()">Rimuovi Immagine</button>
-      </div>
+            <!-- Colonna Destra: Dettagli Appartamento -->
+            <div class="col-span-2">
+                <div class="grid grid-cols-1 gap-6">
+                    <!-- Titolo -->
+                    <div>
+                        <label for="title" class="block text-sm font-medium text-gray-700">Titolo</label>
+                        <input
+                            type="text"
+                            id="title"
+                            name="title"
+                            value="Appartamento in Centro"
+                            class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
+                            required
+                        />
+                    </div>
 
-      <!-- carica altre immagini non copertina -->
-      <div id="image-group-container">
-          <label class="block text-sm font-medium text-gray-700">Carica altre immagini (Upload)</label>
-          <div class="row-image-group-container flex">
+                    <div class="grid grid-cols-3 gap-6">
+                        <!-- Stanze -->
+                        <div>
+                            <label for="rooms" class="block text-sm font-medium text-gray-700">Stanze</label>
+                            <input
+                                type="number"
+                                id="rooms"
+                                name="rooms"
+                                value="3"
+                                class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
+                                required
+                            />
+                        </div>
 
-            <img class="w-48" id="image-preview-group" alt="Immagine Copertina" style="display: none;">
+                        <!-- Letti -->
+                        <div>
+                            <label for="beds" class="block text-sm font-medium text-gray-700">Letti</label>
+                            <input
+                                type="number"
+                                id="beds"
+                                name="beds"
+                                value="2"
+                                class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
+                                required
+                            />
+                        </div>
 
-              <input
-                  type="file"
-                  name="images[]"
-                  class="image-group-input mt-1 block w-48 border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
-                  onchange="previewImageNonCover(event)"
-              >
-              <input
-                  class="w-48"
-                  type="text"
-                  name="image_description[]"
-                  placeholder="Descrizione dell'immagine"
-              >
-              <button id="add-row-add-image-input" class="ml-2 bg-blue-500 text-white px-4 py-2 rounded-md shadow hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Aggiungi riga</button>
-          </div>
-      </div>
+                        <!-- Bagni -->
+                        <div>
+                            <label for="bathrooms" class="block text-sm font-medium text-gray-700">Bagni</label>
+                            <input
+                                type="number"
+                                id="bathrooms"
+                                name="bathrooms"
+                                value="1"
+                                class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
+                                required
+                            />
+                        </div>
+                    </div>
 
+                    <!-- Metri Quadri con linea trascinabile -->
+                    <div>
+                        <label for="square_meters" class="block text-sm font-medium text-gray-700">Metri Quadri</label>
+                        <input
+                            type="range"
+                            id="square_meters"
+                            name="square_meters"
+                            min="20"
+                            max="200"
+                            value="75"
+                            class="mt-1 w-full"
+                            oninput="this.nextElementSibling.value = this.value"
+                        />
+                        <output>75</output> m²
+                    </div>
 
+                    <!-- Indirizzo -->
+                    <div>
+                        <label for="address" class="block text-sm font-medium text-gray-700">Indirizzo</label>
+                        <input
+                            type="text"
+                            id="address"
+                            name="address"
+                            value="Via Roma, 123"
+                            class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
+                            required
+                        />
+                        <p id="address-result">
+                            Cercavi l'indirizzo: <span id="address-result-text"></span>
+                        </p>
+                    </div>
 
+                    <div class="flex justify-between">
+                        <!-- Immagine Copertina -->
+                        <div class="w-1/2 pr-2"> <!-- 50% di larghezza e padding a destra -->
+                            <label for="cover_image" class="block text-sm font-medium text-gray-700">Carica Immagine di copertina (Upload)</label>
+                            <input
+                                type="file"
+                                id="cover_image"
+                                name="cover_image"
+                                accept="image/*"
+                                class="hidden"
+                                required
+                                onchange="previewImage(event)"
+                            />
+                            <label for="cover_image" class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500 cursor-pointer">
+                                Seleziona immagine
+                            </label>
+                            <div>
+                                <img id="image-preview" alt="Immagine Copertina" class="w-full h-auto mt-2" style="display: none;">
+                                <button id="remove-image-button" class="bg-red-500 text-white px-4 py-2 rounded-md shadow hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2" style="display: none;" onclick="resetFileInput()">Rimuovi Immagine</button>
+                            </div>
+                        </div>
 
-      <!-- Visibilità -->
-      <div class="flex items-center">
-        <input type="hidden" name="is_visible" value="0">
-        <input type="checkbox" name="is_visible" id="is_visible" value="1" class="mr-2 h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring focus:ring-blue-200" checked>
-        <label for="is_visible" class="ml-2 text-sm font-medium text-gray-700">Visibile</label>
-      </div>
+                        <!-- carica altre immagini non copertina -->
+                        <div class="w-1/2 pl-2"> <!-- 50% di larghezza e padding a sinistra -->
+                            <label class="block text-sm font-medium text-gray-700">Carica altre immagini (Upload)</label>
+                            <div class="row-image-group-container flex flex-col">
+                                <div class="max-w-sm">
+                                    <form>
+                                        <label class="block">
+                                            <span class="sr-only">Scegli foto del profilo</span>
+                                            <input type="file" name="images[]" class="block w-full text-sm text-gray-500
+                                                file:me-4 file:py-2 file:px-4
+                                                file:rounded-lg file:border-0
+                                                file:text-sm file:font-semibold
+                                                file:bg-blue-600 file:text-white
+                                                hover:file:bg-blue-700
+                                                file:disabled:opacity-50 file:disabled:pointer-events-none
+                                                dark:text-neutral-500
+                                                dark:file:bg-blue-500
+                                                dark:hover:file:bg-blue-400
+                                            " onchange="previewImageNonCover(event)">
+                                        </label>
+                                    </form>
+                                </div>
+                                <div class="flex items-center mt-4">
+                                    <input
+                                        class="w-full text-sm text-gray-500 border border-gray-300 rounded-md shadow-sm p-2 focus:border-yellow-500 focus:ring-yellow-500"
+                                        type="text"
+                                        name="image_description[]"
+                                        placeholder="Descrizione dell'immagine"
+                                        required
+                                    >
+                                    <button id="add-row-add-image-input" class="ml-2 bg-blue-600 text-white px-4 py-2 rounded-md shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2">Aggiungi</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-      <!-- Descrizione -->
-      <div>
-        <label for="description" class="block text-sm font-medium text-gray-700">Descrizione</label>
-        <textarea
-          id="description"
-          name="description"
-          placeholder="Es. Appartamento luminoso e spazioso nel cuore della città."
-          class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
-          required
-        >Appartamento luminoso e spazioso nel cuore della città.</textarea>
-      </div>
+                    <!-- Visibilità -->
+                    <div class="flex items-center">
+                        <input type="hidden" name="is_visible" value="0">
+                        <input type="checkbox" name="is_visible" id="is_visible" value="1" class="mr-2 h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring focus:ring-blue-200" checked>
+                        <label for="is_visible" class="ml-2 text-sm font-medium text-gray-700">Visibile</label>
+                    </div>
 
-      <!-- Pulsante Submit -->
-      <div class="text-center">
-        <button
-          id="submit-button"
-          type="submit"
-          class="bg-yellow-500 text-white font-medium px-6 py-2 rounded-md shadow hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2"
-        >
-          Crea Appartamento
-        </button>
-      </div>
-    </div>
-  </form>
+                    <!-- Descrizione -->
+                    <div class="col-span-full">
+                        <label for="about" class="block text-lg font-semibold text-gray-900">Descrizione</label>
+                        <div class="mt-2">
+                            <textarea
+                                id="about"
+                                name="about"
+                                placeholder="Scrivi qui la descrizione dell'appartamento..."
+                                class="p-4 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500 h-32 resize-none"
+                                required
+                            ></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Pulsante Submit -->
+                    <div class="text-center">
+                        <button
+                            id="submit-button"
+                            type="submit"
+                            class="bg-yellow-500 text-white font-medium px-6 py-2 rounded-md shadow hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2"
+                        >
+                            Crea Appartamento
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
 
 </div>
 
 <script>
-
-
-
   document.getElementById('address').addEventListener('input', async function() {
     const apiTomTomKey = "{{ env('API_TOMTOM_KEY') }}";
     const url = "https://api.tomtom.com/search/2/geocode/" + encodeURIComponent(this.value) + ".json?key=" + apiTomTomKey + "&limit=1&countrySet=IT&language=it-IT";
@@ -225,7 +249,6 @@
     const reader = new FileReader();
     const imagePreview = document.getElementById('image-preview');
     const file = event.target.files[0];
-
 
     // 2. se c'è un file lo legge
     if (file) {
@@ -264,8 +287,6 @@
     document.getElementById('remove-image-button').style.display = 'none';
   }
 
-
-
   // FUNZIONI PER GESTIRE LE IMMAGINI NON COPERTINA
   /**
    * Funzione per aggiungere una riga
@@ -296,7 +317,6 @@
     `;
     imageGroupContainer.insertAdjacentHTML('beforeend', newRowHTML);
 });
-
 
 /**
  * Funzione per mostrare l'immagine
@@ -332,10 +352,5 @@ document.getElementById('image-group-container').addEventListener('click', funct
         rowToDelete.remove();
     }
 });
-
-
-
-
-
 </script>
 @endsection

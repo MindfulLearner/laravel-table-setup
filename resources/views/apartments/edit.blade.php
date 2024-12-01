@@ -4,121 +4,139 @@
 {{-- form per editare un appartamento --}}
 
 <div class="max-w-3xl mx-auto bg-white shadow-lg rounded-lg p-8 mt-10">
+
+    @if ($errors->any())
+        <div class="bg-red-100 text-red-700 p-4 rounded-md mb-4">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <h1 class="text-2xl font-bold text-gray-800 mb-6 text-center">Aggiorna Appartamento</h1>
-    <form action="{{ route('apartments.update', $apartment->id) }}" method="POST">
-      @csrf
-      @method('PUT')
-      <div class="grid grid-cols-1 gap-6">
-        <!-- Titolo -->
-        <div>
-          <label for="title" class="block text-sm font-medium text-gray-700">Titolo</label>
-          <input
-            type="text"
-            id="title"
-            name="title"
-            value="{{ old('title', $apartment->title) }}"
-            placeholder="Inserisci un titolo..."
-            class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
-            required
-          />
-        </div>
+    <form action="{{ route('apartments.update', $apartment->id) }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        @method('PUT')
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Colonna Sinistra: Servizi e Sponsorizzazioni -->
+            <div class="col-span-1">
+                <fieldset class="border border-gray-300 rounded-lg p-4 mb-4">
+                    <legend class="text-sm font-medium text-gray-700">Servizi</legend>
+                    <div class="space-y-2">
+                        @foreach ($services as $service)
+                            <div class="flex items-center">
+                                <input type="checkbox" id="service_{{ $service->id }}" name="services[]" value="{{ $service->id }}" class="mr-2 h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring focus:ring-blue-200" @if($apartment->services->contains($service->id)) checked @endif>
+                                <label for="service_{{ $service->id }}" class="ml-2 text-sm font-medium text-gray-700">{{ $service->name }}</label>
+                            </div>
+                        @endforeach
+                    </div>
+                </fieldset>
 
-        <!-- Stanze, Letti, Bagni -->
-        <div class="grid grid-cols-3 gap-6">
-          <!-- Stanze -->
-          <div>
-            <label for="rooms" class="block text-sm font-medium text-gray-700">Stanze</label>
-            <input
-              type="number"
-              id="rooms"
-              name="rooms"
-              value="{{ old('rooms', $apartment->rooms) }}"
-              placeholder="Inserisci il numero di stanze..."
-              class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
-              required
-            />
-          </div>
+                <fieldset class="border border-gray-300 rounded-lg p-4 mb-4">
+                    <legend class="text-sm font-medium text-gray-700">Sponsorizzazioni</legend>
+                    <div class="space-y-2">
+                        @foreach ($sponsorships as $sponsorship)
+                            <div class="flex items-center">
+                                <input type="radio" id="sponsorship_{{ $sponsorship->id }}" name="sponsorship" value="{{ $sponsorship->id }}" class="mr-2 h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring focus:ring-blue-200" @if($apartment->sponsorships->contains($sponsorship->id)) checked @endif>
+                                <label for="sponsorship_{{ $sponsorship->id }}" class="ml-2 text-sm font-medium text-gray-700">{{ $sponsorship->name }}</label>
+                            </div>
+                        @endforeach
+                    </div>
+                </fieldset>
+            </div>
 
-          <!-- Letti -->
-          <div>
-            <label for="beds" class="block text-sm font-medium text-gray-700">Letti</label>
-            <input
-              type="number"
-              id="beds"
-              name="beds"
-              value="{{ old('beds', $apartment->beds) }}"
-              placeholder="Inserisci il numero di letti..."
-              class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
-              required
-            />
-          </div>
+            <!-- Colonna Destra: Dettagli Appartamento -->
+            <div class="col-span-2">
+                <div class="grid grid-cols-1 gap-6">
+                    <!-- Titolo -->
+                    <div>
+                        <label for="title" class="block text-sm font-medium text-gray-700">Titolo</label>
+                        <input
+                            type="text"
+                            id="title"
+                            name="title"
+                            value="{{ old('title', $apartment->title) }}"
+                            placeholder="Inserisci un titolo..."
+                            class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
+                            required
+                        />
+                    </div>
 
-          <!-- Bagni -->
-          <div>
-            <label for="bathrooms" class="block text-sm font-medium text-gray-700">Bagni</label>
-            <input
-              type="number"
-              id="bathrooms"
-              name="bathrooms"
-              value="{{ old('bathrooms', $apartment->bathrooms) }}"
-              placeholder="Inserisci il numero di bagni..."
-              class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
-              required
-            />
-          </div>
-        </div>
+                    <div class="grid grid-cols-3 gap-6">
+                        <!-- Stanze -->
+                        <div>
+                            <label for="rooms" class="block text-sm font-medium text-gray-700">Stanze</label>
+                            <input
+                                type="number"
+                                id="rooms"
+                                name="rooms"
+                                value="{{ old('rooms', $apartment->rooms) }}"
+                                placeholder="Inserisci il numero di stanze..."
+                                class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
+                                required
+                            />
+                        </div>
 
-        <!-- Metri Quadri con linea trascinabile -->
-        <div>
-          <label for="square_meters" class="block text-sm font-medium text-gray-700">Metri Quadri</label>
-          <input
-            type="range"
-            id="square_meters"
-            name="square_meters"
-            min="20"
-            max="200"
-            value="{{ old('square_meters', $apartment->square_meters) }}"
-            class="mt-1 w-full"
-            oninput="this.nextElementSibling.value = this.value"
-          />
-          <output>{{ old('square_meters', $apartment->square_meters) }}</output> m²
-        </div>
+                        <!-- Letti -->
+                        <div>
+                            <label for="beds" class="block text-sm font-medium text-gray-700">Letti</label>
+                            <input
+                                type="number"
+                                id="beds"
+                                name="beds"
+                                value="{{ old('beds', $apartment->beds) }}"
+                                placeholder="Inserisci il numero di letti..."
+                                class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
+                                required
+                            />
+                        </div>
 
-        <!-- Indirizzo -->
-        <div>
-          <label for="address" class="block text-sm font-medium text-gray-700">Indirizzo</label>
-          <input
-            type="text"
-            id="address"
-            name="address"
-            value="{{ old('address', $apartment->address) }}"
-            placeholder="Inserisci l'indirizzo..."
-            class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
-            required
-          />
-        </div>
+                        <!-- Bagni -->
+                        <div>
+                            <label for="bathrooms" class="block text-sm font-medium text-gray-700">Bagni</label>
+                            <input
+                                type="number"
+                                id="bathrooms"
+                                name="bathrooms"
+                                value="{{ old('bathrooms', $apartment->bathrooms) }}"
+                                placeholder="Inserisci il numero di bagni..."
+                                class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
+                                required
+                            />
+                        </div>
+                    </div>
 
-        <!-- Servizi -->
-        <div>
-          <label for="services" class="block text-sm font-medium text-gray-700">Servizi</label>
-          <div class="space-y-2">
-            @foreach ($services as $service)
-              <div class="flex items-center">
-                <input type="checkbox" id="service_{{ $service->id }}" name="services[]" value="{{ $service->id }}" class="mr-2 h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring focus:ring-blue-200" @if($apartment->services->contains($service->id)) checked @endif>
-                <label for="service_{{ $service->id }}" class="ml-2 text-sm font-medium text-gray-700">{{ $service->name }}</label>
-              </div>
-            @endforeach
+                    <!-- Metri Quadri con linea trascinabile -->
+                    <div>
+                        <label for="square_meters" class="block text-sm font-medium text-gray-700">Metri Quadri</label>
+                        <input
+                            type="range"
+                            id="square_meters"
+                            name="square_meters"
+                            min="20"
+                            max="200"
+                            value="{{ old('square_meters', $apartment->square_meters) }}"
+                            class="mt-1 w-full"
+                            oninput="this.nextElementSibling.value = this.value"
+                        />
+                        <output>{{ old('square_meters', $apartment->square_meters) }}</output> m²
+                    </div>
 
-            <br>
-            <label for="sponsorships" class="block text-sm font-medium text-gray-700">Sponsorizzazioni</label>
-            @foreach ($sponsorships as $sponsorship)
-              <div class="flex items-center">
-                <input type="radio" id="sponsorship_{{ $sponsorship->id }}" name="sponsorship" value="{{ $sponsorship->id }}" class="mr-2 h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring focus:ring-blue-200" @if($apartment->sponsorships->contains($sponsorship->id)) checked @endif>
-                <label for="sponsorship_{{ $sponsorship->id }}" class="ml-2 text-sm font-medium text-gray-700">{{ $sponsorship->name }}</label>
-              </div>
-            @endforeach
-          </div>
-        </div>
+                    <!-- Indirizzo -->
+                    <div>
+                        <label for="address" class="block text-sm font-medium text-gray-700">Indirizzo</label>
+                        <input
+                            type="text"
+                            id="address"
+                            name="address"
+                            value="{{ old('address', $apartment->address) }}"
+                            placeholder="Inserisci l'indirizzo..."
+                            class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
+                            required
+                        />
+                    </div>
 
             <!-- Immagine copertina -->
             <div>
@@ -152,18 +170,17 @@
                 <label class="block text-lg font-semibold text-gray-800 mb-4">Le tue immagini caricate</label>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     @foreach ($images as $image)
-                        <div class="bg-white rounded-xl shadow-lg overflow-hidden transition-transform hover:scale-105">
+                        <div class="bg-white rounded-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105">
                             <div class="relative">
                                 <img
                                     src="{{ $image->image_path }}"
                                     alt="Immagine appartamento"
-                                    class="w-full h-48 object-cover"
+                                    class="w-full h-48 object-cover transition duration-300 ease-in-out"
                                 />
-                                {{-- form per eliminare l'immagine --}}
-                                <form action="{{ route('apartments.destroyImage', $image->id) }}" method="POST">
+                                <form action="{{ route('apartments.destroyImage', $image->id) }}" method="POST" class="absolute top-2 right-2">
                                     @csrf
                                     @method('DELETE')
-                                    <button class="bg-red-500 text-white px-4 py-2 rounded-md shadow hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
+                                    <button class="bg-red-500 text-white px-3 py-1 rounded-md shadow hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
                                         Elimina
                                     </button>
                                 </form>
@@ -224,17 +241,14 @@
       </div>
     </form>
 
-    <!-- Messaggio di successo -->
     @if(session('success'))
-      <div class="mt-6 p-4 bg-green-100 text-green-700 rounded-md">
-        <p>{{ session('success') }}</p>
-      </div>
+        <div class="mt-6 p-4 bg-green-100 text-green-700 rounded-md">
+            <p>{{ session('success') }}</p>
+        </div>
     @endif
-  </div>
+</div>
 
-  <script>
-
-
+<script>
 /**
    * Funzione per vedere l'immagine copertina
    */

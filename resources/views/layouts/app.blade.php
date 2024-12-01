@@ -15,7 +15,7 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
+        <div class="min-h-screen relative overflow-hidden" style="background-image: url('https://media.istockphoto.com/id/966305776/it/foto/milano.webp?a=1&b=1&s=612x612&w=0&k=20&c=BLJ_CBtd3Nj4vxUW8ZeVx3Znzi3RKK24wjUP-NeZWlY='); background-size: cover; filter:">
             @include('layouts.navigation')
 
             <!-- Page Heading -->
