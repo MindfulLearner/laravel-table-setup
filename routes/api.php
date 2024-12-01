@@ -20,6 +20,18 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get('geocode', function (Request $request) {
+    $apiKey = 'SooRbYbji9V5qUxAh3i2ijnD8m9ZWVZ7';
+    $url = 'https://api.tomtom.com/search/2/geocode/' . urlencode($request->indirizzo) . '.json?key=' . $apiKey . '&limit=1&countrySet=IT&language=it-IT';
+
+    $client = new \GuzzleHttp\Client();
+    $response = $client->get($url);
+
+
+    return response($response->getBody(), $response->getStatusCode())
+        ->header('Content-Type', $response->getHeader('Content-Type')[0]);
+});
+
 
 //upload
 Route::post('/upload', [ImageUploadController::class, '__invoke'])->name('apartments.upload');
