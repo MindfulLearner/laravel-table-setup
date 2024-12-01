@@ -36,6 +36,7 @@ class ApartmentApi extends Controller
      */
     public function store(Request $request)
     {
+        dd($request->all());
         $apartment = Apartment::create($request->all());
         if ($request->has('services')) {
             $apartment->services()->sync($request->input('services'));
