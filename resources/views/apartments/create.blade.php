@@ -136,7 +136,7 @@
                         </p>
                     </div>
 
-                    <div class="flex justify-between">
+                    <div class="justify-between">
                         <!-- Immagine Copertina -->
                         <div class="w-1/2 pr-2"> <!-- 50% di larghezza e padding a destra -->
                             <label for="cover_image" class="block text-sm font-medium text-gray-700">Carica Immagine di copertina (Upload)</label>
@@ -158,41 +158,33 @@
                             </div>
                         </div>
 
-                        <!-- carica altre immagini non copertina -->
-                        <div class="w-1/2 pl-2"> <!-- 50% di larghezza e padding a sinistra -->
-                            <label class="block text-sm font-medium text-gray-700">Carica altre immagini (Upload)</label>
-                            <div class="row-image-group-container flex flex-col">
-                                <div class="max-w-sm">
-                                    <form>
-                                        <label class="block">
-                                            <span class="sr-only">Scegli foto del profilo</span>
-                                            <input type="file" name="images[]" class="block w-full text-sm text-gray-500
-                                                file:me-4 file:py-2 file:px-4
-                                                file:rounded-lg file:border-0
-                                                file:text-sm file:font-semibold
-                                                file:bg-blue-600 file:text-white
-                                                hover:file:bg-blue-700
-                                                file:disabled:opacity-50 file:disabled:pointer-events-none
-                                                dark:text-neutral-500
-                                                dark:file:bg-blue-500
-                                                dark:hover:file:bg-blue-400
-                                            " onchange="previewImageNonCover(event)">
-                                        </label>
-                                    </form>
-                                </div>
-                                <div class="flex items-center mt-4">
-                                    <input
-                                        class="w-full text-sm text-gray-500 border border-gray-300 rounded-md shadow-sm p-2 focus:border-yellow-500 focus:ring-yellow-500"
-                                        type="text"
-                                        name="image_description[]"
-                                        placeholder="Descrizione dell'immagine"
-                                        required
+                          <!-- carica altre immagini non copertina -->
+                        <div id="image-group-container">
+                          <div class="flex justify-between items-center mb-2">
+                              <label class="block text-sm font-medium text-gray-700">Carica altre immagini (Upload)</label>
+                              <button id="add-row-add-image-input" class="bg-blue-500 text-white px-4 py-2 rounded-md shadow hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Aggiungi riga</button>
+                          </div>
+                          <div class="row-image-group-container flex">
+
+                            <img class="w-48" id="image-preview-group" alt="Immagine Copertina" style="display: none;">
+
+                              <div class="flex-1 space-y-3 mb-2"></div>
+                                <input
+                                    type="file"
+                                    name="images[]"
+                                    class="image-group-input w-full border-blue-300 rounded-lg shadow-lg focus:border-blue-500 focus:ring-blue-500"
+                                    onchange="previewImageNonCover(event)"
+                                >
+                                <img class="w-48 h-32 object-cover rounded-lg border-4 border-blue-300 mt-2" id="image-preview-group" alt="Anteprima immagine" style="display: none;">
+                                <input
+                                    type="text"
+                                    name="image_description[]"
+                                    class="w-full max-w-xs border-blue-300 rounded-lg shadow-lg focus:border-blue-500 focus:ring-blue-500 mt-2"
+                                    placeholder="Descrizione dell'immagine"
                                     >
-                                    <button id="add-row-add-image-input" class="ml-2 bg-blue-600 text-white px-4 py-2 rounded-md shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2">Aggiungi</button>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
+                          </div>
+                      </div>
 
                     <!-- Visibilità -->
                     <div class="flex items-center">
@@ -203,11 +195,11 @@
 
                     <!-- Descrizione -->
                     <div class="col-span-full">
-                        <label for="about" class="block text-lg font-semibold text-gray-900">Descrizione</label>
+                        <label for="description" class="block text-lg font-semibold text-gray-900">Descrizione</label>
                         <div class="mt-2">
                             <textarea
-                                id="about"
-                                name="about"
+                                id="description"
+                                name="description"
                                 placeholder="Scrivi qui la descrizione dell'appartamento..."
                                 class="p-4 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500 h-32 resize-none"
                                 required
@@ -293,21 +285,23 @@
    */
   document.getElementById('add-row-add-image-input').addEventListener('click', function(event) {
     event.preventDefault();
-
     const imageGroupContainer = document.querySelector('#image-group-container');
     const newRowHTML = `
         <div class="row-image-group-container flex">
-            <img class="w-48" alt="Immagine Copertina" style="display: none;">
+          <img class="w-48" id="image-preview-group" alt="Immagine Copertina" style="display: none;">
+                        <div class="flex-1 space-y-3">
+        <input
+            type="file"
+            name="images[]"
+            class="image-group-input w-full border-blue-300 rounded-lg shadow-lg focus:border-blue-500 focus:ring-blue-500"
+            onchange="previewImageNonCover(event)"
+        >
+        <img class="w-48 h-32 object-cover rounded-lg border-4 border-blue-300 mt-2" id="image-preview-group" alt="Anteprima immagine" style="display: none;">
+        <div class="flex items-center">
             <input
-                type="file"
-                name="images[]"
-                class="image-group-input mt-1 block w-48 border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
-                onchange="previewImageNonCover(event)"
-            >
-            <input
-                class="w-48"
                 type="text"
                 name="image_description[]"
+                class="w-full max-w-xs border-blue-300 rounded-lg shadow-lg focus:border-blue-500 focus:ring-blue-500 mt-2"
                 placeholder="Descrizione dell'immagine"
             >
             <button class="ml-2 bg-red-500 text-white px-4 py-2 rounded-md shadow hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 delete-row">
