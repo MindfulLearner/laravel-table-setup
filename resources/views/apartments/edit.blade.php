@@ -183,7 +183,7 @@
                                     class="w-full h-48 object-cover transition duration-300 ease-in-out"
                                 />
                                 {{-- cacnella per eliminare l'immagine --}}
-                                <button type="button" class="bg-red-600 text-white px-5 py-2 rounded-lg shadow-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-offset-2" onclick="deleteImage({{ $image->id }})">
+                                <button type="button" class="absolute top-2 right-2 bg-red-600 text-white px-3 py-1 rounded-full shadow-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-offset-2" onclick="deleteImage({{ $image->id }})">
                                     Elimina
                                 </button>
                             </div>
@@ -421,26 +421,37 @@ document.getElementById('image-group-container').addEventListener('click', funct
 });
 
 function deleteImage(imageId) {
-    if (confirm("sei sicuro di voler eliminare questa immagine?")) {
-        const form = document.createElement('form');
-        form.method = 'POST';
-        form.action = `/images/${imageId}`;
+    Swal.fire({
+        title: 'Sei sicuro?',
+        text: "Non potrai recuperare questa immagine!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sì, elimina!',
+        cancelButtonText: 'Annulla'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = `/images/${imageId}`;
 
-        const csrfToken = document.createElement('input');
-        csrfToken.type = 'hidden';
-        csrfToken.name = '_token';
-        csrfToken.value = '{{ csrf_token() }}';
+            const csrfToken = document.createElement('input');
+            csrfToken.type = 'hidden';
+            csrfToken.name = '_token';
+            csrfToken.value = '{{ csrf_token() }}';
 
-        const methodField = document.createElement('input');
-        methodField.type = 'hidden';
-        methodField.name = '_method';
-        methodField.value = 'DELETE';
+            const methodField = document.createElement('input');
+            methodField.type = 'hidden';
+            methodField.name = '_method';
+            methodField.value = 'DELETE';
 
-        form.appendChild(csrfToken);
-        form.appendChild(methodField);
-        document.body.appendChild(form);
-        form.submit();
-    }
+            form.appendChild(csrfToken);
+            form.appendChild(methodField);
+            document.body.appendChild(form);
+            form.submit();
+        }
+    });
 }
 
   </script>

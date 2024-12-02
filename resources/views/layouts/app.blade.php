@@ -15,6 +15,7 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen relative overflow-hidden" style="background-image: url('https://media.istockphoto.com/id/966305776/it/foto/milano.webp?a=1&b=1&s=612x612&w=0&k=20&c=BLJ_CBtd3Nj4vxUW8ZeVx3Znzi3RKK24wjUP-NeZWlY='); background-size: cover; filter:">
