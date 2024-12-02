@@ -55,12 +55,23 @@
                     <a href="{{ route('apartments.edit', $apartment->id) }}" class="bg-blue-500 text-white px-4 py-2 rounded mr-2">
                       Modifica
                     </a>
-                    <form action="{{ route('apartments.destroy', $apartment->id) }}" method="POST" class="inline">
-                      @csrf
-                      @method('DELETE')
-                      <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded deleteButton">
+
+                      <button class="open-modal bg-red-500 text-white px-4 py-2 rounded" data-apartment-id="{{ $apartment->id }}">
                         Cancella
                       </button>
+
+                      <form action="{{ route('apartments.destroy', $apartment->id) }}" method="POST" class="inline">
+                        @csrf
+                        @method('DELETE')
+                      <div id="modal-container-{{ $apartment->id }}" class="hidden fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                        <div class="bg-white p-6 rounded-lg shadow-lg mx-auto">
+                          <p class="mb-4">sei sicuro di voler cancellare l'appartamento {{ $apartment->title }}?</p>
+                          <div class="flex justify-end">
+                            <button type="button" class="close-modal bg-blue-500 text-white px-4 py-2 rounded mr-2">Chiudi</button>
+                            <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded">Cancella</button>
+                          </div>
+                        </div>
+                      </div>
                     </form>
                   @endif
                   <a href="{{ route('apartments.show', $apartment->id) }}" class="bg-green-500 text-white px-4 py-2 rounded">
@@ -70,16 +81,35 @@
               </div>
             </div>
               @endforeach
-              </div>
               <script>
                 // Logica conferma cancellazione
+
                 document.querySelectorAll(".deleteButton").forEach(function(button) {
                     button.addEventListener("click", function(event) {
                         if (!confirm("Sei sicuro di voler cancellare questo appartamento?")) {
                             event.preventDefault();
-                            // Manda a url di cancellazione
-                            // Esce solo se si clicca cancel
                         }
+                    });
+                });
+
+                document.addEventListener("DOMContentLoaded", () => {
+                    document.querySelectorAll(".open-modal").forEach(button => {
+                        button.addEventListener("click", () => {
+                            const apartmentId = button.getAttribute("data-apartment-id");
+                            const modalContainer = document.getElementById(`modal-container-${apartmentId}`);
+                            if (modalContainer) {
+                                modalContainer.classList.remove("hidden");
+                            }
+                        });
+                    });
+
+                    document.querySelectorAll(".close-modal").forEach(button => {
+                        button.addEventListener("click", () => {
+                            const modalContainer = button.closest(".bg-black");
+                            if (modalContainer) {
+                                modalContainer.classList.add("hidden");
+                            }
+                        });
                     });
                 });
             </script>
