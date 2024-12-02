@@ -18,7 +18,7 @@
             <!-- Hobby Plan -->
             <div class="p-6 bg-gray-800 rounded-lg text-center shadow-lg border-4 border-[#b49578] w-full md:w-80 mx-auto flex flex-col justify-between h-full">
                 <div>
-                    <form action="{{ route('sponsors.createBronze') }}" method="GET">
+                    <form action="{{ route('bronze') }}" method="GET">
                         @csrf
                         <h2 class="text-2xl font-bold mb-4">Bronze</h2>
                         <p class="text-4xl font-bold mb-6">2,99 €</p>
@@ -36,7 +36,7 @@
             <!-- Pro Plan -->
             <div class="p-6 bg-gradient-to-br from-purple-600 to-yellow-400 rounded-lg text-center shadow-lg border-4 border-[#b49578] w-full md:w-80 mx-auto flex flex-col justify-between h-full">
                 <div>
-                    <form action="{{ route('sponsors.createSilver') }}" method="GET">
+                    <form action="{{ route('silver') }}" method="GET">
                         @csrf
                         <h2 class="text-2xl font-bold mb-4">Silver</h2>
                         <p class="text-4xl font-bold mb-6">5.99 €</p>
@@ -54,7 +54,7 @@
             <!-- Business Plan -->
             <div class="p-6 bg-gray-800 rounded-lg text-center shadow-lg border-4 border-[#b49578] w-full md:w-80 mx-auto flex flex-col justify-between h-full">
                 <div>
-                    <form action="{{ route('sponsors.createGold') }}" method="GET">
+                    <form action="{{ route('gold') }}" method="GET">
                         @csrf
                         <h2 class="text-2xl font-bold mb-4">Gold</h2>
                         <p class="text-4xl font-bold mb-6">9.99 €</p>
@@ -83,7 +83,9 @@
             <div class="flex justify-center items-center space-x-8">
                 <img src="https://images.unsplash.com/photo-1496200186974-4293800e2c20?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8bG9nb3xlbnwwfHwwfHx8Mg%3D%3D" alt="Logo Azienda 1" class="h-16">
                 <img src="https://images.unsplash.com/photo-1620288627223-53302f4e8c74?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8bG9nb3xlbnwwfHwwfHx8Mg%3D%3D" alt="Logo Azienda 2" class="h-16">
-                <img src="https://images.unsplash.com/photo-1562783912-21ad31ee2a83?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fGxvZ298ZW58MHx8MHx8fDI%3D" alt="Logo Azienda 3" class="h-16">
+                <img src="https://cdn2.unrealengine.com/12br-delay-social-news-header-02-1920x1080-119208936.jpg" alt="Logo Azienda 3" class="h-16">
+                <img src="https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bG9nb3xlbnwwfHwwfHx8Mg%3D%3D" alt="Logo Azienda 4" class="h-16">
+                <img src="https://images.unsplash.com/photo-1521747116042-5a810fda9664?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bG9nb3xlbnwwfHwwfHx8Mg%3D%3D" alt="Logo Azienda 5" class="h-16">
             </div>
         </div>
 
