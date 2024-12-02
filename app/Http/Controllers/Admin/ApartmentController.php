@@ -210,6 +210,7 @@ class ApartmentController extends Controller
 
         $apartment = Apartment::findOrFail($id);
 
+
         foreach ($apartment->images as $image) {
             if (strpos($image->image_path, "https://mybucketlaravel.s3.eu-west-3.amazonaws.com/") !== false) {
                 $this->deleteImage($image->image_path);

@@ -28,9 +28,7 @@ class ImageUploadController extends Controller
      {
          $image = Image::findOrFail($id);
 
-         if (strpos($image->image_path, "https://mybucketlaravel.s3.eu-west-3.amazonaws.com/") !== false) {
-            $this->deleteImage($image->image_path);
-         }
+
          $currentEditPage = Apartment::findOrFail($image->apartment_id);
 
          // controlla se è l'ultima immagine
@@ -38,7 +36,9 @@ class ImageUploadController extends Controller
              return redirect()->route('apartments.edit', $image->apartment_id)
                  ->withErrors(['error' => 'Devi tenere almeno un\'immagine']);
          }
-
+    if (strpos($image->image_path, "https://mybucketlaravel.s3.eu-west-3.amazonaws.com/") !== false) {
+            $this->deleteImage($image->image_path);
+         }
          $image->delete();
          return redirect()->route('apartments.edit', $currentEditPage->id);
      }
