@@ -12,7 +12,6 @@
             </ul>
         </div>
     @endif
-
     <h1 class="text-2xl font-bold text-gray-800 mb-6 text-center">Crea un Nuovo Appartamento</h1>
     <form action="{{ route('apartments.store') }}" enctype="multipart/form-data" method="POST" onsubmit="return validateForm()">
         @csrf
@@ -29,7 +28,7 @@
                             <div class="flex items-center">
                                 <input type="checkbox" id="service_{{ $service->id }}" name="services[]" value="{{ $service->id }}" class="mr-2 h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring focus:ring-blue-200">
                                 <label for="service_{{ $service->id }}" class="ml-2 text-sm font-medium text-gray-700">
-                                    <i class="fas fa-check-circle text-blue-500"></i>
+                                    <i class="{{ getServiceIcon($service->name) }} text-gray-700 mr-2 w-4"></i>
                                     {{ $service->name }}
                                 </label>
                             </div>
@@ -429,3 +428,27 @@ function validateForm() {
 }
 </script>
 @endsection
+@php
+function getServiceIcon($serviceName) {
+    switch ($serviceName) {
+        case 'WiFi':
+            return 'fas fa-wifi';
+        case 'Parcheggio':
+            return 'fas fa-parking';
+        case 'Silver':
+            return 'fas fa-medal';
+        case 'Aria Condizionata':
+            return 'fas fa-wind';
+        case 'Cucina':
+            return 'fas fa-utensils';
+        case 'Lavatrice':
+            return 'fas fa-tshirt';
+        case 'TV':
+            return 'fas fa-tv';
+        case 'Riscaldamento':
+            return 'fas fa-thermometer-half';
+        default:
+            return 'fas fa-check-circle'; 
+    }
+}
+@endphp
