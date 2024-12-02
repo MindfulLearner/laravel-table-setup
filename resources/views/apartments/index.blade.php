@@ -44,11 +44,6 @@
                           @endforeach
                       </span>
                   </p>
-                  <p>
-                      @foreach ($apartment->sponsorships as $sponsorship)
-                          <span class="text-green-500 font-semibold">Sponsorizzato: {{ $sponsorship->name }}</span>@if (!$loop->last)<span class="text-gray-500"> | </span>@endif
-                      @endforeach
-                  </p>
                 </div>
                 <div class="mt-4 flex justify-between">
                   @if ($apartment->user_id === $superId)
