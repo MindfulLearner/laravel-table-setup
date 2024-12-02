@@ -70,17 +70,18 @@ class ApartmentController extends Controller
             'beds' => 'required|integer|min:1|max:10',
             'bathrooms' => 'required|integer|min:1|max:10',
             'services' => 'required|array',
-            'sponsorship' => 'required|integer',
             'description' => 'required|string|max:255',
             'cover_image' => 'required|image|mimes:jpeg,jpg,png,gif,svg|max:2048',
             'address' => 'required|string|max:255',
             'is_visible' => 'required|boolean',
         ]);
 
+
         $existingApartment = Apartment::where('address', $request->address)->first();
         if ($existingApartment) {
-            return redirect()->back()->withErrors(['address' => 'Questo indirizzo esiste già nel database.']);
+            return redirect()->back()->withInput($request->all())->withErrors(['address' => 'Questo indirizzo esiste già nel database.']);
         }
+
 
 
         if ($request->file('images')) {
@@ -98,6 +99,9 @@ class ApartmentController extends Controller
         $data['user_id'] = $user->id;
         $data['cover_image'] = $imageUrl;
         $arrayAddress = $this->getAddress($data['address']);
+        if (!$arrayAddress) {
+            return redirect()->back()->withInput($request->all())->withErrors(['address' => 'Indirizzo non valido o non trovato.']);
+        }
         $data['address'] = $arrayAddress['address'];
         $data['latitude'] = $arrayAddress['latitude'];
         $data['longitude'] = $arrayAddress['longitude'];
@@ -105,10 +109,10 @@ class ApartmentController extends Controller
         //  controllo se l'indirizzo esiste già nel database
 
 
+
         // creo l'appartamento
         $apartment = Apartment::create($data);
         $apartment->services()->sync($data['services']);
-        $apartment->sponsorships()->sync($data['sponsorship']);
 
         if ($request->file('images')) {
             for ($i = 0; $i < count($images); $i++) {
@@ -194,7 +198,6 @@ class ApartmentController extends Controller
         }
         $apartment->update($data);
         $apartment->services()->sync($data['services']);
-        $apartment->sponsorships()->sync($data['sponsorship']);
         return redirect()->route('dashboard')->with('success', 'Appartamento aggiornato con successo');
     }
 
@@ -230,6 +233,12 @@ class ApartmentController extends Controller
         $url = "https://api.tomtom.com/search/2/geocode/" . urlencode($indirizzo) . ".json?key=$apiTomTomKey&limit=1&countrySet=IT&language=it-IT";
         $response = Http::get($url);
         $response = $response->json();
+
+        // Controlla se ci sono risultati
+        if (empty($response['results'])) {
+            return false;
+        }
+
         $infoArrayAddress['latitude'] = $response['results'][0]['position']['lat'];
         $infoArrayAddress['longitude'] = $response['results'][0]['position']['lon'];
         $infoArrayAddress['address'] = $response['results'][0]['address']['freeformAddress'];

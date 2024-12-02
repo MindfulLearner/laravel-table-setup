@@ -58,7 +58,7 @@
                       <form action="{{ route('apartments.destroy', $apartment->id) }}" method="POST" class="inline">
                         @csrf
                         @method('DELETE')
-                      <div id="modal-container-{{ $apartment->id }}" class="hidden fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                      <div id="modal-container-{{ $apartment->id }}" class="hidden fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50">
                         <div class="bg-white p-6 rounded-lg shadow-lg mx-auto">
                           <p class="mb-4">sei sicuro di voler cancellare l'appartamento {{ $apartment->title }}?</p>
                           <div class="flex justify-end">
@@ -100,7 +100,7 @@
 
                     document.querySelectorAll(".close-modal").forEach(button => {
                         button.addEventListener("click", () => {
-                            const modalContainer = button.closest(".bg-black");
+                            const modalContainer = button.closest(".bg-gray-500");
                             if (modalContainer) {
                                 modalContainer.classList.add("hidden");
                             }

@@ -27,7 +27,7 @@
                     <div class="space-y-2">
                         @foreach ($services as $service)
                             <div class="flex items-center">
-                                <input type="checkbox" id="service_{{ $service->id }}" name="services[]" value="{{ $service->id }}" class="mr-2 h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring focus:ring-blue-200">
+                                <input type="checkbox" id="service_{{ $service->id }}" name="services[]" value="{{ $service->id }}" class="mr-2 h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring focus:ring-blue-200" {{ in_array($service->id, old('services', [])) ? 'checked' : '' }}>
                                 <label for="service_{{ $service->id }}" class="ml-2 text-sm font-medium text-gray-700">
                                     <i class="fas fa-check-circle text-blue-500"></i>
                                     {{ $service->name }}
@@ -48,7 +48,8 @@
                             type="text"
                             id="title"
                             name="title"
-                            value="Appartamento in Centro"
+                            value="{{ old('title') }}"
+                            placeholder="Inserisci il titolo dell'appartamento"
                             class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
                             required
                         />
@@ -62,7 +63,8 @@
                                 type="number"
                                 id="rooms"
                                 name="rooms"
-                                value="3"
+                                value="{{ old('rooms') }}"
+                                placeholder="Inserisci il numero di stanze"
                                 class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
                                 required
                             />
@@ -75,7 +77,8 @@
                                 type="number"
                                 id="beds"
                                 name="beds"
-                                value="2"
+                                value="{{ old('beds') }}"
+                                placeholder="Inserisci il numero di letti"
                                 class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
                                 required
                             />
@@ -88,7 +91,8 @@
                                 type="number"
                                 id="bathrooms"
                                 name="bathrooms"
-                                value="1"
+                                value="{{ old('bathrooms') }}"
+                                placeholder="Inserisci il numero di bagni"
                                 class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
                                 required
                             />
@@ -104,11 +108,11 @@
                             name="square_meters"
                             min="20"
                             max="200"
-                            value="75"
+                            value="{{ old('square_meters', 75) }}"
                             class="mt-1 w-full"
                             oninput="this.nextElementSibling.value = this.value"
                         />
-                        <output>75</output> m²
+                        <output>{{ old('square_meters', 75) }}</output> m²
                     </div>
 
                     <!-- Indirizzo -->
@@ -118,7 +122,8 @@
                             type="text"
                             id="address"
                             name="address"
-                            value="Via Roma, 123"
+                            value="{{ old('address') }}"
+                            placeholder="Inserisci l'indirizzo"
                             class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
                             required
                         />
@@ -159,7 +164,7 @@
                           </div>
                           <div class="row-image-group-container flex items-center mb-2">
                             <img class="w-48 h-32 object-cover rounded-lg border-4 border-blue-300" id="image-preview-group" alt="Anteprima immagine" style="display: none;">
-        
+
                             <div class="flex-1 space-y-3">
                                 <input
                                     type="file"
@@ -182,7 +187,7 @@
                     <!-- Visibilità -->
                     <div class="flex items-center">
                         <input type="hidden" name="is_visible" value="0">
-                        <input type="checkbox" name="is_visible" id="is_visible" value="1" class="mr-2 h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring focus:ring-blue-200" checked>
+                        <input type="checkbox" name="is_visible" id="is_visible" value="1" class="mr-2 h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring focus:ring-blue-200" {{ old('is_visible', 1) ? 'checked' : '' }}>
                         <label for="is_visible" class="ml-2 text-sm font-medium text-gray-700">Visibile</label>
                     </div>
 
@@ -196,7 +201,7 @@
                                 placeholder="Scrivi qui la descrizione dell'appartamento..."
                                 class="p-4 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500 h-32 resize-none"
                                 required
-                            ></textarea>
+                            >{{ old('description') }}</textarea>
                         </div>
                     </div>
 
@@ -218,6 +223,8 @@
 </div>
 
 <script>
+
+
   document.getElementById('address').addEventListener('input', async function() {
     const apiTomTomKey = "{{ env('API_TOMTOM_KEY') }}";
     const inputValue = this.value;
@@ -226,11 +233,13 @@
     if (inputValue.length < 3) {
         document.getElementById('suggestions').innerHTML = '';
         document.getElementById('suggestions').classList.add('hidden');
+        document.getElementById('address').classList.add('border-red-500');
         return;
     }
 
-    const response = await fetch(url);
+      const response = await fetch(url);
     const data = await response.json();
+
 
     const suggestions = data['results'] || [];
     const suggestionsContainer = document.getElementById('suggestions');
@@ -256,7 +265,11 @@
     } else {
         suggestionsContainer.classList.add('hidden');
     }
+
+
   });
+
+
 
 
   document.addEventListener('click', function(event) {
@@ -383,9 +396,8 @@ document.getElementById('image-group-container').addEventListener('click', funct
 
 function validateForm() {
     const serviceCheckboxes = document.querySelectorAll('input[name="services[]"]');
-    const sponsorshipRadios = document.querySelectorAll('input[name="sponsorship"]');
     const coverImageInput = document.getElementById('cover_image');
-    
+
     let isServiceChecked = false;
     let isSponsorshipChecked = false;
 

@@ -50,18 +50,6 @@
                         @endforeach
                     </div>
                 </fieldset>
-
-                <fieldset class="border border-gray-300 rounded-lg p-4 mb-4">
-                    <legend class="text-sm font-medium text-gray-700">Sponsorizzazioni</legend>
-                    <div class="space-y-2">
-                        @foreach ($sponsorships as $sponsorship)
-                            <div class="flex items-center">
-                                <input type="radio" id="sponsorship_{{ $sponsorship->id }}" name="sponsorship" value="{{ $sponsorship->id }}" class="mr-2 h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring focus:ring-blue-200" @if($apartment->sponsorships->contains($sponsorship->id)) checked @endif>
-                                <label for="sponsorship_{{ $sponsorship->id }}" class="ml-2 text-sm font-medium text-gray-700">{{ $sponsorship->name }}</label>
-                            </div>
-                        @endforeach
-                    </div>
-                </fieldset>
             </div>
 
             <!-- Colonna Destra: Dettagli Appartamento -->
@@ -149,10 +137,10 @@
                             id="address"
                             name="address"
                             value="{{ old('address', $apartment->address) }}"
-                            placeholder="Inserisci l'indirizzo..."
                             class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
                             required
                         />
+                        <div id="suggestions" class="absolute bg-white border border-gray-300 rounded-md mt-1 z-10 hidden"></div>
                     </div>
 
             <!-- Immagine copertina -->
@@ -265,6 +253,57 @@
 </div>
 
 <script>
+    /**
+     * Funzione per suggerire l'indirizzo
+     */
+  document.getElementById('address').addEventListener('input', async function() {
+    const apiTomTomKey = "{{ env('API_TOMTOM_KEY') }}";
+    const inputValue = this.value;
+    const url = "https://api.tomtom.com/search/2/geocode/" + encodeURIComponent(inputValue) + ".json?key=" + apiTomTomKey + "&limit=5&countrySet=IT&language=it-IT";
+
+    if (inputValue.length < 3) {
+        document.getElementById('suggestions').innerHTML = '';
+        document.getElementById('suggestions').classList.add('hidden');
+        return;
+    }
+
+    const response = await fetch(url);
+    const data = await response.json();
+
+    const suggestions = data['results'] || [];
+    const suggestionsContainer = document.getElementById('suggestions');
+    suggestionsContainer.innerHTML = '';
+
+    suggestions.forEach(result => {
+        const address = result['address']['freeformAddress'];
+        const suggestionItem = document.createElement('div');
+        suggestionItem.textContent = address;
+        suggestionItem.classList.add('p-2', 'cursor-pointer');
+
+        suggestionItem.addEventListener('click', function() {
+            document.getElementById('address').value = address;
+            suggestionsContainer.innerHTML = '';
+            suggestionsContainer.classList.add('hidden');
+        });
+
+        suggestionsContainer.appendChild(suggestionItem);
+    });
+
+    if (suggestions.length > 0) {
+        suggestionsContainer.classList.remove('hidden');
+    } else {
+        suggestionsContainer.classList.add('hidden');
+    }
+  });
+
+  document.addEventListener('click', function(event) {
+    const suggestionsContainer = document.getElementById('suggestions');
+    if (!suggestionsContainer.contains(event.target) && event.target.id !== 'address') {
+        suggestionsContainer.innerHTML = '';
+        suggestionsContainer.classList.add('hidden');
+    }
+  });
+
 /**
    * Funzione per vedere l'immagine copertina
    */
