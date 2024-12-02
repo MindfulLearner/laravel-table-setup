@@ -14,11 +14,14 @@
     @endif
 
     <h1 class="text-2xl font-bold text-gray-800 mb-6 text-center">Crea un Nuovo Appartamento</h1>
-    <form action="{{ route('apartments.store') }}" enctype="multipart/form-data" method="POST">
+    <form action="{{ route('apartments.store') }}" enctype="multipart/form-data" method="POST" onsubmit="return validateForm()">
         @csrf
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <!-- Colonna Sinistra: Servizi e Sponsorizzazioni -->
             <div class="col-span-1">
+              <div id="services-error" class="hidden bg-red-100 text-red-700 p-2 rounded-md mb-2">
+                        Seleziona almeno un servizio.
+                    </div>
                 <fieldset class="border border-gray-300 rounded-lg p-4 mb-4">
                     <legend class="text-sm font-medium text-gray-700">Servizi</legend>
                     <div class="space-y-2">
@@ -29,18 +32,6 @@
                                     <i class="fas fa-check-circle text-blue-500"></i>
                                     {{ $service->name }}
                                 </label>
-                            </div>
-                        @endforeach
-                    </div>
-                </fieldset>
-
-                <fieldset class="border border-gray-300 rounded-lg p-4 mb-4">
-                    <legend class="text-sm font-medium text-gray-700">Sponsorizzazioni</legend>
-                    <div class="space-y-2">
-                        @foreach ($sponsorships as $sponsorship)
-                            <div class="flex items-center">
-                                <input type="radio" id="sponsorship_{{ $sponsorship->id }}" name="sponsorship" value="{{ $sponsorship->id }}" class="mr-2 h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring focus:ring-blue-200">
-                                <label for="sponsorship_{{ $sponsorship->id }}" class="ml-2 text-sm font-medium text-gray-700">{{ $sponsorship->name }}</label>
                             </div>
                         @endforeach
                     </div>
@@ -137,6 +128,11 @@
                     <div class="justify-between">
                         <!-- Immagine Copertina -->
                         <div class="w-1/2 pr-2"> <!-- 50% di larghezza e padding a destra -->
+                            <!-- Messaggio di errore per l'immagine di copertina -->
+                            <div id="cover-image-error" class="hidden bg-red-100 text-red-700 p-2 rounded-md mb-4">
+                                Carica un'immagine di copertina.
+                            </div>
+
                             <label for="cover_image" class="block text-sm font-medium text-gray-700">Carica Immagine di copertina (Upload)</label>
                             <input
                                 type="file"
@@ -144,7 +140,6 @@
                                 name="cover_image"
                                 accept="image/*"
                                 class="hidden"
-                                required
                                 onchange="previewImage(event)"
                             />
                             <label for="cover_image" class="p-2 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500 cursor-pointer">
@@ -162,11 +157,10 @@
                               <label class="block text-sm font-medium text-gray-700">Carica altre immagini (Upload)</label>
                               <button id="add-row-add-image-input" class="bg-blue-500 text-white px-4 py-2 rounded-md shadow hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Aggiungi riga</button>
                           </div>
-                          <div class="row-image-group-container flex">
-
-                            <img class="w-48" id="image-preview-group" alt="Immagine Copertina" style="display: none;">
-
-                              <div class="flex-1 space-y-3 mb-2"></div>
+                          <div class="row-image-group-container flex items-center mb-2">
+                            <img class="w-48 h-32 object-cover rounded-lg border-4 border-blue-300" id="image-preview-group" alt="Anteprima immagine" style="display: none;">
+        
+                            <div class="flex-1 space-y-3">
                                 <input
                                     type="file"
                                     name="images[]"
@@ -179,9 +173,9 @@
                                     name="image_description[]"
                                     class="w-full max-w-xs border-blue-300 rounded-lg shadow-lg focus:border-blue-500 focus:ring-blue-500 mt-2"
                                     placeholder="Descrizione dell'immagine"
-                                    >
-                                </div>
-                          </div>
+                                >
+                            </div>
+                        </div>
                       </div>
 
 
@@ -386,5 +380,52 @@ document.getElementById('image-group-container').addEventListener('click', funct
         rowToDelete.remove();
     }
 });
+
+function validateForm() {
+    const serviceCheckboxes = document.querySelectorAll('input[name="services[]"]');
+    const sponsorshipRadios = document.querySelectorAll('input[name="sponsorship"]');
+    const coverImageInput = document.getElementById('cover_image');
+    
+    let isServiceChecked = false;
+    let isSponsorshipChecked = false;
+
+    serviceCheckboxes.forEach((checkbox) => {
+        if (checkbox.checked) {
+            isServiceChecked = true;
+        }
+    });
+
+    sponsorshipRadios.forEach((radio) => {
+        if (radio.checked) {
+            isSponsorshipChecked = true;
+        }
+    });
+
+    const servicesErrorDiv = document.getElementById('services-error');
+    const sponsorshipErrorDiv = document.getElementById('sponsorship-error');
+    const coverImageErrorDiv = document.getElementById('cover-image-error');
+
+    if (!isServiceChecked) {
+        servicesErrorDiv.classList.remove('hidden');
+    } else {
+        servicesErrorDiv.classList.add('hidden');
+    }
+
+    if (!isSponsorshipChecked) {
+        sponsorshipErrorDiv.classList.remove('hidden');
+    } else {
+        sponsorshipErrorDiv.classList.add('hidden');
+    }
+
+    // Controllo per l'immagine di copertina
+    if (!coverImageInput.files.length) {
+        coverImageErrorDiv.classList.remove('hidden');
+        return false;
+    } else {
+        coverImageErrorDiv.classList.add('hidden');
+    }
+
+    return isServiceChecked && isSponsorshipChecked;
+}
 </script>
 @endsection
