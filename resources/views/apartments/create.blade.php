@@ -36,7 +36,6 @@
                         @endforeach
                     </div>
                 </fieldset>
-
             </div>
 
             <!-- Colonna Destra: Dettagli Appartamento -->
