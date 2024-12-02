@@ -37,23 +37,6 @@
                     </div>
                 </fieldset>
 
-                
-                <div id="sponsorship-error" class="hidden bg-red-100 text-red-700 p-2 rounded-md mb-4">
-                  Seleziona una sponsorizzazione.
-              </div>
-
-                <fieldset class="border border-gray-300 rounded-lg p-4 mb-4">
-                    <legend class="text-sm font-medium text-gray-700">Sponsorizzazioni</legend>
-                    <div class="space-y-2">
-                        @foreach ($sponsorships as $sponsorship)
-                            <div class="flex items-center">
-                                <input type="radio" id="sponsorship_{{ $sponsorship->id }}" name="sponsorship" value="{{ $sponsorship->id }}" class="mr-2 h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring focus:ring-blue-200">
-                                <label for="sponsorship_{{ $sponsorship->id }}" class="ml-2 text-sm font-medium text-gray-700">{{ $sponsorship->name }}</label>
-                            </div>
-                        @endforeach
-                    </div>
-                </fieldset>
-
             </div>
 
             <!-- Colonna Destra: Dettagli Appartamento -->
