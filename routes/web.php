@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\ApartmentController;
 use App\Http\Controllers\UserContentController;
 use App\Http\Controllers\ImageUploadController;
+use App\Http\Controllers\SponsorController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -43,6 +45,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/sponsor', function () {
         return view('sponsor');
     });
+
+    Route::get('/sponsor/bronze', [SponsorController::class, 'createBronze'])->name('sponsors.createBronze');
+    Route::get('/sponsor/silver', [SponsorController::class, 'createSilver'])->name('sponsors.createSilver');
+    Route::get('/sponsor/gold', [SponsorController::class, 'createGold'])->name('sponsors.createGold');
 
 
 });

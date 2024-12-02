@@ -6,7 +6,7 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <title>Sponsorship Plans</title>
 </head>
-<body class="bg-gray-200 text-white">
+<body class="bg-gray-200 text-white pt-12 pb-12">
     <div class="flex flex-col justify-center items-center min-h-screen">
         <!-- Titolo e sottotitolo -->
         <div class="text-center mb-8">
@@ -18,50 +18,59 @@
             <!-- Hobby Plan -->
             <div class="p-6 bg-gray-800 rounded-lg text-center shadow-lg border-4 border-[#b49578] w-full md:w-80 mx-auto flex flex-col justify-between h-full">
                 <div>
-                    <h2 class="text-2xl font-bold mb-4">Bronze</h2>
-                    <p class="text-4xl font-bold mb-6">2,99 €</p>
-                    <ul class="mb-6 space-y-2">
+                    <form action="{{ route('sponsors.createBronze') }}" method="GET">
+                        @csrf
+                        <h2 class="text-2xl font-bold mb-4">Bronze</h2>
+                        <p class="text-4xl font-bold mb-6">2,99 €</p>
+                        <ul class="mb-6 space-y-2">
                         <li>✅ Fino a 10 immagini dell'appartamento</li>
-                        <li>✅ Visibilità per 7 giorni</li>
-                        <li>✅ Supporto via email</li>
-                    </ul>
+                            <li>✅ Visibilità per 7 giorni</li>
+                            <li>✅ Supporto via email</li>
+                        </ul>
                 </div>
                 <div class="flex justify-center mt-auto">
                     <button class="px-4 py-2 bg-gray-700 text-white rounded hover:bg-gray-600 h-12">Inizia</button>
+                    </form>
                 </div>
             </div>
             <!-- Pro Plan -->
             <div class="p-6 bg-gradient-to-br from-purple-600 to-yellow-400 rounded-lg text-center shadow-lg border-4 border-[#b49578] w-full md:w-80 mx-auto flex flex-col justify-between h-full">
                 <div>
-                    <h2 class="text-2xl font-bold mb-4">Silver</h2>
-                    <p class="text-4xl font-bold mb-6">5.99 €</p>
-                    <ul class="mb-6 space-y-2">
-                        <li>✅ Fino a 25 immagini dell'appartamento</li>
-                        <li>✅ Visibilità per 30 giorni</li>
-                        <li>✅ Supporto prioritario via email</li>
-                    </ul>
+                    <form action="{{ route('sponsors.createSilver') }}" method="GET">
+                        @csrf
+                        <h2 class="text-2xl font-bold mb-4">Silver</h2>
+                        <p class="text-4xl font-bold mb-6">5.99 €</p>
+                        <ul class="mb-6 space-y-2">
+                            <li>✅ Fino a 25 immagini dell'appartamento</li>
+                            <li>✅ Visibilità per 30 giorni</li>
+                            <li>✅ Supporto prioritario via email</li>
+                        </ul>
                 </div>
                 <div class="flex justify-center mt-auto">
                     <button class="px-6 py-2 bg-black text-white rounded hover:bg-gray-800 h-12">Inizia</button>
+                    </form>
                 </div>
             </div>
             <!-- Business Plan -->
             <div class="p-6 bg-gray-800 rounded-lg text-center shadow-lg border-4 border-[#b49578] w-full md:w-80 mx-auto flex flex-col justify-between h-full">
                 <div>
-                    <h2 class="text-2xl font-bold mb-4">Gold</h2>
-                    <p class="text-4xl font-bold mb-6">9.99 €</p>
-                    <ul class="mb-6 space-y-2">
+                    <form action="{{ route('sponsors.createGold') }}" method="GET">
+                        @csrf
+                        <h2 class="text-2xl font-bold mb-4">Gold</h2>
+                        <p class="text-4xl font-bold mb-6">9.99 €</p>
+                        <ul class="mb-6 space-y-2">
                         <li>✅ Fino a 50 immagini dell'appartamento</li>
                         <li>✅ Visibilità per 90 giorni</li>
                         <li>✅ Supporto dedicato</li>
                         <li>✅ Posizione prioritaria nella ricerca</li>
-                    </ul>
+                        </ul>
                 </div>
                 <div class="flex justify-center mt-auto">
                     <button class="px-6 py-2 bg-gray-700 text-white rounded hover:bg-gray-600 h-12">Inizia</button>
+                    </form>
                 </div>
             </div>
-            
+
         </div>
 
         <div class="mt-8 text-center text-gray-800">
