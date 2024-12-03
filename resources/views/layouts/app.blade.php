@@ -18,7 +18,7 @@
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen relative overflow-hidden" style="background-image: url('https://media.istockphoto.com/id/966305776/it/foto/milano.webp?a=1&b=1&s=612x612&w=0&k=20&c=BLJ_CBtd3Nj4vxUW8ZeVx3Znzi3RKK24wjUP-NeZWlY='); background-size: cover; filter:">
+        <div class="min-h-screen bg-cover bg-no-repeat" style="background-image: url('{{ asset('images/background.avif') }}'); background-position: center 80%;">
             @include('layouts.navigation')
 
             <!-- Page Heading -->
