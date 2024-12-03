@@ -121,8 +121,8 @@
                             <span>{{ old('square_meters', 75) }}</span> m²
                         </output>
                     </div>
-                    
-                    
+
+
                     <!-- Indirizzo -->
                     <div>
                         <label for="address" class="block text-md font-semibold text-gray-100">Indirizzo</label>
@@ -231,8 +231,8 @@
     appearance: none;
     width: 100%;
     height: 8px;
-    background: #444; 
-    border-radius: 4px; 
+    background: #444;
+    border-radius: 4px;
     position: relative;
     outline: none;
 }
@@ -242,45 +242,45 @@
     -webkit-appearance: none;
     appearance: none;
     width: 24px;
-    height: 24px; 
-    margin-top: -10px; 
-    background: #FFD700; 
+    height: 24px;
+    margin-top: -10px;
+    background: #FFD700;
     border-radius: 50%;
     cursor: pointer;
-    border: 2px solid #FFD700; 
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); 
+    border: 2px solid #FFD700;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     transition: transform 0.2s ease-in-out;
     position: relative;
-    z-index: 2; 
+    z-index: 2;
 }
 
 /* Thumb personalizzato per Firefox */
 .range-slider::-moz-range-thumb {
-    width: 24px; 
-    height: 24px; 
-    background: #FFD700; 
-    border-radius: 50%; 
+    width: 24px;
+    height: 24px;
+    background: #FFD700;
+    border-radius: 50%;
     cursor: pointer;
-    border: 2px solid #FFD700; 
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); 
+    border: 2px solid #FFD700;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     transition: transform 0.2s ease-in-out;
     position: relative;
-    z-index: 2; 
+    z-index: 2;
 }
 
 /* Track per il colore di avanzamento */
 .range-slider::-webkit-slider-runnable-track {
     width: 100%;
     height: 8px;
-    background: linear-gradient(to right, #FFD700 var(--value), #444 var(--value)); 
+    background: linear-gradient(to right, #FFD700 var(--value), #444 var(--value));
     border-radius: 4px;
     position: relative;
-    z-index: 1; 
+    z-index: 1;
 }
 
 /* Track per il colore di avanzamento in Firefox */
 .range-slider::-moz-range-progress {
-    background: #FFD700; 
+    background: #FFD700;
     height: 8px;
     border-radius: 4px;
 }
@@ -316,7 +316,7 @@
   document.getElementById('address').addEventListener('input', async function() {
     const apiTomTomKey = "{{ env('API_TOMTOM_KEY') }}";
     const inputValue = this.value;
-    const url = "https://api.tomtom.com/search/2/geocode/" + encodeURIComponent(inputValue) + ".json?key=" + apiTomTomKey + "&limit=5&countrySet=IT&language=it-IT";
+    const url = "https://api.tomtom.com/search/2/geocode/" + encodeURIComponent(inputValue) + ".json?key=" + apiTomTomKey + "&limit=5&countrySet=IT&language=it-IT&boundingBox=45.4,8.5,46.7,10.5";
 
     if (inputValue.length < 3) {
         document.getElementById('suggestions').innerHTML = '';
@@ -422,26 +422,22 @@
     event.preventDefault();
     const imageGroupContainer = document.querySelector('#image-group-container');
     const newRowHTML = `
-        <div class="row-image-group-container flex">
-          <img class="w-48" id="image-preview-group" alt="Immagine Copertina" style="display: none;">
-                        <div class="flex-1 space-y-3">
-        <input
-            type="file"
-            name="images[]"
-            class="image-group-input w-full border-blue-300 rounded-lg shadow-lg focus:border-blue-500 focus:ring-blue-500"
-            onchange="previewImageNonCover(event)"
-        >
-        <img class="w-48 h-32 object-cover rounded-lg border-4 border-blue-300 mt-2" id="image-preview-group" alt="Anteprima immagine" style="display: none;">
-        <div class="flex items-center">
+        <div class="row-image-group-container flex items-center mb-4 space-x-4">
+          <img class="w-48 h-32 object-cover rounded-lg border-4 border-blue-300" id="image-preview-group" alt="Anteprima immagine" style="display: none;">
+          <div class="flex-1">
+            <input
+                type="file"
+                name="images[]"
+                class="image-group-input w-full bg-black text-gray-200 border-blue-500 rounded-lg shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-300 focus:ring-opacity-50 transition"
+                onchange="previewImageNonCover(event)"
+            >
             <input
                 type="text"
                 name="image_description[]"
-                class="w-full max-w-xs border-blue-300 rounded-lg shadow-lg focus:border-blue-500 focus:ring-blue-500 mt-2"
+                class="mt-4 w-full bg-black text-gray-200 border-blue-500 rounded-lg shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-300 focus:ring-opacity-50 transition"
                 placeholder="Descrizione dell'immagine"
             >
-            <button class="ml-2 bg-red-500 text-white px-4 py-2 rounded-md shadow hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 delete-row">
-                Elimina
-            </button>
+          </div>
         </div>
     `;
     imageGroupContainer.insertAdjacentHTML('beforeend', newRowHTML);
