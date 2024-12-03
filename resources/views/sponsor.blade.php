@@ -1,7 +1,9 @@
 @extends('dashboard')
 
+@section('header', 'Piano sponsorizzazione')
+
 @section('content')
-<body class="bg-gray-200 text-white pt-12 pb-12">
+<div class="bg-gray-200 text-white pt-12 pb-12">
     <div class="flex flex-col justify-center items-center min-h-screen">
         <!-- Titolo e sottotitolo -->
         <div class="text-center mb-8">
@@ -112,5 +114,5 @@
             </div>
         </div>
     </div>
-</body>
+</div>
 @endsection

@@ -1,5 +1,7 @@
 @extends('dashboard')
 
+@section('header', 'Aggiorna appartamento')
+
 @section('content')
 {{-- form per editare un appartamento --}}
 

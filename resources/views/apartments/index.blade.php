@@ -1,5 +1,7 @@
 @extends('dashboard')
 
+@section('header', 'Gestione appartamenti')
+
 @section('content')
 @if (session('error'))
     <div class="alert alert-danger -red-500">

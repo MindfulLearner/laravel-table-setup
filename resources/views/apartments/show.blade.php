@@ -1,5 +1,7 @@
 @extends('dashboard')
 
+@section('header', 'Dettagli appartamento')
+
 @section('content')
   <div class="max-w-4xl mx-auto p-8 mt-10 bg-white shadow-lg rounded-lg">
     <!-- Apartment Title -->

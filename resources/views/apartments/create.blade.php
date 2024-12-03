@@ -1,5 +1,6 @@
 @extends('dashboard')
 
+@section('header', 'Crea appartamento')
 @section('content')
 <div class="max-w-3xl mx-auto bg-white shadow-lg rounded-lg p-8 mt-10">
 
@@ -460,7 +461,7 @@ function getServiceIcon($serviceName) {
         case 'Riscaldamento':
             return 'fas fa-thermometer-half';
         default:
-            return 'fas fa-check-circle'; 
+            return 'fas fa-check-circle';
     }
 }
 @endphp
