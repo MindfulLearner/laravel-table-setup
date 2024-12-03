@@ -51,7 +51,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/sponsor/silver', [SponsorController::class, 'createSilver'])->name('silver');
     Route::get('/sponsor/gold', [SponsorController::class, 'createGold'])->name('gold');
 
-
 });
 
 require __DIR__.'/auth.php';
