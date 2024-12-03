@@ -22,7 +22,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('geocode', function (Request $request) {
     $apiKey = 'SooRbYbji9V5qUxAh3i2ijnD8m9ZWVZ7';
-    $url = 'https://api.tomtom.com/search/2/geocode/' . urlencode($request->indirizzo) . '.json?key=' . $apiKey . '&limit=1&countrySet=IT&language=it-IT';
+    // utilizzo bounding box per la zona di ricerca lombarda
+    // le coordinate interno lombardia sono 45.4,8.5,46.7,10.5
+    $url = 'https://api.tomtom.com/search/2/geocode/' . urlencode($request->indirizzo) . '.json?key=' . $apiKey . '&limit=1&countrySet=IT&language=it-IT&boundingBox=45.4,8.5,46.7,10.5';
 
     $client = new \GuzzleHttp\Client();
     $response = $client->get($url);
