@@ -12,7 +12,6 @@ class SponsorController extends Controller
     public function createBronze()
     {
         $superId = Auth::user()->id;
-        // query che prende tutti gli appartamenti dell'utente
         $apartments = Apartment::where('user_id', $superId)->get();
          return view('sponsors.createBronze', compact('superId', 'apartments'));
     }
@@ -21,7 +20,6 @@ class SponsorController extends Controller
     {
         $superId = Auth::user()->id;
         $apartments = Apartment::where('user_id', $superId)->get();
-
         return view('sponsors.createSilver', compact('apartments'));
     }
 
@@ -47,11 +45,27 @@ class SponsorController extends Controller
 
     public function updateSponsorSilver(Request $request)
     {
-        dd($request->all());
+        $sponsorships = Sponsorship::where('name', 'Silver')->first();
+        foreach ($request->apartments as $apartment) {
+            $apartment = Apartment::find($apartment);
+            $apartment->sponsorships()->attach($sponsorships);
+        }
+
+        $superId = Auth::user()->id;
+        $apartments = Apartment::where('user_id', $superId)->with('sponsorships')->get();
+        return view('apartments.index', compact('apartments', 'superId'));
     }
 
     public function updateSponsorGold(Request $request)
     {
-        dd($request->all());
+        $sponsorships = Sponsorship::where('name', 'Gold')->first();
+        foreach ($request->apartments as $apartment) {
+            $apartment = Apartment::find($apartment);
+            $apartment->sponsorships()->attach($sponsorships);
+        }
+
+        $superId = Auth::user()->id;
+        $apartments = Apartment::where('user_id', $superId)->with('sponsorships')->get();
+        return view('apartments.index', compact('apartments', 'superId'));
     }
 }
