@@ -2,7 +2,7 @@
 
 @section('header', 'Crea appartamento')
 @section('content')
-<div class="max-w-4xl mx-auto bg-gradient-to-r from-black via-[#003D48] to-black shadow-xl rounded-lg p-10 mt-10">
+<div class="max-w-4xl mx-auto bg-gradient-to-r from-neutral-900 via-[#003D48] to-neutral-900 shadow-xl rounded-lg p-10 mt-10">
 
     @if ($errors->any())
         <div class="bg-red-200 text-red-900 p-5 rounded-lg mb-6 shadow-md">
@@ -243,7 +243,7 @@
     appearance: none;
     width: 24px;
     height: 24px; 
-    margin-top: -10px; 
+    margin-top: -8px; 
     background: #FFD700; 
     border-radius: 50%;
     cursor: pointer;
