@@ -46,10 +46,16 @@ Route::middleware('auth')->group(function () {
         return view('sponsor');
     });
 
+    Route::get('/sponsor', function () {
+        return view('sponsor');
+    })->name('sponsor');
     // sponsor routes
     Route::get('/sponsor/bronze', [SponsorController::class, 'createBronze'])->name('bronze');
+    Route::post('/sponsor/bronze', [SponsorController::class, 'updateSponsorBronze'])->name('updateSponsorBronze');
     Route::get('/sponsor/silver', [SponsorController::class, 'createSilver'])->name('silver');
+    Route::post('/sponsor/silver', [SponsorController::class, 'updateSponsorSilver'])->name('updateSponsorSilver');
     Route::get('/sponsor/gold', [SponsorController::class, 'createGold'])->name('gold');
+    Route::post('/sponsor/gold', [SponsorController::class, 'updateSponsorGold'])->name('updateSponsorGold');
 
 });
 
