@@ -12,21 +12,21 @@ class SponsorController extends Controller
     public function createBronze()
     {
         $superId = Auth::user()->id;
-        $apartments = Apartment::where('user_id', $superId)->get();
+        $apartments = Apartment::where('user_id', $superId)->with('sponsorships')->get();
          return view('sponsors.createBronze', compact('superId', 'apartments'));
     }
 
     public function createSilver()
     {
         $superId = Auth::user()->id;
-        $apartments = Apartment::where('user_id', $superId)->get();
+        $apartments = Apartment::where('user_id', $superId)->with('sponsorships')->get();
         return view('sponsors.createSilver', compact('apartments'));
     }
 
     public function createGold()
     {
         $superId = Auth::user()->id;
-        $apartments = Apartment::where('user_id', $superId)->get();
+        $apartments = Apartment::where('user_id', $superId)->with('sponsorships')->get();
         return view('sponsors.createGold', compact('apartments'));
     }
 

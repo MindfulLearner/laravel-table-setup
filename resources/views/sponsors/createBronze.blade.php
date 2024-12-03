@@ -10,7 +10,7 @@
                 <!-- Qui ci fa il foreach apartments as apartment -->
                 @foreach($apartments as $apartment)
                     <div class="border p-4 rounded-lg shadow-sm bg-white">
-                        <h3 class="text-lg font-semibold"> {{ $apartment->name }} </h3>
+                        <h3 class="text-lg font-semibold"> {{ $apartment->title }} </h3>
                         <p class="text-gray-600">{{ $apartment->description }} </p>
                         <p class="text-gray-800 font-bold">Prezzo: 2,99 €</p>
                         <div class="mt-2">
@@ -18,6 +18,11 @@
                             <label for="apartment-{{ $apartment->id }}" class="text-gray-700">Seleziona</label>
                         </div>
                     </div>
+                    @if($apartment->sponsorships->where('name', 'Bronze')->first())
+                        <p class="text-gray-800 font-bold">Attivo</p>
+                    @else
+                        <p class="text-gray-800 font-bold">Inattivo</p>
+                    @endif
                 @endforeach
                 <!-- Fine del foreach -->
             </div>
