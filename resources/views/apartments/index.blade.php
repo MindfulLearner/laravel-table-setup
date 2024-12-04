@@ -79,6 +79,7 @@
                             <a href="{{ route('apartments.show', $apartment->id) }}" class="bg-transparent border-2 border-green-600 text-white px-5 py-3 rounded-full ease-in-out font-semibold hover:bg-green-700 transition duration-500">
                                 Vedi
                             </a>
+
                         </div>
                       </div>
                   </div>
@@ -88,13 +89,44 @@
           
             </div>
 
-            <script>
+              @endforeach
+              
+              <script>
                 // Logica conferma cancellazione
                 document.querySelectorAll(".deleteButton").forEach(function(button) {
                     button.addEventListener("click", function(event) {
-                        if (!confirm("Sei sicuro di voler cancellare questo appartamento?")) {
-                            event.preventDefault();
-                        }
+                        const apartmentId = this.getAttribute('data-id');
+                        Swal.fire({
+                            title: 'Sei sicuro?',
+                            text: "Non potrai recuperare questo appartamento!",
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Sì, elimina!',
+                            cancelButtonText: 'Annulla'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                const form = document.createElement('form');
+                                form.method = 'POST';
+                                form.action = `/apartments/${apartmentId}`;
+
+                                const csrfToken = document.createElement('input');
+                                csrfToken.type = 'hidden';
+                                csrfToken.name = '_token';
+                                csrfToken.value = '{{ csrf_token() }}';
+
+                                const methodField = document.createElement('input');
+                                methodField.type = 'hidden';
+                                methodField.name = '_method';
+                                methodField.value = 'DELETE';
+
+                                form.appendChild(csrfToken);
+                                form.appendChild(methodField);
+                                document.body.appendChild(form);
+                                form.submit();
+                            }
+                        });
                     });
                 });
 
@@ -122,4 +154,6 @@
         </div>
     </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @endsection

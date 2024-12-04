@@ -4,7 +4,8 @@
 <div class="flex items-center justify-center min-h-screen bg-gradient-to-r from-neutral-900 via-[#003441] to-neutral-900 py-12 px-4">
     <div class="max-w-5xl mx-auto bg-gradient-to-r from-neutral-900 via-[#003441] to-neutral-900 p-10 rounded-3xl shadow-xl">
         <h2 class="text-4xl font-extrabold text-gray-100 mb-8 text-center border-b-4 border-yellow-500 pb-4">Seleziona Appartamenti per il Piano Gold</h2>
-        <form action="{{ route('updateSponsorGold') }}" method="POST">
+        <form id="payment-form" action="{{ route('updateSponsorGold') }}" method="POST">
+
             @csrf
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
                 <!-- Foreach degli appartamenti -->
@@ -35,10 +36,13 @@
             
             <div class="flex justify-between items-center mt-8">
                 <p class="text-2xl font-bold text-white">Prezzo Totale: <span id="totalPrice">0,00 €</span></p>
-                <button type="submit" class="px-8 py-4 bg-gradient-to-t from-yellow-400 to-yellow-600 text-white rounded-full shadow-lg hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-400 transition-all ease-in-out duration-300 transform hover:scale-105 h-14 opacity-100">
+                <div id="dropin-container"></div>
+                <input type="hidden" id="nonce" name="payment_method_nonce">
+                <button type="submit" id="submit-button" class="px-8 py-4 bg-gradient-to-t from-yellow-400 to-yellow-600 text-white rounded-full shadow-lg hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-400 transition-all ease-in-out duration-300 transform hover:scale-105 h-14 opacity-100">
                     Attiva Piano Gold
                 </button>
             </div>
+
         </form>
     </div>
 </div>
@@ -54,6 +58,7 @@
         transition: background 0.5s ease, box-shadow 0.5s ease; /* Smooth transition */
     }
 </style>
+<script src="https://js.braintreegateway.com/web/dropin/1.31.0/js/dropin.min.js"></script>
 
 <script>
     function toggleCardSelection(apartmentId) {
@@ -76,6 +81,30 @@
         let total = checkboxes.length * pricePerApartment;
         totalPriceElement.textContent = total.toFixed(2) + ' €';
     }
+
+    fetch('/payment/token')
+        .then(response => response.json())
+        .then(data => {
+            braintree.dropin.create({
+                authorization: data.token,
+                container: '#dropin-container'
+            }, function (createErr, instance) {
+                if (createErr) {
+                    console.error('Errore nella creazione del Drop-in:', createErr);
+                    return;
+                }
+                document.getElementById('submit-button').addEventListener('click', function () {
+                    instance.requestPaymentMethod(function (err, payload) {
+                        if (err) {
+                            console.error(err);
+                            return;
+                        }
+                        document.getElementById('nonce').value = payload.nonce;
+                        document.getElementById('payment-form').submit();
+                    });
+                });
+            });
+        });
 </script>
 
 @endsection

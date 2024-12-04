@@ -60,6 +60,7 @@
             </div>
         @endforeach
     </div>
+ <a href="{{ route('statistics', $apartment->id) }}" class="text-blue-500 hover:underline font-semibold">Visualizza statistiche</a>
 
     <!-- Messaggi ricevuti -->
     <div class="bg-neutral-800 p-6 rounded-lg shadow-md mb-10">
@@ -72,7 +73,6 @@
             </div>
         @endforeach
     </div>
-
     <!-- Link per tornare alla lista degli appartamenti -->
     <div class="text-center">
         <a href="{{ route('apartments.index') }}" class="bg-[#967305] text-white px-6 py-3 rounded-lg shadow-lg font-bold hover:bg-yellow-500 transition-all ease-in-out duration-300 focus:outline-none focus:ring-2 focus:ring-yellow-400">
@@ -80,4 +80,5 @@
         </a>
     </div>
 </div>
+
 @endsection
