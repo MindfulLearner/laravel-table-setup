@@ -86,15 +86,12 @@
             </div>
         </div>
         
-        
-        
-
         <div class="mt-8 text-center text-gray-200">
             <p>Domande sulla sicurezza e sui nostri piani? <a href="#" class="text-yellow-500 hover:underline">Contattaci</a>.</p>
         </div>
 
         <!-- Sezione per le aziende -->
-        <div class="mt-12 w-full bg-gray-800 text-gray-200 p-8 rounded-lg shadow-lg">
+        <div class="mt-12 w-full bg-gradient-to-r from-neutral-900 via-neutral-800 to-neutral-900 text-gray-200 p-8 shadow-lg">
             <p class="text-center mb-8 text-lg">Siamo orgogliosi di collaborare con aziende leader nel settore immobiliare. Ecco alcune delle aziende che si affidano a noi per migliorare la loro visibilità e raggiungere più clienti.</p>
             <div class="flex justify-center items-center space-x-8">
                 <img src="https://images.unsplash.com/photo-1496200186974-4293800e2c20?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8bG9nb3xlbnwwfHwwfHx8Mg%3D%3D" alt="Logo Azienda 1" class="h-16">
@@ -107,7 +104,7 @@
 
         <div class="py-12"></div>
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="text-3xl font-extrabold text-gray-200 text-center mb-8">Domande Frequenti</h2>
+                <h2 class="text-3xl font-extrabold text-gray-200 drop-shadow-md text-center mb-8">Domande Frequenti</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <!-- FAQ Item 1 -->
                     <div class="bg-neutral-800 p-6 rounded-xl shadow-md">

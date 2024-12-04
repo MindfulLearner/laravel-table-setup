@@ -14,13 +14,13 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" class="text-white hover:text-yellow-500 transition-all duration-300 font-semibold">
+                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" class="text-white hover:text-yellow-500 transition-all border-none  duration-300 font-semibold">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('apartments.create')" :active="request()->routeIs('apartments/create')" class="text-white hover:text-yellow-500 transition-all duration-300 font-semibold">
+                    <x-nav-link :href="route('apartments.create')" :active="request()->routeIs('apartments/create')" class="text-white hover:text-yellow-500 transition-all border-none duration-300 font-semibold">
                         {{ __('Crea il tuo appartamento') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('sponsor')" :active="request()->routeIs('sponsor')" class="text-white hover:text-yellow-500 transition-all duration-300 font-semibold">
+                    <x-nav-link :href="route('sponsor')" :active="request()->routeIs('sponsor')" class="text-white hover:text-yellow-500 transition-all border-none duration-300 font-semibold">
                         {{ __('Esplora Sponsor') }}
                     </x-nav-link>
                 </div>
