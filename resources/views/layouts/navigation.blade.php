@@ -74,6 +74,9 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" class="text-white hover:bg-yellow-500 hover:text-black px-4 py-2 rounded-lg transition duration-300">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('apartments.create')" :active="request()->routeIs('apartments/create')" class="text-white hover:bg-yellow-500 hover:text-black px-4 py-2 rounded-lg transition duration-300">
+                {{ __('Crea il tuo appartamento') }}
+            </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('sponsor')" :active="request()->routeIs('sponsor')" class="text-white hover:bg-yellow-500 hover:text-black px-4 py-2 rounded-lg transition duration-300">
                 {{ __('Esplora Sponsor') }}
             </x-responsive-nav-link>

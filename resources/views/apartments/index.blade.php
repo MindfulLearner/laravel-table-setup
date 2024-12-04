@@ -88,8 +88,6 @@
           @endforeach
           
             </div>
-
-              @endforeach
               
               <script>
                 // Logica conferma cancellazione

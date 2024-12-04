@@ -61,33 +61,28 @@
         let total = checkboxes.length * pricePerApartment;
         totalPriceElement.textContent = total.toFixed(2) + ' €';
     }
-</script>
-</div>
-
-
-        fetch('/payment/token')
-            .then(response => response.json())
-            .then(data => {
-                braintree.dropin.create({
-                    authorization: data.token,
-                    container: '#dropin-container'
-                }, function (createErr, instance) {
-                    if (createErr) {
-                        console.error('Errore nella creazione del Drop-in:', createErr);
-                        return;
-                    }
-                    document.getElementById('submit-button').addEventListener('click', function () {
-                        instance.requestPaymentMethod(function (err, payload) {
-                            if (err) {
-                                console.error(err);
-                                return;
-                            }
-                            document.getElementById('nonce').value = payload.nonce;
-                            document.getElementById('payment-form').submit();
-                        });
+    fetch('/payment/token')
+        .then(response => response.json())
+        .then(data => {
+            braintree.dropin.create({
+                authorization: data.token,
+                container: '#dropin-container'
+            }, function (createErr, instance) {
+                if (createErr) {
+                    console.error('Errore nella creazione del Drop-in:', createErr);
+                    return;
+                }
+                document.getElementById('submit-button').addEventListener('click', function () {
+                    instance.requestPaymentMethod(function (err, payload) {
+                        if (err) {
+                            console.error(err);
+                            return;
+                        }
+                        document.getElementById('nonce').value = payload.nonce;
+                        document.getElementById('payment-form').submit();
                     });
                 });
             });
+        });
     </script>
-</div>
 @endsection
