@@ -68,4 +68,12 @@ class SponsorController extends Controller
         $apartments = Apartment::where('user_id', $superId)->with('sponsorships')->get();
         return view('apartments.index', compact('apartments', 'superId'));
     }
+
+    public function showPaymentPage()
+    {
+        $selectedApartments = [];
+        $totalPrice = 0;
+
+        return view('sponsors.payment', compact('selectedApartments', 'totalPrice'));
+    }
 }
