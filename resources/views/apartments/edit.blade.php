@@ -174,7 +174,7 @@
                                         <img
                                             src="{{ $image->image_path }}"
                                             alt="Immagine appartamento"
-                                            class="w-full h-48 object-cover transition duration-300 ease-in-out"
+                                            class="w-full h-32 object-cover transition duration-300 ease-in-out"
                                         />
                                         <!-- Bottone per eliminare l'immagine -->
                                         <button type="button" class="absolute top-2 right-2 bg-red-600 text-white px-3 py-1 rounded-full shadow-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-offset-2 transition" onclick="deleteImage({{ $image->id }})">
