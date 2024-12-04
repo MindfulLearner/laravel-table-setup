@@ -55,6 +55,7 @@
         <p class="text-gray-800">{{ $image->description }}</p>
       @endforeach
     </div>
+ <a href="{{ route('statistics', $apartment->id) }}" class="text-blue-500 hover:underline font-semibold">Visualizza statistiche</a>
 
     <!-- messaggi ricebuti -->
     <div class="bg-white p-4 rounded-lg shadow-md mb-4">
@@ -66,6 +67,8 @@
         </div>
       @endforeach
     </div>
+
+
 
     <!-- Back to Apartments List Link -->
     <a href="{{ route('apartments.index') }}" class="text-blue-500 hover:underline font-semibold">Torna alla lista degli appartamenti</a>

@@ -146,12 +146,14 @@ class ApartmentApi extends Controller
             $cacheKey = 'views_counter_' . $id . '_' . $ip;
 
         if (!Cache::has($cacheKey)) {
-            Cache::put($cacheKey, true, 60);
+            //per far veder che funziona il controllo, imposto un tempo di 20 secondi
+            Cache::put($cacheKey, true, 20);
             $views = new View();
             $views->ip_address = $ip;
             $views->apartment_id = $id;
             $views->date = now();
             $views->save();
+            return response()->json(['message' => 'View counted'], 200);
         } else {
             return response()->json(['message' => 'View already counted'], 400);
         }

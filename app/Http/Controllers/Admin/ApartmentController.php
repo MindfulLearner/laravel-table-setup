@@ -12,6 +12,7 @@ use App\Models\Sponsorship;
 use App\Models\Message;
 use App\Models\Service;
 use App\Models\Image;
+use App\Models\View;
 use Illuminate\Support\Facades\Storage;
 
 class ApartmentController extends Controller
@@ -266,5 +267,11 @@ class ApartmentController extends Controller
         $path = $image_string->storePublicly('images');
         $imageUrl = "https://mybucketlaravel.s3.eu-west-3.amazonaws.com/$path";
         return $imageUrl;
+    }
+
+    public function statistics($id)
+    {
+        $views = View::where('apartment_id', $id)->get();
+        return view('apartments.statistics', compact('views'));
     }
 }
