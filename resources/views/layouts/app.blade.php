@@ -18,13 +18,13 @@
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-cover bg-no-repeat" style="background-image: url('{{ asset('images/background.avif') }}'); background-position: center 80%;">
+        <div class="min-h-screen bg-cover bg-no-repeat" style="background-image: url('{{ asset('images/background.avif') }}'); background-position: center 80%; background-attachment: fixed;">
             @include('layouts.navigation')
 
             <!-- Page Heading -->
             @if (isset($header))
-                <header class="bg-white dark:bg-gray-800 shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                <header class="dark:bg-gradient-to-b dark:from-neutral-900 dark:to-[#00252e] shadow">
+                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 ">
                         {{ $header }}
                     </div>
                 </header>

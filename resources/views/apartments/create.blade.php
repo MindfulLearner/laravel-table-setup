@@ -2,8 +2,24 @@
 
 @section('header', 'Crea appartamento')
 @section('content')
-<div class="max-w-3xl mx-auto bg-white shadow-lg rounded-lg p-8 mt-10">
-    <h1 class="text-2xl font-bold text-gray-800 mb-6 text-center">Crea un Nuovo Appartamento</h1>
+
+<div class="max-w-4xl mx-auto bg-gradient-to-r from-neutral-900 via-[#003441] to-neutral-900 shadow-xl rounded-lg p-10 mt-10">
+
+    @if ($errors->any())
+        <div class="bg-red-200 text-red-900 p-5 rounded-lg mb-6 shadow-md">
+            <ul class="list-disc list-inside">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
+    <h1 class="text-3xl font-extrabold text-gray-200 mb-8 text-center border-b-4 border-yellow-500 pb-4">
+        Crea un Nuovo Appartamento
+    </h1>
+
+
     <form action="{{ route('apartments.store') }}" enctype="multipart/form-data" method="POST" onsubmit="return validateForm()">
         @csrf
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -230,9 +246,11 @@
     -webkit-appearance: none;
     appearance: none;
     width: 24px;
-    height: 24px;
-    margin-top: -10px;
-    background: #FFD700;
+
+    height: 24px; 
+    margin-top: -8px; 
+    background: #FFD700; 
+
     border-radius: 50%;
     cursor: pointer;
     border: 2px solid #FFD700;

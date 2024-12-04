@@ -6,9 +6,6 @@
       <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
           <div class="p-6 text-gray-900 dark:text-red-200">
               {{ __("Accesso eseguito!") }}
-              <a href="{{ route('apartments.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded mr-2">
-                Crea Appartamento
-              </a>
 
               @foreach ($apartments as $apartment)
               <div
