@@ -59,27 +59,59 @@
             </div>
         @endforeach
     </div>
+
     <!-- Statistiche appartamento -->
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-            <div class="p-6 text-gray-900 dark:text-red-200">
-                {{ __("Statistiche appartamento") }}
-            </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-3">
-                {{ $views->count() }} {{ __("visualizzazioni") }}
-            </div>
-            <div class="mt-3">
-                <p>IP visitatori</p>
-                @foreach ($views as $view)
-                    <p>{{ $view->ip_address }}</p>
-                    <p>{{ $view->created_at }}</p>
-                    <p>{{ $view->id }}</p>
-                @endforeach
-            </div>
+
+    <!-- Stats Section -->
+    <div class="p-10 bg-gradient-to-r from-neutral-800 via-neutral-700 to-neutral-800 rounded-lg shadow-xl mt-10 mb-10">
+        <h2 class="text-3xl font-bold text-white drop-shadow-md mb-6 text-center">
+            {{ __("Statistiche dell'Appartamento") }}
+        </h2>
+
+        <!-- Visualizzazioni totali -->
+        <div class="text-center text-white drop-shadow-md text-2xl font-extrabold mb-8">
+            {{ $views->count() }} <span class="text-2xl font-semibold"> {{ __("Visualizzazioni Totali") }}</span>
         </div>
+
+        <!-- Lista delle Visualizzazioni -->
+        <div class="text-white drop-shadow-md text-semibold mb-8 text-center text-xl mt-20">
+            {{ __("Dettagli delle Visualizzazioni") }}
         </div>
+
+        @if($views->isNotEmpty())
+            <div class="overflow-auto bg-neutral-700 rounded-lg p-6 text-gray-100">
+                <table class="min-w-full divide-y divide-gray-600 text-sm">
+                    <thead class="bg-neutral-800">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-white drop-shadow-md uppercase tracking-wider">
+                                {{ __("Data Visualizzazione") }}
+                            </th>
+                            {{-- <th class="px-6 py-3 text-left text-white drop-shadow-md uppercase tracking-wider">
+                                {{ __("Indirizzo IP") }}
+                            </th> --}}
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-neutral-600">
+                        @foreach ($views as $view)
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    {{ $view->created_at->format('d-m-Y H:i:s') }}
+                                </td>
+                                {{-- <td class="px-6 py-4 whitespace-nowrap">
+                                    {{ $view->ip_address }}
+                                </td> --}}
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        @else
+            <p class="text-white drop-shadow-md text-center mt-8">
+                {{ __("Non ci sono visualizzazioni al momento.") }}
+            </p>
+        @endif
     </div>
+
     <!-- Messaggi ricevuti -->
     <div class="bg-neutral-800 p-6 rounded-lg shadow-md mb-10">
         <h2 class="text-2xl font-bold text-yellow-500 mb-6">Messaggi ricevuti</h2>
