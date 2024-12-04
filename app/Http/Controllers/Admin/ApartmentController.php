@@ -139,8 +139,9 @@ class ApartmentController extends Controller
         $sponsorships = Sponsorship::all();
         $messages = Message::where('apartment_id', $id)->get();
         $images = Image::where('apartment_id', $id)->get();
+        $views = View::where('apartment_id', $id)->get();
 
-        return view('apartments.show', compact('apartment', 'services', 'sponsorships', 'images', 'messages'));
+        return view('apartments.show', compact('apartment', 'services', 'sponsorships', 'images', 'messages', 'views'));
     }
 
     /**
@@ -269,9 +270,5 @@ class ApartmentController extends Controller
         return $imageUrl;
     }
 
-    public function statistics($id)
-    {
-        $views = View::where('apartment_id', $id)->get();
-        return view('apartments.statistics', compact('views'));
-    }
+
 }
