@@ -1,49 +1,38 @@
 @extends('dashboard')
 
 @section('content')
-<div class="flex items-center justify-center min-h-screen bg-gradient-to-r from-neutral-900 via-[#003441] to-neutral-900 py-12 px-4">
-    <div class="max-w-5xl mx-auto bg-gradient-to-r from-neutral-900 via-[#003441] to-neutral-900 p-10 rounded-3xl shadow-xl">
-        <h2 class="text-4xl font-extrabold text-gray-100 mb-8 text-center border-b-4 border-gray-300 pb-4">Seleziona Appartamenti per il Piano Silver</h2>
-        <form id="payment-form" action="{{ route('updateSponsorSilver') }}" method="POST">
-
-            @csrf
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
-                <!-- Foreach degli appartamenti -->
-                @foreach($apartments as $apartment)
-                    <div id="card-{{ $apartment->id }}" class="apartment-card hover:glow relative rounded-xl shadow-lg bg-neutral-800 hover:shadow-2xl transform hover:scale-105 transition-all duration-300 overflow-hidden">
-                        <img src="{{ $apartment->cover_image }}" alt="Property Image" class="w-full h-56 object-cover">
-                        <div class="p-6">
-                            <h3 class="text-2xl font-semibold text-gray-300 mb-4">{{ $apartment->title }}</h3>
-                            <p class="text-gray-300 mb-4">{{ Str::limit($apartment->description, 100, '...') }}</p>
-                            <p class="text-gray-400 font-bold text-lg">Prezzo: 5,99 €</p>
-                            
-                            <div class="flex items-center mt-6">
-                                <input type="checkbox" name="apartments[]" value="{{ $apartment->id }}" id="apartment-{{ $apartment->id }}" class="mr-3 h-5 w-5 text-yellow-500 border-gray-500 bg-neutral-700 rounded focus:ring focus:ring-gray-300 focus:ring-opacity-50 transition" onchange="toggleCardSelection({{ $apartment->id }})">
-                                <label for="apartment-{{ $apartment->id }}" class="text-lg font-semibold text-gray-100">Seleziona</label>
-                            </div>
-    
-                            <!-- Sponsorizzazione Attiva/Inattiva -->
-                            @if($apartment->sponsorships->where('name', 'Silver')->first())
-                                <p class="mt-4 text-sm font-bold text-green-400">Stato: Attivo</p>
-                            @else
-                                <p class="mt-4 text-sm font-bold text-red-500">Stato: Inattivo</p>
-                            @endif
-                        </div>
-                    </div>
+<div class="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-neutral-900 via-[#003441] to-neutral-900 py-12 px-4">
+    <div class="max-w-5xl mx-auto grid grid-cols-1 gap-8">
+        
+        <!-- Card Dettagli Appartamenti -->
+        <div class="bg-neutral-800 p-8 rounded-3xl shadow-xl">
+            <h2 class="text-3xl font-extrabold text-gray-100 mb-6 text-center border-b-4 border-yellow-700 pb-4">Dettagli Appartamenti</h2>
+            <ul class="mb-6">
+                @foreach($selectedApartments as $apartment)
+                    <li class="text-lg text-white mb-2">
+                        <strong>{{ $apartment->title }}</strong> - Prezzo: {{ number_format($totalPrice, 2) }} €
+                    </li>
                 @endforeach
-                <!-- Fine del foreach -->
-            </div>
-            
-            <div class="flex justify-between items-center mt-8">
-                <p class="text-2xl font-bold text-white">Prezzo Totale: <span id="totalPrice">0,00 €</span></p>
-                <div id="dropin-container"></div>
+            </ul>
+            <p class="text-2xl font-bold text-white">Piano: Silver</p>
+            <p class="text-2xl font-bold text-white mt-4">Prezzo Totale: <span id="totalPrice">{{ number_format($totalPrice, 2) }} €</span></p>
+        </div>
+
+        <!-- Card Pagamento -->
+        <div class="bg-neutral-800 p-8 rounded-3xl shadow-xl">
+            <h2 class="text-3xl font-extrabold text-gray-100 mb-6 text-center border-b-4 border-yellow-700 pb-4">Pagamento</h2>
+            <form action="{{ route('updateSponsorSilver') }}" method="POST" id="payment-form">
+                @csrf
+                <div id="dropin-container" class="mb-6"></div>
                 <input type="hidden" id="nonce" name="payment_method_nonce">
-                <button type="submit" id="submit-button" class="px-8 py-4 bg-gradient-to-t from-gray-300 to-gray-500 text-white rounded-full shadow-lg hover:bg-gray-400 focus:outline-none focus:ring-4 focus:ring-gray-300 transition-all ease-in-out duration-300 transform hover:scale-105 h-14 opacity-100">
+                <button type="submit" id="submit-button" class="w-full px-8 py-4 bg-gradient-to-t from-yellow-600 to-yellow-800 text-white rounded-full shadow-lg hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-400 transition-all ease-in-out duration-300 transform hover:scale-105 h-14 opacity-100">
                     Attiva Piano Silver
                 </button>
-            </div>
-
-        </form>
+            </form>
+            <p class="mt-6 text-sm text-gray-400">
+                Inviando questo ordine autorizzi il nostro servizio a eseguire l'addebito dell'importo di € {{ number_format($totalPrice, 2) }} per un periodo di prova di 3 mesi. Se non recedi prima della scadenza dell'anzidetto periodo di prova, autorizzi il nostro servizio a eseguire automaticamente addebiti mensili di € {{ number_format($totalPrice, 2) }} ciascuno fino alla disdetta del tuo abbonamento. Se la tariffa dovesse cambiare, te ne daremo preventiva comunicazione scritta. In qualsiasi momento puoi verificare
+            </p>
+        </div>
     </div>
 </div>
 
