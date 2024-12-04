@@ -75,6 +75,7 @@
                                 placeholder="Inserisci il numero di stanze"
                                 class="p-4 mt-2 block w-full bg-black text-gray-200 border-gray-500 rounded-lg shadow-sm focus:border-yellow-500 focus:ring focus:ring-yellow-300 focus:ring-opacity-50 transition"
                                 required
+                                min="0"
                             />
                         </div>
 
@@ -89,6 +90,7 @@
                                 placeholder="Inserisci il numero di letti"
                                 class="p-4 mt-2 block w-full bg-black text-gray-200 border-gray-500 rounded-lg shadow-sm focus:border-yellow-500 focus:ring focus:ring-yellow-300 focus:ring-opacity-50 transition"
                                 required
+                                min="0"
                             />
                         </div>
 
@@ -103,6 +105,7 @@
                                 placeholder="Inserisci il numero di bagni"
                                 class="p-4 mt-2 block w-full bg-black text-gray-200 border-gray-500 rounded-lg shadow-sm focus:border-yellow-500 focus:ring focus:ring-yellow-300 focus:ring-opacity-50 transition"
                                 required
+                                min="0"
                             />
                         </div>
                     </div>
@@ -247,9 +250,9 @@
     appearance: none;
     width: 24px;
 
-    height: 24px; 
-    margin-top: -8px; 
-    background: #FFD700; 
+    height: 24px;
+    margin-top: -8px;
+    background: #FFD700;
 
     border-radius: 50%;
     cursor: pointer;
