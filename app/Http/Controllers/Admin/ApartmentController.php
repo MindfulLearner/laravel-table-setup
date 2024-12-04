@@ -12,6 +12,7 @@ use App\Models\Sponsorship;
 use App\Models\Message;
 use App\Models\Service;
 use App\Models\Image;
+use App\Models\View;
 use Illuminate\Support\Facades\Storage;
 
 class ApartmentController extends Controller
@@ -73,6 +74,7 @@ class ApartmentController extends Controller
             'description' => 'required|string|max:255',
             'cover_image' => 'required|image|mimes:jpeg,jpg,png,gif,svg|max:2048',
             'address' => 'required|string|max:255',
+            'price' => 'required|numeric|min:1|max:10000',
             'is_visible' => 'required|boolean',
         ]);
 
@@ -172,7 +174,6 @@ class ApartmentController extends Controller
         $cover_image = $request->file('cover_image');
         $images = $request->file('images');
 
-
         $apartment = Apartment::findOrFail($id);
 
         $data = $request->all();
@@ -266,5 +267,11 @@ class ApartmentController extends Controller
         $path = $image_string->storePublicly('images');
         $imageUrl = "https://mybucketlaravel.s3.eu-west-3.amazonaws.com/$path";
         return $imageUrl;
+    }
+
+    public function statistics($id)
+    {
+        $views = View::where('apartment_id', $id)->get();
+        return view('apartments.statistics', compact('views'));
     }
 }

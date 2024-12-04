@@ -35,6 +35,9 @@ Route::get('geocode', function (Request $request) {
 });
 
 
+// Views counter
+Route::post('/apartments/{id}/views', [ApartmentApi::class, 'incrementViews']);
+
 //upload
 Route::post('/upload', [ImageUploadController::class, '__invoke'])->name('apartments.upload');
 //delete

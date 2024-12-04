@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\ApartmentController;
 use App\Http\Controllers\UserContentController;
 use App\Http\Controllers\ImageUploadController;
 use App\Http\Controllers\SponsorController;
+use App\Http\Controllers\PaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -56,6 +57,11 @@ Route::middleware('auth')->group(function () {
     Route::post('/sponsor/silver', [SponsorController::class, 'updateSponsorSilver'])->name('updateSponsorSilver');
     Route::get('/sponsor/gold', [SponsorController::class, 'createGold'])->name('gold');
     Route::post('/sponsor/gold', [SponsorController::class, 'updateSponsorGold'])->name('updateSponsorGold');
+
+    Route::get('/payment/token', [PaymentController::class, 'token']);
+    Route::post('/payment/checkout', [PaymentController::class, 'checkout']);
+    // visualizza statistiche views
+    Route::get('/statistics/{id}', [ApartmentController::class, 'statistics'])->name('statistics');
 
 });
 

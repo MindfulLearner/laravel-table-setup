@@ -2,6 +2,7 @@
 
 @section('header', 'Crea appartamento')
 @section('content')
+
 <div class="max-w-4xl mx-auto bg-gradient-to-r from-neutral-900 via-[#003441] to-neutral-900 shadow-xl rounded-lg p-10 mt-10">
 
     @if ($errors->any())
@@ -18,18 +19,19 @@
         Crea un Nuovo Appartamento
     </h1>
 
+
     <form action="{{ route('apartments.store') }}" enctype="multipart/form-data" method="POST" onsubmit="return validateForm()">
         @csrf
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
 
             <!-- Colonna Sinistra: Servizi -->
             <div class="col-span-1">
-                <div id="services-error" class="hidden bg-red-200 text-red-900 p-3 rounded-md mb-4">
+                <div id="services-error" class="hidden bg-red-100 text-red-700 p-2 rounded-md mb-2">
                     Seleziona almeno un servizio.
                 </div>
-                <fieldset class="border border-gray-500 rounded-xl p-6 mb-8 shadow-lg">
-                    <legend class="text-md font-bold text-gray-100">Servizi</legend>
-                    <div class="space-y-3 mt-4">
+                <fieldset class="border border-gray-300 rounded-lg p-4 mb-4">
+                    <legend class="text-sm font-medium text-gray-700">Servizi <span class="text-red-500">*</span></legend>
+                    <div class="space-y-2">
                         @foreach ($services as $service)
                             <div class="flex items-center">
                                 <input type="checkbox" id="service_{{ $service->id }}" name="services[]" value="{{ $service->id }}" class="mr-3 h-5 w-5 text-yellow-500 bg-black border-gray-300 rounded focus:ring focus:ring-yellow-300 focus:ring-opacity-50" {{ in_array($service->id, old('services', [])) ? 'checked' : '' }}>
@@ -49,7 +51,7 @@
 
                     <!-- Titolo -->
                     <div>
-                        <label for="title" class="block text-md font-semibold text-gray-100">Titolo</label>
+                        <label for="title" class="block text-sm font-medium text-gray-700">Titolo <span class="text-red-500">*</span></label>
                         <input
                             type="text"
                             id="title"
@@ -64,7 +66,7 @@
                     <div class="grid grid-cols-3 gap-6">
                         <!-- Stanze -->
                         <div>
-                            <label for="rooms" class="block text-md font-semibold text-gray-100">Stanze</label>
+                            <label for="rooms" class="block text-sm font-medium text-gray-700">Stanze <span class="text-red-500">*</span></label>
                             <input
                                 type="number"
                                 id="rooms"
@@ -78,7 +80,7 @@
 
                         <!-- Letti -->
                         <div>
-                            <label for="beds" class="block text-md font-semibold text-gray-100">Letti</label>
+                            <label for="beds" class="block text-sm font-medium text-gray-700">Letti <span class="text-red-500">*</span></label>
                             <input
                                 type="number"
                                 id="beds"
@@ -92,7 +94,7 @@
 
                         <!-- Bagni -->
                         <div>
-                            <label for="bathrooms" class="block text-md font-semibold text-gray-100">Bagni</label>
+                            <label for="bathrooms" class="block text-sm font-medium text-gray-700">Bagni <span class="text-red-500">*</span></label>
                             <input
                                 type="number"
                                 id="bathrooms"
@@ -106,7 +108,8 @@
                     </div>
 
                     <!-- Metri Quadri con linea trascinabile -->
-                    <div class="flex items-center gap-4 mt-4">
+                    <div>
+                        <label for="square_meters" class="block text-sm font-medium text-gray-700">Metri Quadri <span class="text-red-500">*</span></label>
                         <input
                             type="range"
                             id="square_meters"
@@ -121,11 +124,11 @@
                             <span>{{ old('square_meters', 75) }}</span> m²
                         </output>
                     </div>
-                    
-                    
+
+
                     <!-- Indirizzo -->
                     <div>
-                        <label for="address" class="block text-md font-semibold text-gray-100">Indirizzo</label>
+                        <label for="address" class="block text-sm font-medium text-gray-700">Indirizzo <span class="text-red-500">*</span></label>
                         <input
                             type="text"
                             id="address"
@@ -144,7 +147,8 @@
                             <div id="cover-image-error" class="hidden bg-red-200 text-red-900 p-3 rounded-md mb-4">
                                 Carica un'immagine di copertina.
                             </div>
-                            <label for="cover_image" class="block text-md font-semibold text-gray-100">Carica Immagine di copertina</label>
+
+                            <label for="cover_image" class="block text-sm font-medium text-gray-700">Carica Immagine di copertina (Upload) <span class="text-red-500">*</span></label>
                             <input
                                 type="file"
                                 id="cover_image"
@@ -196,16 +200,17 @@
                     </div>
 
                     <!-- Descrizione -->
-                    <div>
-                        <label for="description" class="block text-md font-semibold text-gray-100">Descrizione</label>
-                        <textarea
-                            id="description"
-                            name="description"
-                            rows="5"
-                            placeholder="Scrivi qui la descrizione dell'appartamento..."
-                            class="p-4 mt-2 block w-full bg-black text-gray-200 border-gray-500 rounded-lg shadow-sm focus:border-yellow-500 focus:ring focus:ring-yellow-300 focus:ring-opacity-50 transition resize-none"
-                            required
-                        >{{ old('description') }}</textarea>
+                    <div class="col-span-full">
+                        <label for="description" class="block text-lg font-semibold text-gray-900">Descrizione <span class="text-red-500">*</span></label>
+                        <div class="mt-2">
+                            <textarea
+                                id="description"
+                                name="description"
+                                placeholder="Scrivi qui la descrizione dell'appartamento..."
+                                class="p-4 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500 h-32 resize-none"
+                                required
+                            >{{ old('description') }}</textarea>
+                        </div>
                     </div>
 
                     <!-- Pulsante Submit -->
@@ -222,7 +227,6 @@
             </div>
         </div>
     </form>
-
 </div>
 
 <style>
@@ -231,8 +235,8 @@
     appearance: none;
     width: 100%;
     height: 8px;
-    background: #444; 
-    border-radius: 4px; 
+    background: #444;
+    border-radius: 4px;
     position: relative;
     outline: none;
 }
@@ -242,45 +246,47 @@
     -webkit-appearance: none;
     appearance: none;
     width: 24px;
+
     height: 24px; 
     margin-top: -8px; 
     background: #FFD700; 
+
     border-radius: 50%;
     cursor: pointer;
-    border: 2px solid #FFD700; 
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); 
+    border: 2px solid #FFD700;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     transition: transform 0.2s ease-in-out;
     position: relative;
-    z-index: 2; 
+    z-index: 2;
 }
 
 /* Thumb personalizzato per Firefox */
 .range-slider::-moz-range-thumb {
-    width: 24px; 
-    height: 24px; 
-    background: #FFD700; 
-    border-radius: 50%; 
+    width: 24px;
+    height: 24px;
+    background: #FFD700;
+    border-radius: 50%;
     cursor: pointer;
-    border: 2px solid #FFD700; 
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); 
+    border: 2px solid #FFD700;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     transition: transform 0.2s ease-in-out;
     position: relative;
-    z-index: 2; 
+    z-index: 2;
 }
 
 /* Track per il colore di avanzamento */
 .range-slider::-webkit-slider-runnable-track {
     width: 100%;
     height: 8px;
-    background: linear-gradient(to right, #FFD700 var(--value), #444 var(--value)); 
+    background: linear-gradient(to right, #FFD700 var(--value), #444 var(--value));
     border-radius: 4px;
     position: relative;
-    z-index: 1; 
+    z-index: 1;
 }
 
 /* Track per il colore di avanzamento in Firefox */
 .range-slider::-moz-range-progress {
-    background: #FFD700; 
+    background: #FFD700;
     height: 8px;
     border-radius: 4px;
 }
@@ -316,7 +322,7 @@
   document.getElementById('address').addEventListener('input', async function() {
     const apiTomTomKey = "{{ env('API_TOMTOM_KEY') }}";
     const inputValue = this.value;
-    const url = "https://api.tomtom.com/search/2/geocode/" + encodeURIComponent(inputValue) + ".json?key=" + apiTomTomKey + "&limit=5&countrySet=IT&language=it-IT";
+    const url = "https://api.tomtom.com/search/2/geocode/" + encodeURIComponent(inputValue) + ".json?key=" + apiTomTomKey + "&limit=5&countrySet=IT&language=it-IT&boundingBox=45.4,8.5,46.7,10.5";
 
     if (inputValue.length < 3) {
         document.getElementById('suggestions').innerHTML = '';
@@ -422,26 +428,22 @@
     event.preventDefault();
     const imageGroupContainer = document.querySelector('#image-group-container');
     const newRowHTML = `
-        <div class="row-image-group-container flex">
-          <img class="w-48" id="image-preview-group" alt="Immagine Copertina" style="display: none;">
-                        <div class="flex-1 space-y-3">
-        <input
-            type="file"
-            name="images[]"
-            class="image-group-input w-full border-blue-300 rounded-lg shadow-lg focus:border-blue-500 focus:ring-blue-500"
-            onchange="previewImageNonCover(event)"
-        >
-        <img class="w-48 h-32 object-cover rounded-lg border-4 border-blue-300 mt-2" id="image-preview-group" alt="Anteprima immagine" style="display: none;">
-        <div class="flex items-center">
+        <div class="row-image-group-container flex items-center mb-4 space-x-4">
+          <img class="w-48 h-32 object-cover rounded-lg border-4 border-blue-300" id="image-preview-group" alt="Anteprima immagine" style="display: none;">
+          <div class="flex-1">
+            <input
+                type="file"
+                name="images[]"
+                class="image-group-input w-full bg-black text-gray-200 border-blue-500 rounded-lg shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-300 focus:ring-opacity-50 transition"
+                onchange="previewImageNonCover(event)"
+            >
             <input
                 type="text"
                 name="image_description[]"
-                class="w-full max-w-xs border-blue-300 rounded-lg shadow-lg focus:border-blue-500 focus:ring-blue-500 mt-2"
+                class="mt-4 w-full bg-black text-gray-200 border-blue-500 rounded-lg shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-300 focus:ring-opacity-50 transition"
                 placeholder="Descrizione dell'immagine"
             >
-            <button class="ml-2 bg-red-500 text-white px-4 py-2 rounded-md shadow hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 delete-row">
-                Elimina
-            </button>
+          </div>
         </div>
     `;
     imageGroupContainer.insertAdjacentHTML('beforeend', newRowHTML);
@@ -484,10 +486,7 @@ document.getElementById('image-group-container').addEventListener('click', funct
 
 function validateForm() {
     const serviceCheckboxes = document.querySelectorAll('input[name="services[]"]');
-    const coverImageInput = document.getElementById('cover_image');
-
     let isServiceChecked = false;
-    let isSponsorshipChecked = false;
 
     serviceCheckboxes.forEach((checkbox) => {
         if (checkbox.checked) {
@@ -495,15 +494,7 @@ function validateForm() {
         }
     });
 
-    sponsorshipRadios.forEach((radio) => {
-        if (radio.checked) {
-            isSponsorshipChecked = true;
-        }
-    });
-
     const servicesErrorDiv = document.getElementById('services-error');
-    const sponsorshipErrorDiv = document.getElementById('sponsorship-error');
-    const coverImageErrorDiv = document.getElementById('cover-image-error');
 
     if (!isServiceChecked) {
         servicesErrorDiv.classList.remove('hidden');
@@ -511,21 +502,7 @@ function validateForm() {
         servicesErrorDiv.classList.add('hidden');
     }
 
-    if (!isSponsorshipChecked) {
-        sponsorshipErrorDiv.classList.remove('hidden');
-    } else {
-        sponsorshipErrorDiv.classList.add('hidden');
-    }
-
-    // Controllo per l'immagine di copertina
-    if (!coverImageInput.files.length) {
-        coverImageErrorDiv.classList.remove('hidden');
-        return false;
-    } else {
-        coverImageErrorDiv.classList.add('hidden');
-    }
-
-    return isServiceChecked && isSponsorshipChecked;
+    return isServiceChecked;
 }
 </script>
 @endsection
