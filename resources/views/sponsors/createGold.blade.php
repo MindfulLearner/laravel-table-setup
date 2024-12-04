@@ -47,12 +47,6 @@
     .hover\:glow:hover {
         box-shadow: 0px 0px 10px 5px rgba(0, 77, 77, 0.4);
     }
-
-    .selected-card {
-        background: linear-gradient(to bottom right, #FFD700, #FFFFFF); /* Gradient from gold to white */
-        box-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
-        transition: background 0.5s ease, box-shadow 0.5s ease; /* Smooth transition */
-    }
 </style>
 
 <script>
