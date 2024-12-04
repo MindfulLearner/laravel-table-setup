@@ -6,7 +6,7 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="http://192.168.1.101:5173">
-                        <div class="text-yellow-600 text-2xl font-semibold tracking-wide">
+                        <div class="text-yellow-500 text-2xl font-semibold tracking-wide">
                             MilanBnB
                         </div>
                     </a>
@@ -14,10 +14,13 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" class="text-white hover:text-yellow-500 transition-colors duration-300 font-semibold">
+                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" class="text-white hover:text-yellow-500 transition-all duration-300 font-semibold">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('sponsor')" :active="request()->routeIs('sponsor')" class="text-white hover:text-yellow-500 transition-colors duration-300 font-semibold">
+                    <x-nav-link :href="route('apartments.create')" :active="request()->routeIs('apartments/create')" class="text-white hover:text-yellow-500 transition-all duration-300 font-semibold">
+                        {{ __('Crea il tuo appartamento') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('sponsor')" :active="request()->routeIs('sponsor')" class="text-white hover:text-yellow-500 transition-all duration-300 font-semibold">
                         {{ __('Esplora Sponsor') }}
                     </x-nav-link>
                 </div>
@@ -38,14 +41,14 @@
                     </x-slot>
 
                     <x-slot name="content">
-                        <x-dropdown-link :href="route('profile.edit')" class="text-gray-800 hover:bg-yellow-500 hover:text-white transition-colors duration-200">
+                        <x-dropdown-link :href="route('profile.edit')" class="text-gray-800 hover:bg-yellow-500 hover:text-white transition-all duration-200">
                             {{ __('Profilo') }}
                         </x-dropdown-link>
 
                         <!-- Logout -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
-                            <x-dropdown-link :href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();" class="text-gray-800 hover:bg-red-500 hover:text-white transition-colors duration-200">
+                            <x-dropdown-link :href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();" class="text-gray-800 hover:bg-red-500 hover:text-white transition-all duration-200">
                                 {{ __('Esci') }}
                             </x-dropdown-link>
                         </form>
