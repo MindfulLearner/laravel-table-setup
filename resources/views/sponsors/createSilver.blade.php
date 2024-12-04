@@ -51,12 +51,6 @@
     .hover\:glow:hover {
         box-shadow: 0px 0px 10px 5px rgba(0, 77, 77, 0.4);
     }
-
-    .selected-card {
-        background: linear-gradient(to bottom right, #4B5563, #FFFFFF); /* Gradient from gray-800 to white */
-        box-shadow: 0 0 15px rgba(148, 163, 184, 0.6);
-        transition: background 0.5s ease, box-shadow 0.5s ease; /* Smooth transition */
-    }
 </style>
 <script src="https://js.braintreegateway.com/web/dropin/1.31.0/js/dropin.min.js"></script>
 <script>
