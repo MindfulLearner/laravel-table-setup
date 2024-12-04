@@ -30,7 +30,7 @@
                     Seleziona almeno un servizio.
                 </div>
                 <fieldset class="border border-gray-300 rounded-lg p-4 mb-4">
-                    <legend class="text-sm font-medium text-gray-700">Servizi <span class="text-red-500">*</span></legend>
+                    <legend class="text-sm font-medium text-white">Servizi <span class="text-red-500">*</span></legend>
                     <div class="space-y-2">
                         @foreach ($services as $service)
                             <div class="flex items-center">
@@ -51,7 +51,7 @@
 
                     <!-- Titolo -->
                     <div>
-                        <label for="title" class="block text-sm font-medium text-gray-700">Titolo <span class="text-red-500">*</span></label>
+                        <label for="title" class="block text-sm font-medium text-white">Titolo <span class="text-red-500">*</span></label>
                         <input
                             type="text"
                             id="title"
@@ -66,7 +66,7 @@
                     <div class="grid grid-cols-3 gap-6">
                         <!-- Stanze -->
                         <div>
-                            <label for="rooms" class="block text-sm font-medium text-gray-700">Stanze <span class="text-red-500">*</span></label>
+                            <label for="rooms" class="block text-sm font-medium text-white">Stanze <span class="text-red-500">*</span></label>
                             <input
                                 type="number"
                                 id="rooms"
@@ -81,7 +81,7 @@
 
                         <!-- Letti -->
                         <div>
-                            <label for="beds" class="block text-sm font-medium text-gray-700">Letti <span class="text-red-500">*</span></label>
+                            <label for="beds" class="block text-sm font-medium text-white">Letti <span class="text-red-500">*</span></label>
                             <input
                                 type="number"
                                 id="beds"
@@ -96,7 +96,7 @@
 
                         <!-- Bagni -->
                         <div>
-                            <label for="bathrooms" class="block text-sm font-medium text-gray-700">Bagni <span class="text-red-500">*</span></label>
+                            <label for="bathrooms" class="block text-sm font-medium text-white">Bagni <span class="text-red-500">*</span></label>
                             <input
                                 type="number"
                                 id="bathrooms"
@@ -111,8 +111,7 @@
                     </div>
 
                     <!-- Metri Quadri con linea trascinabile -->
-                    <div>
-                        <label for="square_meters" class="block text-sm font-medium text-gray-700">Metri Quadri <span class="text-red-500">*</span></label>
+                    <div class="flex items-center gap-4 mt-4">
                         <input
                             type="range"
                             id="square_meters"
@@ -128,10 +127,26 @@
                         </output>
                     </div>
 
+                    <!-- Prezzo -->
+                    <div>
+                        <label for="price" class="block text-sm font-medium text-white">Prezzo <span class="text-red-500">*</span></label>
+                        <input
+                            type="number"
+                            id="price"
+                            name="price"
+                            value="{{ old('price') }}"
+                            placeholder="Inserisci il prezzo dell'appartamento"
+                            class="p-4 mt-2 block w-20 bg-black text-gray-200 border-gray-500 rounded-lg shadow-sm focus:border-yellow-500 focus:ring focus:ring-yellow-300 focus:ring-opacity-50 transition"
+                            required
+                            min="0"
+                            step="0.01"
+                        />
+                    </div>
+
 
                     <!-- Indirizzo -->
                     <div>
-                        <label for="address" class="block text-sm font-medium text-gray-700">Indirizzo <span class="text-red-500">*</span></label>
+                        <label for="address" class="block text-sm font-medium text-white">Indirizzo <span class="text-red-500">*</span></label>
                         <input
                             type="text"
                             id="address"
@@ -151,7 +166,7 @@
                                 Carica un'immagine di copertina.
                             </div>
 
-                            <label for="cover_image" class="block text-sm font-medium text-gray-700">Carica Immagine di copertina (Upload) <span class="text-red-500">*</span></label>
+                            <label for="cover_image" class="block text-sm font-medium text-white">Carica Immagine di copertina (Upload) <span class="text-red-500">*</span></label>
                             <input
                                 type="file"
                                 id="cover_image"
@@ -168,7 +183,6 @@
                                 <button id="remove-image-button" class="mt-2 bg-red-500 text-white px-4 py-2 rounded-lg shadow hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2" style="display: none;" onclick="resetFileInput()">Rimuovi Immagine</button>
                             </div>
                         </div>
-
                         <!-- Carica altre immagini non copertina -->
                         <div id="image-group-container" class="w-full">
                             <div class="flex justify-between items-center mb-4">
@@ -204,13 +218,13 @@
 
                     <!-- Descrizione -->
                     <div class="col-span-full">
-                        <label for="description" class="block text-lg font-semibold text-gray-900">Descrizione <span class="text-red-500">*</span></label>
+                        <label for="description" class="block text-lg font-semibold text-white">Descrizione <span class="text-red-500">*</span></label>
                         <div class="mt-2">
                             <textarea
                                 id="description"
                                 name="description"
                                 placeholder="Scrivi qui la descrizione dell'appartamento..."
-                                class="p-4 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500 h-32 resize-none"
+                                class="p-4 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500 h-32 resize-none bg-black text-gray-200"
                                 required
                             >{{ old('description') }}</textarea>
                         </div>

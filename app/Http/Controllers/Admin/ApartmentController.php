@@ -104,6 +104,8 @@ class ApartmentController extends Controller
         if (!$arrayAddress) {
             return redirect()->back()->withInput($request->all())->withErrors(['address' => 'Indirizzo non valido o non trovato.']);
         }
+        $data['square_meters'] = $request->square_meters;
+        $data['price'] = $request->price;
         $data['address'] = $arrayAddress['address'];
         $data['latitude'] = $arrayAddress['latitude'];
         $data['longitude'] = $arrayAddress['longitude'];
@@ -198,6 +200,8 @@ class ApartmentController extends Controller
                 ]);
             }
         }
+        $data['square_meters'] = $request->square_meters;
+        $data['price'] = $request->price;
         $apartment->update($data);
         $apartment->services()->sync($data['services']);
         return redirect()->route('dashboard')->with('success', 'Appartamento aggiornato con successo');

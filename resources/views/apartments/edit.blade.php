@@ -123,6 +123,22 @@
                         </output>
                     </div>
 
+                        <!-- Prezzo -->
+                        <div>
+                            <label for="price" class="block text-sm font-medium text-white">Prezzo <span class="text-red-500">*</span></label>
+                            <input
+                                type="number"
+                                id="price"
+                                name="price"
+                                value="{{ old('price', $apartment->price) }}"
+                                placeholder="Inserisci il prezzo dell'appartamento"
+                                class="p-4 mt-2 block w-20 bg-black text-gray-200 border-gray-500 rounded-lg shadow-sm focus:border-yellow-500 focus:ring focus:ring-yellow-300 focus:ring-opacity-50 transition"
+                                required
+                                min="0"
+                                step="0.01"
+                        />
+                    </div>
+
                     <!-- Indirizzo -->
                     <div>
                         <label for="address" class="block text-md font-semibold text-gray-100">Indirizzo</label>
