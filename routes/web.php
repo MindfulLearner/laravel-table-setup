@@ -57,6 +57,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/sponsor/gold', [SponsorController::class, 'createGold'])->name('gold');
     Route::post('/sponsor/gold', [SponsorController::class, 'updateSponsorGold'])->name('updateSponsorGold');
 
+    // visualizza statistiche views
+    Route::get('/statistics', [ApartmentController::class, 'statistics'])->name('statistics');
+
 });
 
 require __DIR__.'/auth.php';

@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Apartment;
+use App\Models\View;
+use Illuminate\Support\Facades\Cache;
+
 class ApartmentApi extends Controller
 {
 /**
@@ -36,16 +39,6 @@ class ApartmentApi extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
-        $apartment = Apartment::create($request->all());
-        if ($request->has('services')) {
-            $apartment->services()->sync($request->input('services'));
-        }
-        if ($request->has('sponsorships')) {
-            $apartment->sponsorships()->sync($request->input('sponsorships'));
-        }
-
-
         $request->validate([
             "user_id" => "required|exists:users,id",
             "title" => "required|string|max:255",
@@ -61,11 +54,16 @@ class ApartmentApi extends Controller
         ]);
 
         $apartment = Apartment::create($request->all());
+        if ($request->has('services')) {
+            $apartment->services()->sync($request->input('services'));
+        }
+        if ($request->has('sponsorships')) {
+            $apartment->sponsorships()->sync($request->input('sponsorships'));
+        }
 
         return response()->json([
             'success' => true,
-            'data' => $apartment = Apartment::with('services', 'sponsorships')->find($apartment->id),
-
+            'data' => Apartment::with('services', 'sponsorships')->find($apartment->id),
             'message' => 'Apartment created successfully'
         ]);
     }
@@ -103,7 +101,7 @@ class ApartmentApi extends Controller
 
         return response()->json([
             'success' => true,
-            'data' => $apartment = Apartment::with('services', 'sponsorships')->find($apartment->id),
+            'data' => Apartment::with('services', 'sponsorships')->find($apartment->id),
             'message' => 'Apartment updated successfully'
         ]);
     }
@@ -130,12 +128,33 @@ class ApartmentApi extends Controller
         try {
             $apartment = Apartment::with('services', 'sponsorships', 'images')->find($id);
             return response()->json([
-            'success' => true,
-            'data' => $apartment,
-            'services' => $apartment->services,
-            'sponsorships' => $apartment->sponsorships,
-            'message' => 'Apartment retrieved successfully'
-        ]);
+                'success' => true,
+                'data' => $apartment,
+                'services' => $apartment->services,
+                'sponsorships' => $apartment->sponsorships,
+                'message' => 'Apartment retrieved successfully'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'An error occurred', 'error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function incrementViews($id)
+    {
+        try {
+            $ip = request()->ip();
+            $cacheKey = 'views_counter_' . $id . '_' . $ip;
+
+        if (!Cache::has($cacheKey)) {
+            Cache::put($cacheKey, true, 60);
+            $views = new View();
+            $views->ip_address = $ip;
+            $views->apartment_id = $id;
+            $views->date = now();
+            $views->save();
+        } else {
+            return response()->json(['message' => 'View already counted'], 400);
+        }
         } catch (\Exception $e) {
             return response()->json(['message' => 'An error occurred', 'error' => $e->getMessage()], 500);
         }
