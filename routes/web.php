@@ -60,8 +60,6 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/payment/token', [PaymentController::class, 'token']);
     Route::post('/payment/checkout', [PaymentController::class, 'checkout']);
-    // visualizza statistiche views
-    Route::get('/statistics/{id}', [ApartmentController::class, 'statistics'])->name('statistics');
 
 });
 

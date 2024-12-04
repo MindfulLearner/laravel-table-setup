@@ -60,8 +60,27 @@
             </div>
         @endforeach
     </div>
- <a href="{{ route('statistics', $apartment->id) }}" class="text-blue-500 hover:underline font-semibold">Visualizza statistiche</a>
-
+    <!-- Statistiche appartamento -->
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="p-6 text-gray-900 dark:text-red-200">
+                {{ __("Statistiche appartamento") }}
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-3">
+                {{ $views->count() }} {{ __("visualizzazioni") }}
+            </div>
+            <div class="mt-3">
+                <p>IP visitatori</p>
+                @foreach ($views as $view)
+                    <p>{{ $view->ip_address }}</p>
+                    <p>{{ $view->created_at }}</p>
+                    <p>{{ $view->id }}</p>
+                @endforeach
+            </div>
+        </div>
+        </div>
+    </div>
     <!-- Messaggi ricevuti -->
     <div class="bg-neutral-800 p-6 rounded-lg shadow-md mb-10">
         <h2 class="text-2xl font-bold text-yellow-500 mb-6">Messaggi ricevuti</h2>
