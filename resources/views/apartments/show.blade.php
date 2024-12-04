@@ -42,13 +42,12 @@
         <br>
 
         <!-- Informazioni sulle sponsorizzazioni -->
-        <p class="text-lg font-semibold text-gray-200"><strong>Sponsorizzazioni:</strong>
-            <span class="text-yellow-500">
-                @foreach ($apartment->sponsorships as $sponsorship)
-                    {{ $sponsorship->name }}@if (!$loop->last), @endif
-                @endforeach
-            </span>
-        </p>
+         <!-- Sponsorizzazione Attiva/Inattiva -->
+         @if($apartment->sponsorships->where('name', 'Bronze')->first())
+         <p class="mt-4 text-sm font-bold text-green-400">Stato: Attivo</p>
+     @else
+         <p class="mt-4 text-sm font-bold text-red-500">Stato: Inattivo</p>
+     @endif
     </div>
 
     <!-- Immagini aggiuntive dell'appartamento -->
