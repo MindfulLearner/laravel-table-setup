@@ -80,7 +80,7 @@
                         </ul>
                     </div>
                     <div class="flex justify-center mt-auto">
-                        <button class="w-8/12 px-6 py-3 bg-[#967305] text-white rounded-full shadow-lg hover:bg-yellow-500 focus:outline-none transition-all duration-300 transform hover:scale-105 h-12">Inizia</button>
+                        <button class="w-8/12 px-6 py-3 bg-yellow-900 text-white rounded-full shadow-lg hover:bg-yellow-700 focus:outline-none transition-all duration-300 transform hover:scale-105 h-12">Inizia</button>
                     </div>
                 </form>
             </div>
