@@ -24,6 +24,7 @@ return new class extends Migration
             $table->float('latitude', 10, 6)->nullable();
             $table->float('longitude', 10, 6)->nullable();
             $table->string('cover_image');
+            $table->decimal('price', 8, 2);
             $table->boolean('is_visible');
             $table->timestamps();
         });

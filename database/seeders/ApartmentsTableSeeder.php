@@ -78,6 +78,7 @@ class ApartmentsTableSeeder extends Seeder
                 'longitude' => $longitude,
                 'address' => $address,
                 'cover_image' => $apartmentImages[$faker->numberBetween(0, count($apartmentImages) - 1)],
+                'price' => $faker->randomFloat(2, 50, 1000),
                 'is_visible' => $faker->boolean,
             ];
 

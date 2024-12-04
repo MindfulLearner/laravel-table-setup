@@ -74,6 +74,7 @@ class ApartmentController extends Controller
             'description' => 'required|string|max:255',
             'cover_image' => 'required|image|mimes:jpeg,jpg,png,gif,svg|max:2048',
             'address' => 'required|string|max:255',
+            'price' => 'required|numeric|min:1|max:10000',
             'is_visible' => 'required|boolean',
         ]);
 
@@ -172,7 +173,6 @@ class ApartmentController extends Controller
 
         $cover_image = $request->file('cover_image');
         $images = $request->file('images');
-
 
         $apartment = Apartment::findOrFail($id);
 
