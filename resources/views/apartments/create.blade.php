@@ -3,27 +3,17 @@
 @section('header', 'Crea appartamento')
 @section('content')
 <div class="max-w-3xl mx-auto bg-white shadow-lg rounded-lg p-8 mt-10">
-
-    @if ($errors->any())
-        <div class="bg-red-100 text-red-700 p-4 rounded-md mb-4">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
     <h1 class="text-2xl font-bold text-gray-800 mb-6 text-center">Crea un Nuovo Appartamento</h1>
     <form action="{{ route('apartments.store') }}" enctype="multipart/form-data" method="POST" onsubmit="return validateForm()">
         @csrf
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <!-- Colonna Sinistra: Servizi e Sponsorizzazioni -->
             <div class="col-span-1">
-              <div id="services-error" class="hidden bg-red-100 text-red-700 p-2 rounded-md mb-2">
-                        Seleziona almeno un servizio.
-                    </div>
+                <div id="services-error" class="hidden bg-red-100 text-red-700 p-2 rounded-md mb-2">
+                    Seleziona almeno un servizio.
+                </div>
                 <fieldset class="border border-gray-300 rounded-lg p-4 mb-4">
-                    <legend class="text-sm font-medium text-gray-700">Servizi</legend>
+                    <legend class="text-sm font-medium text-gray-700">Servizi <span class="text-red-500">*</span></legend>
                     <div class="space-y-2">
                         @foreach ($services as $service)
                             <div class="flex items-center">
@@ -43,7 +33,7 @@
                 <div class="grid grid-cols-1 gap-6">
                     <!-- Titolo -->
                     <div>
-                        <label for="title" class="block text-sm font-medium text-gray-700">Titolo</label>
+                        <label for="title" class="block text-sm font-medium text-gray-700">Titolo <span class="text-red-500">*</span></label>
                         <input
                             type="text"
                             id="title"
@@ -58,7 +48,7 @@
                     <div class="grid grid-cols-3 gap-6">
                         <!-- Stanze -->
                         <div>
-                            <label for="rooms" class="block text-sm font-medium text-gray-700">Stanze</label>
+                            <label for="rooms" class="block text-sm font-medium text-gray-700">Stanze <span class="text-red-500">*</span></label>
                             <input
                                 type="number"
                                 id="rooms"
@@ -72,7 +62,7 @@
 
                         <!-- Letti -->
                         <div>
-                            <label for="beds" class="block text-sm font-medium text-gray-700">Letti</label>
+                            <label for="beds" class="block text-sm font-medium text-gray-700">Letti <span class="text-red-500">*</span></label>
                             <input
                                 type="number"
                                 id="beds"
@@ -86,7 +76,7 @@
 
                         <!-- Bagni -->
                         <div>
-                            <label for="bathrooms" class="block text-sm font-medium text-gray-700">Bagni</label>
+                            <label for="bathrooms" class="block text-sm font-medium text-gray-700">Bagni <span class="text-red-500">*</span></label>
                             <input
                                 type="number"
                                 id="bathrooms"
@@ -101,7 +91,7 @@
 
                     <!-- Metri Quadri con linea trascinabile -->
                     <div>
-                        <label for="square_meters" class="block text-sm font-medium text-gray-700">Metri Quadri</label>
+                        <label for="square_meters" class="block text-sm font-medium text-gray-700">Metri Quadri <span class="text-red-500">*</span></label>
                         <input
                             type="range"
                             id="square_meters"
@@ -117,7 +107,7 @@
 
                     <!-- Indirizzo -->
                     <div>
-                        <label for="address" class="block text-sm font-medium text-gray-700">Indirizzo</label>
+                        <label for="address" class="block text-sm font-medium text-gray-700">Indirizzo <span class="text-red-500">*</span></label>
                         <input
                             type="text"
                             id="address"
@@ -138,7 +128,7 @@
                                 Carica un'immagine di copertina.
                             </div>
 
-                            <label for="cover_image" class="block text-sm font-medium text-gray-700">Carica Immagine di copertina (Upload)</label>
+                            <label for="cover_image" class="block text-sm font-medium text-gray-700">Carica Immagine di copertina (Upload) <span class="text-red-500">*</span></label>
                             <input
                                 type="file"
                                 id="cover_image"
@@ -193,7 +183,7 @@
 
                     <!-- Descrizione -->
                     <div class="col-span-full">
-                        <label for="description" class="block text-lg font-semibold text-gray-900">Descrizione</label>
+                        <label for="description" class="block text-lg font-semibold text-gray-900">Descrizione <span class="text-red-500">*</span></label>
                         <div class="mt-2">
                             <textarea
                                 id="description"
@@ -219,7 +209,6 @@
             </div>
         </div>
     </form>
-
 </div>
 
 <script>
@@ -396,10 +385,7 @@ document.getElementById('image-group-container').addEventListener('click', funct
 
 function validateForm() {
     const serviceCheckboxes = document.querySelectorAll('input[name="services[]"]');
-    const coverImageInput = document.getElementById('cover_image');
-
     let isServiceChecked = false;
-    let isSponsorshipChecked = false;
 
     serviceCheckboxes.forEach((checkbox) => {
         if (checkbox.checked) {
@@ -407,15 +393,7 @@ function validateForm() {
         }
     });
 
-    sponsorshipRadios.forEach((radio) => {
-        if (radio.checked) {
-            isSponsorshipChecked = true;
-        }
-    });
-
     const servicesErrorDiv = document.getElementById('services-error');
-    const sponsorshipErrorDiv = document.getElementById('sponsorship-error');
-    const coverImageErrorDiv = document.getElementById('cover-image-error');
 
     if (!isServiceChecked) {
         servicesErrorDiv.classList.remove('hidden');
@@ -423,21 +401,7 @@ function validateForm() {
         servicesErrorDiv.classList.add('hidden');
     }
 
-    if (!isSponsorshipChecked) {
-        sponsorshipErrorDiv.classList.remove('hidden');
-    } else {
-        sponsorshipErrorDiv.classList.add('hidden');
-    }
-
-    // Controllo per l'immagine di copertina
-    if (!coverImageInput.files.length) {
-        coverImageErrorDiv.classList.remove('hidden');
-        return false;
-    } else {
-        coverImageErrorDiv.classList.add('hidden');
-    }
-
-    return isServiceChecked && isSponsorshipChecked;
+    return isServiceChecked;
 }
 </script>
 @endsection

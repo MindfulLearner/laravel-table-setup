@@ -422,6 +422,9 @@ document.getElementById('image-group-container').addEventListener('click', funct
     }
 });
 
+/**
+ * Funzione per il popup di eliminazione
+ */
 function deleteImage(imageId) {
     Swal.fire({
         title: 'Sei sicuro?',

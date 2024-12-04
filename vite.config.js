@@ -11,4 +11,10 @@ export default defineConfig({
             refresh: true,
         }),
     ],
+    server: {
+        port: 5173,
+        port: 5174,
+        port: 5175,
+        port: 5176,
+    },
 });
