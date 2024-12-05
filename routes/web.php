@@ -61,7 +61,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/payment/token', [PaymentController::class, 'token']);
     Route::post('/payment/checkout', [PaymentController::class, 'checkout']);
 
-    Route::get('/sponsors/payment', [SponsorController::class, 'showPaymentPage'])->name('payment');
+    Route::post('/sponsors/payment', [SponsorController::class, 'showPaymentPage'])->name('payment');
 
 });
 

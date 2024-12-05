@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Braintree\Gateway;
-
 class PaymentController extends Controller
 {
     private $gateway;
@@ -25,7 +24,6 @@ class PaymentController extends Controller
             $clientToken = $this->gateway->clientToken()->generate();
             return response()->json(['token' => $clientToken]);
         } catch (\Exception $e) {
-            \Log::error('Errore Braintree: ' . $e->getMessage());
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
@@ -47,7 +45,6 @@ class PaymentController extends Controller
                 return response()->json(['success' => false, 'error' => $result->message]);
             }
         } catch (\Exception $e) {
-            \Log::error('Errore Braintree: ' . $e->getMessage());
             return response()->json(['success' => false, 'error' => $e->getMessage()]);
         }
     }

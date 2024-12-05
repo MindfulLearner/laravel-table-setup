@@ -69,10 +69,11 @@ class SponsorController extends Controller
         return view('apartments.index', compact('apartments', 'superId'));
     }
 
-    public function showPaymentPage()
+    public function showPaymentPage(Request $request)
     {
-        $selectedApartments = [];
-        $totalPrice = 0;
+        // Recupera gli appartamenti selezionati e il prezzo totale dalla richiesta
+        $selectedApartments = Apartment::whereIn('id', $request->input('apartments', []))->get();
+        $totalPrice = $request->input('totalPrice', 0);
 
         return view('sponsors.payment', compact('selectedApartments', 'totalPrice'));
     }
