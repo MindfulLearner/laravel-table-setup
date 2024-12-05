@@ -136,7 +136,7 @@
                             name="price"
                             value="{{ old('price') }}"
                             placeholder="Inserisci il prezzo dell'appartamento"
-                            class="p-4 mt-2 block w-20 bg-black text-gray-200 border-gray-500 rounded-lg shadow-sm focus:border-yellow-500 focus:ring focus:ring-yellow-300 focus:ring-opacity-50 transition"
+                            class="p-4 mt-2 block w-1/4 bg-black text-gray-200 border-gray-500 rounded-lg shadow-sm focus:border-yellow-500 focus:ring focus:ring-yellow-300 focus:ring-opacity-50 transition"
                             required
                             min="0"
                             step="0.01"

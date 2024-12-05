@@ -27,7 +27,7 @@
     </head>
     <body>
         <div>
-            <div class="logo text-yellow-400">
+            <div class="logo text-white drop-shadow-lg">
                 <a href="http://127.0.0.1:5173">
                     <div>
                         MilanBnB

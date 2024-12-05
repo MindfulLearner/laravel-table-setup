@@ -35,7 +35,7 @@
                             <div class="flex items-center">
                                 <input type="checkbox" id="service_{{ $service->id }}" name="services[]" value="{{ $service->id }}" class="mr-3 h-5 w-5 text-yellow-500 bg-black border-gray-300 rounded focus:ring focus:ring-yellow-300 focus:ring-opacity-50" @if($apartment->services->contains($service->id)) checked @endif>
                                 <label for="service_{{ $service->id }}" class="ml-2 text-md font-medium text-gray-200 flex items-center">
-                                    <i class="fas fa-check-circle text-yellow-500 mr-2"></i>
+                                    <i class="{{ getServiceIcon($service->name) }} text-yellow-500 mr-3 w-5"></i>
                                     {{ $service->name }}
                                 </label>
                             </div>
@@ -125,19 +125,19 @@
 
                         <!-- Prezzo -->
                         <div>
-                            <label for="price" class="block text-sm font-medium text-white">Prezzo <span class="text-red-500">*</span></label>
+                            <label for="price" class="block text-sm font-medium text-white">Prezzo</label>
                             <input
                                 type="number"
                                 id="price"
                                 name="price"
                                 value="{{ old('price', $apartment->price) }}"
                                 placeholder="Inserisci il prezzo dell'appartamento"
-                                class="p-4 mt-2 block w-20 bg-black text-gray-200 border-gray-500 rounded-lg shadow-sm focus:border-yellow-500 focus:ring focus:ring-yellow-300 focus:ring-opacity-50 transition"
+                                class="p-4 mt-2 block bg-black text-gray-200 w-1/4 border-gray-500 rounded-lg shadow-sm focus:border-yellow-500 focus:ring focus:ring-yellow-300 focus:ring-opacity-50 transition"
                                 required
                                 min="0"
                                 step="0.01"
-                        />
-                    </div>
+                            />
+                        </div>
 
                     <!-- Indirizzo -->
                     <div>
@@ -548,6 +548,30 @@ function deleteImage(imageId) {
         }
     });
 }
+    @php
+    function getServiceIcon($serviceName) {
+        switch ($serviceName) {
+            case 'WiFi':
+                return 'fas fa-wifi';
+            case 'Parcheggio':
+                return 'fas fa-parking';
+            case 'Silver':
+                return 'fas fa-medal';
+            case 'Aria Condizionata':
+                return 'fas fa-wind';
+            case 'Cucina':
+                return 'fas fa-utensils';
+            case 'Lavatrice':
+                return 'fas fa-tshirt';
+            case 'TV':
+                return 'fas fa-tv';
+            case 'Riscaldamento':
+                return 'fas fa-thermometer-half';
+            default:
+                return 'fas fa-check-circle';
+        }
+    }
+    @endphp
 
   </script>
 @endsection
