@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-neutral-900 via-[#003441] to-neutral-900 py-12 px-4">
-    <div class="max-w-5xl mx-auto grid grid-cols-1 gap-8">
+    <div class="max-w-3xl mx-auto grid grid-cols-1 gap-8">
         
         <!-- Card Dettagli Appartamenti -->
         <div class="bg-neutral-800 p-8 rounded-3xl shadow-xl">
@@ -23,7 +23,7 @@
             <h2 class="text-3xl font-extrabold text-gray-100 mb-6 text-center border-b-4 border-yellow-700 pb-4">Pagamento</h2>
             <form action="{{ route('updateSponsorBronze') }}" method="POST" id="payment-form">
                 @csrf
-                <div id="dropin-container" class="mb-6"></div>
+                <div id="dropin-container" class="mb-6 max-w-sm mx-auto"></div>
                 <input type="hidden" id="nonce" name="payment_method_nonce">
                 <button type="submit" id="submit-button" class="w-full px-8 py-4 bg-gradient-to-t from-yellow-600 to-yellow-800 text-white rounded-full shadow-lg hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-400 transition-all ease-in-out duration-300 transform hover:scale-105 h-14 opacity-100">
                     Attiva Piano Bronze
@@ -67,4 +67,5 @@
             });
         });
 </script>
+
 @endsection
