@@ -66,7 +66,7 @@
                 <form action="{{ route('gold') }}" method="GET">
                     @csrf
                     <div class="z-10">
-                        <h2 class="text-4xl font-bold mb-16 mt-10 text-white drop-shadow-lg">Gold</h2>
+                        <h2 class="text-4xl font-bold mb-12 mt-12 text-white drop-shadow-lg">Gold</h2>
                         <div class="mb-6">
                             <span class="absolute -top-[110px] -right-[48px] transform font-big font-extrabold text-yellow-200 opacity-20">144</span>
                             <p class="text-7xl font-extrabold mb-6 text-yellow-900 relative z-20 mt-6 drop-shadow-lg">9,99 €</p>
@@ -93,7 +93,7 @@
         <!-- Sezione per le aziende -->
         <div class="mt-12 w-full bg-gradient-to-r from-neutral-900 via-neutral-800 to-neutral-900 text-gray-200 p-8 shadow-lg">
             <p class="text-center mb-8 text-lg">Siamo orgogliosi di collaborare con aziende leader nel settore immobiliare. Ecco alcune delle aziende che si affidano a noi per migliorare la loro visibilità e raggiungere più clienti.</p>
-            <div class="flex justify-center items-center space-x-8">
+            <div class="grid grid-cols-1 gap-8 md:grid-cols-3 lg:grid-none lg:flex lg:justify-center lg:gap-3 justify-items-center">
                 <img src="https://images.unsplash.com/photo-1496200186974-4293800e2c20?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8bG9nb3xlbnwwfHwwfHx8Mg%3D%3D" alt="Logo Azienda 1" class="h-16">
                 <img src="https://images.unsplash.com/photo-1620288627223-53302f4e8c74?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8bG9nb3xlbnwwfHwwfHx8Mg%3D%3D" alt="Logo Azienda 2" class="h-16">
                 <img src="https://cdn2.unrealengine.com/12br-delay-social-news-header-02-1920x1080-119208936.jpg" alt="Logo Azienda 3" class="h-16">

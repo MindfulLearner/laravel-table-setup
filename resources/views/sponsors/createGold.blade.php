@@ -29,14 +29,14 @@
             @endforeach
         </div>
 
-        <div class="flex justify-between items-center mt-8">
-            <p class="text-2xl font-bold text-white">Prezzo Totale: <span id="totalPrice">0,00 €</span></p>
+        <div class="md:flex md:justify-between md:items-center mt-8 sm:grid sm:grid-cols-1 sm:grid-rows-2">
+            <p class="text-2xl text-center mb-10 font-bold text-white">Prezzo Totale: <span id="totalPrice">0,00 €</span></p>
             <div class="flex flex-col items-end gap-2">
-                <p id="alertMessage" class="text-red-500 text-sm">
+                <p id="alertMessage" class="text-red-500 text-sm mx-auto">
                     Seleziona almeno un appartamento
                 </p>
                 <button type="button" onclick="proceedToPayment()" id="proceedButton" disabled
-                    class="px-8 py-4 bg-gradient-to-t from-yellow-600 to-yellow-800 text-white rounded-full shadow-lg hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-400 transition-all ease-in-out duration-300 transform hover:scale-105 h-14 opacity-50">
+                    class="px-8 py-4 bg-gradient-to-t from-yellow-600 to-yellow-800 text-white rounded-full shadow-lg hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-400 mx-auto transition-all ease-in-out duration-300 transform hover:scale-105 h-14 opacity-50">
                     Procedi al Pagamento
                 </button>
             </div>
