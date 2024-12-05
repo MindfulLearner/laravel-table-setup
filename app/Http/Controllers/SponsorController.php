@@ -32,41 +32,65 @@ class SponsorController extends Controller
 
     public function updateSponsorBronze(Request $request)
     {
-        $sponsorships = Sponsorship::where('name', 'Bronze')->first();
-        foreach ($request->apartments as $apartment) {
-            $apartment = Apartment::find($apartment);
-            $apartment->sponsorships()->attach($sponsorships);
-        }
 
-        $superId = Auth::user()->id;
-        $apartments = Apartment::where('user_id', $superId)->with('sponsorships')->get();
-        return view('apartments.index', compact('apartments', 'superId'));
+        // gestiamo il pagamento con braintree
+        $payment = new PaymentController();
+        $response = $payment->checkout($request);
+        if ($response->getStatusCode() != 200) {
+            return redirect()->back()->with('error', 'Errore durante il pagamento');
+        } else {
+            $sponsorships = Sponsorship::where('name', 'Bronze')->first();
+            $decodedApartments = json_decode($request->apartments, true);
+            foreach ($decodedApartments as $apartment) {
+                $apartment = Apartment::find($apartment['id']);
+                $apartment->sponsorships()->attach($sponsorships);
+            }
+
+            $superId = Auth::user()->id;
+            $apartments = Apartment::where('user_id', $superId)->with('sponsorships')->get();
+            $successPayment = 'Pagamento effettuato!';
+            return view('apartments.index', compact('apartments', 'superId', 'successPayment'));
+        }
     }
 
     public function updateSponsorSilver(Request $request)
     {
-        $sponsorships = Sponsorship::where('name', 'Silver')->first();
-        foreach ($request->apartments as $apartment) {
+        $payment = new PaymentController();
+        $response = $payment->checkout($request);
+        if ($response->getStatusCode() != 200) {
+            return redirect()->back()->with('error', 'Errore durante il pagamento');
+        } else {
+            $sponsorships = Sponsorship::where('name', 'Silver')->first();
+            foreach ($request->apartments as $apartment) {
             $apartment = Apartment::find($apartment);
-            $apartment->sponsorships()->attach($sponsorships);
-        }
+                $apartment->sponsorships()->attach($sponsorships);
+            }
 
-        $superId = Auth::user()->id;
-        $apartments = Apartment::where('user_id', $superId)->with('sponsorships')->get();
-        return view('apartments.index', compact('apartments', 'superId'));
+            $superId = Auth::user()->id;
+            $apartments = Apartment::where('user_id', $superId)->with('sponsorships')->get();
+            $successPayment = 'Pagamento effettuato!';
+            return view('apartments.index', compact('apartments', 'superId', 'successPayment'));
+        }
     }
 
     public function updateSponsorGold(Request $request)
     {
-        $sponsorships = Sponsorship::where('name', 'Gold')->first();
-        foreach ($request->apartments as $apartment) {
+        $payment = new PaymentController();
+        $response = $payment->checkout($request);
+        if ($response->getStatusCode() != 200) {
+            return redirect()->back()->with('error', 'Errore durante il pagamento');
+        } else {
+            $sponsorships = Sponsorship::where('name', 'Gold')->first();
+            foreach ($request->apartments as $apartment) {
             $apartment = Apartment::find($apartment);
             $apartment->sponsorships()->attach($sponsorships);
         }
 
         $superId = Auth::user()->id;
-        $apartments = Apartment::where('user_id', $superId)->with('sponsorships')->get();
-        return view('apartments.index', compact('apartments', 'superId'));
+            $apartments = Apartment::where('user_id', $superId)->with('sponsorships')->get();
+            $successPayment = 'Pagamento effettuato!';
+            return view('apartments.index', compact('apartments', 'superId', 'successPayment'));
+        }
     }
 
     public function showPaymentPage(Request $request)
@@ -74,7 +98,8 @@ class SponsorController extends Controller
         // Recupera gli appartamenti selezionati e il prezzo totale dalla richiesta
         $selectedApartments = Apartment::whereIn('id', $request->input('apartments', []))->get();
         $totalPrice = $request->input('totalPrice', 0);
+        $sponsorshipType = $request->input('sponsorshipType', 'Bronze');
 
-        return view('sponsors.payment', compact('selectedApartments', 'totalPrice'));
+        return view('sponsors.payment', compact('selectedApartments', 'totalPrice', 'sponsorshipType'));
     }
 }

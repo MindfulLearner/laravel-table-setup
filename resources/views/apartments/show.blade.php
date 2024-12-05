@@ -42,12 +42,64 @@
         <br>
 
         <!-- Informazioni sulle sponsorizzazioni -->
-         <!-- Sponsorizzazione Attiva/Inattiva -->
-         @if($apartment->sponsorships->where('name', 'Bronze')->first())
-         <p class="mt-4 text-sm font-bold text-green-400">Stato: Attivo</p>
-     @else
-         <p class="mt-4 text-sm font-bold text-red-500">Stato: Inattivo</p>
-     @endif
+        <div class="mt-6 space-y-4">
+            <h3 class="text-xl font-bold text-white mb-4">Sponsorizzazioni</h3>
+            <div class="flex flex-wrap gap-4">
+                @if($apartment->sponsorships->where('name', 'Bronze')->first())
+                    <div class="flex items-center px-6 py-3 bg-gradient-to-r from-yellow-700 to-yellow-900 rounded-xl shadow-lg border-2 border-yellow-600 transform hover:scale-105 transition-all duration-300">
+                        <i class="fas fa-medal text-yellow-700 text-2xl mr-3"></i>
+                        <div>
+                            <span class="text-lg font-bold text-yellow-500">Bronze</span>
+                            <span class="ml-2 text-sm text-green-400 font-semibold">• Attivo</span>
+                        </div>
+                    </div>
+                @else
+                    <div class="flex items-center px-6 py-3 bg-neutral-800 rounded-xl shadow-md opacity-50">
+                        <i class="fas fa-medal text-yellow-700 text-2xl mr-3"></i>
+                        <div>
+                            <span class="text-lg font-bold text-yellow-700">Bronze</span>
+                            <span class="ml-2 text-sm text-red-500 font-semibold">• Inattivo</span>
+                        </div>
+                    </div>
+                @endif
+
+                @if($apartment->sponsorships->where('name', 'Silver')->first())
+                    <div class="flex items-center px-6 py-3 bg-gradient-to-r from-gray-400 to-gray-600 rounded-xl shadow-lg border-2 border-gray-300 transform hover:scale-105 transition-all duration-300">
+                        <i class="fas fa-medal text-gray-300 text-2xl mr-3"></i>
+                        <div>
+                            <span class="text-lg font-bold text-gray-200">Silver</span>
+                            <span class="ml-2 text-sm text-green-400 font-semibold">• Attivo</span>
+                        </div>
+                    </div>
+                @else
+                    <div class="flex items-center px-6 py-3 bg-neutral-800 rounded-xl shadow-md opacity-50">
+                        <i class="fas fa-medal text-gray-400 text-2xl mr-3"></i>
+                        <div>
+                            <span class="text-lg font-bold text-gray-400">Silver</span>
+                            <span class="ml-2 text-sm text-red-500 font-semibold">• Inattivo</span>
+                        </div>
+                    </div>
+                @endif
+
+                @if($apartment->sponsorships->where('name', 'Gold')->first())
+                  <div class="flex items-center px-6 py-3 bg-gradient-to-r from-yellow-500 to-yellow-700 rounded-xl shadow-lg border-2 border-yellow-400 transform hover:scale-105 transition-all duration-300">
+                        <i class="fas fa-crown text-yellow-500 text-2xl mr-3"></i>
+                        <div>
+                            <span class="text-lg font-bold text-yellow-500">Gold</span>
+                            <span class="ml-2 text-sm text-green-400 font-semibold">• Attivo</span>
+                        </div>
+                    </div>
+                @else
+                   <div class="flex items-center px-6 py-3 bg-neutral-800 rounded-xl shadow-md opacity-50">
+                        <i class="fas fa-crown text-yellow-400 text-2xl mr-3"></i>
+                        <div>
+                            <span class="text-lg font-bold text-yellow-300">Gold</span>
+                            <span class="ml-2 text-sm text-red-500 font-semibold">• Inattivo</span>
+                        </div>
+                        </div>
+                @endif
+            </div>
+        </div>
     </div>
 
     <!-- Immagini aggiuntive dell'appartamento -->

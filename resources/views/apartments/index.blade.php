@@ -14,8 +14,14 @@
             <div class="text-yellow-500 text-3xl font-bold border-b-4 border-yellow-500 pb-4 mb-6">
                 {{ __("Accesso eseguito!") }}
             </div>
-
+            @if (isset($successPayment))
+                <p class="text-white text-2xl font-bold">
+                    {{ $successPayment }}
+                    agli appartamenti selezionati!
+                </p>
+            @endif
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+
               @foreach ($apartments as $apartment)
               <div class="w-full mx-auto bg-neutral-900 shadow-lg rounded-2xl overflow-hidden transform transition-all ease-in-out duration-500 cursor-pointer hover:scale-105 hover:shadow-2xl relative group">
                   <div class="absolute inset-0 bg-gradient-to-r from-[#013E49] to-[#004D73] opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out rounded-2xl"></div>
@@ -57,11 +63,11 @@
                                 <a href="{{ route('apartments.edit', $apartment->id) }}" class="border-2 border-yellow-400 bg-transparent text-white px-5 py-3 rounded-full font-semibold hover:bg-yellow-500 transition-all ease-in-out duration-500">
                                     Modifica
                                 </a>
-  
+
                                 <button class="open-modal border-2 border-red-600 bg-transparent text-white px-5 py-3 rounded-full font-semibold hover:bg-red-900 transition-all ease-in-out duration-500" data-apartment-id="{{ $apartment->id }}">
                                     Cancella
                                 </button>
-  
+
                                 <form action="{{ route('apartments.destroy', $apartment->id) }}" method="POST" class="inline">
                                     @csrf
                                     @method('DELETE')
@@ -86,9 +92,9 @@
               </div>
 
           @endforeach
-          
+
             </div>
-              
+
               <script>
                 // Logica conferma cancellazione
                 document.querySelectorAll(".deleteButton").forEach(function(button) {
