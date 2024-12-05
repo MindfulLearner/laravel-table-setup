@@ -17,16 +17,16 @@
                 <img class="absolute top-0 left-0 w-full h-full object-cover opacity-20 z-0 mix-blend-overlay" src="{{ asset('images/bronze_overlay.jpg') }}" alt="Overlay">
                 <form action="{{ route('bronze') }}" method="GET">
                     @csrf
-                    <div class="relative z-10">
-                        <h2 class="text-4xl font-bold mb-12 text-white drop-shadow-lg">Bronze</h2>
-                        <div class="relative mb-6">
-                            <span class="absolute top-0 left-1/2 transform -translate-x-1/2 text-9xl font-extrabold text-white opacity-20">7</span>
+                    <div class="z-10">
+                        <h2 class="text-4xl font-bold mb-16 mt-10 text-white drop-shadow-lg">Bronze</h2>
+                        <div class="mb-6">
+                            <span class="absolute -top-[110px] -right-[48px] transform font-big font-extrabold text-white opacity-20">24</span>
                             <p class="text-7xl font-extrabold mb-6 text-gray-200 relative z-20 mt-6 drop-shadow-lg">2,99 €</p>
-                            <p class="text-md text-gray-100 relative z-20 drop-shadow-lg mb-20">Per 7 giorni</p>
+                            <p class="text-md text-gray-100 relative z-20 drop-shadow-lg mb-20">Per 24 ore</p>
                         </div>
                         <ul class="mb-20 space-y-3 text-gray-100 relative z-20 drop-shadow-lg">
                             <li>Fino a 10 immagini dell'appartamento</li>
-                            <li>Visibilità per 7 giorni</li>
+                            <li>Visibilità per 24 ore</li>
                             <li>Supporto via email</li>
                         </ul>
                     </div>
@@ -41,16 +41,16 @@
                 <img class="absolute top-0 left-0 w-full h-full object-cover opacity-20 z-0 mix-blend-overlay" src="{{ asset('images/silver_overlay.jpg') }}" alt="Overlay">
                 <form action="{{ route('silver') }}" method="GET">
                     @csrf
-                    <div class="relative z-10">
-                        <h2 class="text-4xl font-bold mb-12 text-white drop-shadow-lg">Silver</h2>
-                        <div class="relative mb-6">
-                            <span class="absolute top-0 left-1/2 transform -translate-x-1/2 text-9xl font-extrabold text-gray-300 opacity-20">30</span>
+                    <div class="z-10">
+                        <h2 class="text-4xl font-bold mb-16 mt-10 text-white drop-shadow-lg">Silver</h2>
+                        <div class="mb-6">
+                            <span class="absolute -top-[110px] -right-[33px] transform font-big font-extrabold text-gray-300 opacity-20">72</span>
                             <p class="text-7xl font-extrabold mb-6 text-gray-800 relative z-20 mt-6 drop-shadow-lg">5,99 €</p>
-                            <p class="text-md text-gray-700 font-semibold relative z-20 drop-shadow-lg mb-20">Per 30 giorni</p>
+                            <p class="text-md text-gray-700 font-semibold relative z-20 drop-shadow-lg mb-20">Per 72 ore</p>
                         </div>
                         <ul class="mb-20 space-y-3 text-gray-800 relative z-20 drop-shadow-lg">
                             <li>Fino a 25 immagini dell'appartamento</li>
-                            <li>Visibilità per 30 giorni</li>
+                            <li>Visibilità per 72 ore</li>
                             <li>Supporto prioritario via email</li>
                         </ul>
                     </div>
@@ -65,16 +65,16 @@
                 <img class="absolute top-0 left-0 w-full h-full object-cover opacity-20 z-0 mix-blend-overlay" src="{{ asset('images/gold_overlay.jpg') }}" alt="Overlay">
                 <form action="{{ route('gold') }}" method="GET">
                     @csrf
-                    <div class="relative z-10">
-                        <h2 class="text-4xl font-bold mb-12 text-white drop-shadow-lg">Gold</h2>
-                        <div class="relative mb-6">
-                            <span class="absolute top-0 left-1/2 transform -translate-x-1/2 text-9xl font-extrabold text-yellow-200 opacity-20">90</span>
+                    <div class="z-10">
+                        <h2 class="text-4xl font-bold mb-16 mt-10 text-white drop-shadow-lg">Gold</h2>
+                        <div class="mb-6">
+                            <span class="absolute -top-[110px] -right-[48px] transform font-big font-extrabold text-yellow-200 opacity-20">144</span>
                             <p class="text-7xl font-extrabold mb-6 text-yellow-900 relative z-20 mt-6 drop-shadow-lg">9,99 €</p>
-                            <p class="text-md text-yellow-900 font-semibold relative z-20 drop-shadow-lg mb-20">Per 90 giorni</p>
+                            <p class="text-md text-yellow-900 font-semibold relative z-20 drop-shadow-lg mb-20">Per 144 ore</p>
                         </div>
                         <ul class="mb-20 space-y-3 text-yellow-900 relative z-20 drop-shadow-lg">
                             <li>Fino a 50 immagini dell'appartamento</li>
-                            <li>Visibilità per 90 giorni</li>
+                            <li>Visibilità per 144 ore</li>
                             <li>Supporto dedicato</li>
                             <li>Posizione prioritaria nella ricerca</li>
                         </ul>
@@ -109,7 +109,7 @@
                     <!-- FAQ Item 1 -->
                     <div class="bg-neutral-800 p-6 rounded-xl shadow-md">
                         <h3 class="text-xl font-semibold text-yellow-500 mb-2">Qual è il periodo di visibilità per il piano Bronze?</h3>
-                        <p class="text-gray-300">Il piano Bronze offre visibilità per 7 giorni, ideale per chi desidera un'esposizione breve ma efficace.</p>
+                        <p class="text-gray-300">Il piano Bronze offre visibilità per 24, ideale per chi desidera un'esposizione breve ma efficace.</p>
                     </div>
                     <!-- FAQ Item 2 -->
                     <div class="bg-neutral-800 p-6 rounded-xl shadow-md">
@@ -134,5 +134,7 @@
 @endsection
 
 <style>
-
+.font-big{
+    font-size: 250px;
+}
 </style>
