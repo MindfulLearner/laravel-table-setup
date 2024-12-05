@@ -125,6 +125,11 @@
             {{ $views->count() }} <span class="text-2xl font-semibold"> {{ __("Visualizzazioni Totali") }}</span>
         </div>
 
+        <!-- Grafico delle visualizzazioni -->
+        <div class="bg-neutral-800 p-6 rounded-lg shadow-lg mb-8">
+            <canvas id="viewsChart" class="w-full h-64"></canvas>
+        </div>
+
         <!-- Lista delle Visualizzazioni -->
         <div class="text-white drop-shadow-md text-semibold mb-8 text-center text-xl mt-20">
             {{ __("Dettagli delle Visualizzazioni") }}
@@ -182,5 +187,144 @@
         </a>
     </div>
 </div>
+
+<!-- Aggiungi Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    // Funzione per generare date fittizie
+    function generateFakeData() {
+        const now = new Date();
+        const data = [];
+        let cumulativeCount = 0;
+
+        // Genera 20 date fittizie, una ogni 10 secondi
+        for(let i = 0; i < 20; i++) {
+            const date = new Date(now - ((19-i) * 10000)); // Invertiamo l'ordine per avere date crescenti
+            cumulativeCount += 1; // Incrementa di 1 per ogni visualizzazione
+            data.push({
+                created_at: date.toISOString(),
+                cumulative_count: cumulativeCount
+            });
+        }
+        return data;
+    }
+
+    // Usa i dati reali se esistono, altrimenti usa dati fittizi
+    const views = @json($views);
+    const viewsData = views.length > 0 ?
+        views.map((view, index) => ({
+            ...view,
+            cumulative_count: index + 1 // Aggiunge il conteggio progressivo
+        })).sort((a, b) => new Date(a.created_at) - new Date(b.created_at))
+        : generateFakeData();
+
+    // Prepara i dati per il grafico
+    const timeLabels = viewsData.map(view => {
+        const date = new Date(view.created_at);
+        return date.toLocaleTimeString('it-IT', {
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit'
+        });
+    });
+
+    const cumulativeCounts = viewsData.map(view => view.cumulative_count);
+
+    // Crea il grafico
+    const ctx = document.getElementById('viewsChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: timeLabels,
+            datasets: [{
+                label: 'Visualizzazioni Totali',
+                data: cumulativeCounts,
+                borderColor: '#EAB308',
+                backgroundColor: 'rgba(234, 179, 8, 0.1)',
+                tension: 0,  // Linea dritta tra i punti
+                fill: true,
+                pointRadius: 6,
+                pointBackgroundColor: '#EAB308',
+                pointBorderColor: '#000',
+                pointBorderWidth: 2,
+                pointHoverRadius: 8,
+                pointHoverBackgroundColor: '#FFFFFF',
+                pointHoverBorderColor: '#EAB308',
+                pointHoverBorderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    labels: {
+                        color: '#FFFFFF',
+                        font: {
+                            size: 14
+                        }
+                    }
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                    titleColor: '#EAB308',
+                    bodyColor: '#FFFFFF',
+                    padding: 10,
+                    displayColors: false,
+                    callbacks: {
+                        label: function(context) {
+                            return `Visualizzazioni: ${context.parsed.y}`;
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        color: '#FFFFFF',
+                        stepSize: 1,
+                        font: {
+                            size: 12
+                        }
+                    },
+                    grid: {
+                        color: 'rgba(255, 255, 255, 0.1)'
+                    },
+                    title: {
+                        display: true,
+                        text: 'Numero di Visualizzazioni',
+                        color: '#FFFFFF',
+                        font: {
+                            size: 14
+                        }
+                    }
+                },
+                x: {
+                    ticks: {
+                        color: '#FFFFFF',
+                        maxRotation: 45,
+                        minRotation: 45,
+                        font: {
+                            size: 11
+                        }
+                    },
+                    grid: {
+                        color: 'rgba(255, 255, 255, 0.1)'
+                    },
+                    title: {
+                        display: true,
+                        text: 'Orario',
+                        color: '#FFFFFF',
+                        font: {
+                            size: 14
+                        }
+                    }
+                }
+            }
+        }
+    });
+</script>
 
 @endsection
