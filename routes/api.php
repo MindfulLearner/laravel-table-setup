@@ -40,6 +40,7 @@ Route::post('/apartments/{id}/views', [ApartmentApi::class, 'incrementViews']);
 
 //upload
 Route::post('/upload', [ImageUploadController::class, '__invoke'])->name('apartments.upload');
+
 //delete
 Route::delete('/delete/{image_string}', [ImageUploadController::class, 'destroy'])->name('apartments.destroy');
 

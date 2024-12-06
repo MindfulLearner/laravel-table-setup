@@ -35,7 +35,7 @@ class ApartmentsTableSeeder extends Seeder
             "https://a0.muscache.com/im/pictures/b42b9cc1-8ba8-4533-831c-7d9a4ad97070.jpg?im_w=720&im_format=avif",
             "https://a0.muscache.com/im/ml/photo_enhancement/pictures/miso/Hosting-43726673/original/8d3375a3-f5af-4f38-b328-733e04b88b9d.jpeg?im_w=720&im_format=avif",
             "https://images.pexels.com/photos/2079237/pexels-photo-2079237.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-            "https://images.pexels.com/photos/1986105/pexels-photo-1986105.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+            "https://a0.muscache.com/im/pictures/fa183f40-8c9c-4645-8b27-86e946ba8a62.jpg?im_w=720&im_format=avif",
             "https://a0.muscache.com/im/pictures/miso/Hosting-882755229618149063/original/c03bcb9b-50a8-4d35-8605-d3777374dbf8.jpeg?im_w=720&im_format=avif",
             "https://images.pexels.com/photos/1866149/pexels-photo-1866149.jpeg",
             "https://images.pexels.com/photos/1571463/pexels-photo-1571463.jpeg",

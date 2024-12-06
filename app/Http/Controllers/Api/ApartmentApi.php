@@ -23,6 +23,7 @@ class ApartmentApi extends Controller
     {
         try {
             $apartments = Apartment::with('services', 'sponsorships', 'images')->get();
+
             return response()->json([
                 'success' => true,
                 'data' => $apartments,
