@@ -51,6 +51,91 @@
                         <div>
                             <span class="text-lg font-bold text-yellow-500">Bronze</span>
                             <span class="ml-2 text-sm text-green-400 font-semibold">• Attivo</span>
+                            {{-- contiamo quanti Bronze attivi ci sono in un appartamento --}}
+                            @php
+                                $bronzeCount = 0;
+                                foreach ($apartment->sponsorships as $sponsorship) {
+                                    if ($sponsorship->name == 'Bronze') {
+                                        $bronzeCount++;
+                                    }
+                                }
+                            @endphp
+                            <div>
+                                ci sono {{ $bronzeCount }} Bronze attivi
+                            </div>
+
+                            {{-- durata totale lo sponsor bronze attivo --}}
+                            @php
+                                $bronzeDuration = 0;
+                                foreach ($apartment->sponsorships as $sponsorship) {
+                                    if ($sponsorship->name == 'Bronze') {
+                                        $bronzeDuration += $sponsorship->duration;
+                                    }
+                                }
+                            @endphp
+                            <div>
+                                durata totale lo sponsor bronze attivo: {{ $bronzeDuration }} ore
+                            </div>
+                        </div>
+
+                        <div>
+                            <span class="text-lg font-bold text-gray-200">Silver</span>
+                            <span class="ml-2 text-sm text-green-400 font-semibold">• Attivo</span>
+                            {{-- contiamo quanti Silver attivi ci sono in un appartamento --}}
+                            @php
+                                $silverCount = 0;
+                                foreach ($apartment->sponsorships as $sponsorship) {
+                                    if ($sponsorship->name == 'Silver') {
+                                        $silverCount++;
+                                    }
+                                }
+                            @endphp
+                            <div>
+                                ci sono {{ $silverCount }} Silver attivi
+                            </div>
+
+                            {{-- durata totale lo sponsor silver attivo --}}
+                            @php
+                                $silverDuration = 0;
+                                foreach ($apartment->sponsorships as $sponsorship) {
+                                    if ($sponsorship->name == 'Silver') {
+                                        $silverDuration += $sponsorship->duration;
+                                    }
+                                }
+                            @endphp
+                            <div>
+                                durata totale lo sponsor silver attivo: {{ $silverDuration }} ore
+                            </div>
+                        </div>
+
+                        <div>
+                            <span class="text-lg font-bold text-yellow-500">Gold</span>
+                            <span class="ml-2 text-sm text-green-400 font-semibold">• Attivo</span>
+                            {{-- contiamo quanti Gold attivi ci sono in un appartamento --}}
+                            @php
+                                $goldCount = 0;
+                                foreach ($apartment->sponsorships as $sponsorship) {
+                                    if ($sponsorship->name == 'Gold') {
+                                        $goldCount++;
+                                    }
+                                }
+                            @endphp
+                            <div>
+                                ci sono {{ $goldCount }} Gold attivi
+                            </div>
+
+                            {{-- durata totale lo sponsor gold attivo --}}
+                            @php
+                                $goldDuration = 0;
+                                foreach ($apartment->sponsorships as $sponsorship) {
+                                    if ($sponsorship->name == 'Gold') {
+                                        $goldDuration += $sponsorship->duration;
+                                    }
+                                }
+                            @endphp
+                            <div>
+                                durata totale lo sponsor gold attivo: {{ $goldDuration }} ore
+                            </div>
                         </div>
                     </div>
                 @else
@@ -61,6 +146,7 @@
                             <span class="ml-2 text-sm text-red-500 font-semibold">• Inattivo</span>
                         </div>
                     </div>
+
                 @endif
 
                 @if($apartment->sponsorships->where('name', 'Silver')->first())

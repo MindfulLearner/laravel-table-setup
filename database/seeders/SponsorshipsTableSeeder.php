@@ -18,18 +18,22 @@ class SponsorshipsTableSeeder extends Seeder
             [
                 'type' => 'No sponsorship',
                 'price' => 0,
+                'duration' => 0,
             ],
             [
                 'type' => 'Bronze',
                 'price' => 2.99,
+                'duration' => 24,
             ],
             [
                 'type' => 'Silver',
                 'price' => 5.99,
+                'duration' => 72,
             ],
             [
                 'type' => 'Gold',
                 'price' => 9.99,
+                'duration' => 144,
             ],
         ];
 
@@ -37,6 +41,7 @@ class SponsorshipsTableSeeder extends Seeder
             Sponsorship::create([
                 'name'  => $sponsorship['type'],
                 'price' => $sponsorship['price'],
+                'duration' => $sponsorship['duration'],
             ]);
         }
     }

@@ -40,9 +40,8 @@ class SponsorController extends Controller
             return redirect()->back()->with('error', 'Errore durante il pagamento');
         } else {
             $sponsorships = Sponsorship::where('name', 'Bronze')->first();
-            $decodedApartments = json_decode($request->apartments, true);
-            foreach ($decodedApartments as $apartment) {
-                $apartment = Apartment::find($apartment['id']);
+            foreach ($request->apartments as $apartment) {
+                $apartment = Apartment::find($apartment);
                 $apartment->sponsorships()->attach($sponsorships);
             }
 
