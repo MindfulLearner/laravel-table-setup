@@ -24,6 +24,24 @@
                             <!-- Sponsorizzazione Attiva/Inattiva -->
                             @if($apartment->sponsorships->where('name', 'Bronze')->first())
                                 <p class="mt-4 text-sm font-bold text-green-400">Stato: Attivo</p>
+                                @php
+                                    $bronzeCount = 0;
+                                    foreach ($apartment->sponsorships as $sponsorship) {
+                                        if ($sponsorship->name == 'Bronze') {
+                                            $bronzeCount++;
+                                        }
+                                    }
+                                @endphp
+                                <p class="mt-4 text-sm font-bold text-green-400">Attivo: {{ $bronzeCount }} volte</p>
+                                @php
+                                    $bronzeDuration = 0;
+                                    foreach ($apartment->sponsorships as $sponsorship) {
+                                        if ($sponsorship->name == 'Bronze') {
+                                            $bronzeDuration += $sponsorship->duration;
+                                        }
+                                    }
+                                @endphp
+                                <p class="mt-4 text-sm font-bold text-green-400">Durata: {{ $bronzeDuration }} ore</p>
                             @else
                                 <p class="mt-4 text-sm font-bold text-red-500">Stato: Inattivo</p>
                             @endif
@@ -31,7 +49,7 @@
                     </div>
                 @endforeach
             </div>
-            
+
             <div class="md:flex md:justify-between md:items-center mt-8 sm:grid sm:grid-cols-1 sm:grid-rows-2">
                 <p class="text-2xl text-center mb-10 font-bold text-white">Prezzo Totale: <span id="totalPrice">0,00 €</span></p>
                 <div class="flex flex-col items-end gap-2">

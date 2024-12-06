@@ -20,6 +20,24 @@
 
                             @if($apartment->sponsorships->where('name', 'Silver')->first())
                                 <p class="mt-4 text-sm font-bold text-green-400">Stato: Attivo</p>
+                                @php
+                                    $silverCount = 0;
+                                    foreach ($apartment->sponsorships as $sponsorship) {
+                                        if ($sponsorship->name == 'Silver') {
+                                            $silverCount++;
+                                        }
+                                    }
+                                @endphp
+                                <p class="mt-4 text-sm font-bold text-green-400">Attivo: {{ $silverCount }} volte</p>
+                                @php
+                                    $silverDuration = 0;
+                                    foreach ($apartment->sponsorships as $sponsorship) {
+                                        if ($sponsorship->name == 'Silver') {
+                                            $silverDuration += $sponsorship->duration;
+                                        }
+                                    }
+                                @endphp
+                                <p class="mt-4 text-sm font-bold text-green-400">Durata: {{ $silverDuration }} ore</p>
                             @else
                                 <p class="mt-4 text-sm font-bold text-red-500">Stato: Inattivo</p>
                             @endif
