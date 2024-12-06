@@ -21,6 +21,24 @@
 
                         @if($apartment->sponsorships->where('name', 'Gold')->first())
                             <p class="mt-4 text-sm font-bold text-green-400">Stato: Attivo</p>
+                            @php
+                            $goldCount = 0;
+                            foreach ($apartment->sponsorships as $sponsorship) {
+                                if ($sponsorship->name == 'Gold') {
+                                    $goldCount++;
+                                }
+                            }
+                            @endphp
+                            <p class="mt-4 text-sm font-bold text-green-400">Attivo: {{ $goldCount }} volte</p>
+                            @php
+                                $goldDuration = 0;
+                                foreach ($apartment->sponsorships as $sponsorship) {
+                                    if ($sponsorship->name == 'Gold') {
+                                        $goldDuration += $sponsorship->duration;
+                                    }
+                                }
+                            @endphp
+                            <p class="mt-4 text-sm font-bold text-green-400">Durata: {{ $goldDuration }} ore</p>
                         @else
                             <p class="mt-4 text-sm font-bold text-red-500">Stato: Inattivo</p>
                         @endif

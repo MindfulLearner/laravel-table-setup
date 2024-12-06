@@ -258,7 +258,7 @@
     <!-- Messaggi ricevuti -->
     <div class="bg-neutral-800 p-6 rounded-lg shadow-md mb-10">
         <h2 class="text-2xl font-bold text-yellow-500 mb-6">Messaggi ricevuti</h2>
-        @foreach ($messages as $message)
+        @foreach ($messages->sortByDesc('created_at') as $message)
             <div class="border-b border-gray-600 py-4">
                 <p class="text-lg text-gray-200 font-semibold mb-2">Data: <span class="text-yellow-500">{{ $message->created_at }}</span></p>
                 <p class="text-lg text-gray-200 font-semibold mb-2">Inviato da: <span class="text-blue-400">{{ $message->email_sender }}</span></p>
