@@ -78,11 +78,30 @@
                             </div>
                         </div>
 
+
+                    </div>
+                @else
+                    <div class="flex items-center px-6 py-3 bg-neutral-800 rounded-xl shadow-md opacity-50">
+                        <i class="fas fa-medal text-yellow-700 text-2xl mr-3"></i>
+                        <div>
+                            <span class="text-lg font-bold text-yellow-700">Bronze</span>
+                            <span class="ml-2 text-sm text-red-500 font-semibold">• Inattivo</span>
+                        </div>
+                    </div>
+
+                @endif
+
+                @if($apartment->sponsorships->where('name', 'Silver')->first())
+                    <div class="flex items-center px-6 py-3 bg-gradient-to-r from-gray-400 to-gray-600 rounded-xl shadow-lg border-2 border-gray-300 transform hover:scale-105 transition-all duration-300">
+                        <i class="fas fa-medal text-gray-300 text-2xl mr-3"></i>
                         <div>
                             <span class="text-lg font-bold text-gray-200">Silver</span>
                             <span class="ml-2 text-sm text-green-400 font-semibold">• Attivo</span>
-                            {{-- contiamo quanti Silver attivi ci sono in un appartamento --}}
-                            @php
+
+                            <div>
+
+                                {{-- contiamo quanti Silver attivi ci sono in un appartamento --}}
+                                @php
                                 $silverCount = 0;
                                 foreach ($apartment->sponsorships as $sponsorship) {
                                     if ($sponsorship->name == 'Silver') {
@@ -107,12 +126,28 @@
                                 durata totale lo sponsor silver attivo: {{ $silverDuration }} ore
                             </div>
                         </div>
+                        </div>
+                    </div>
+                @else
+                    <div class="flex items-center px-6 py-3 bg-neutral-800 rounded-xl shadow-md opacity-50">
+                        <i class="fas fa-medal text-gray-400 text-2xl mr-3"></i>
+                        <div>
+                            <span class="text-lg font-bold text-gray-400">Silver</span>
+                            <span class="ml-2 text-sm text-red-500 font-semibold">• Inattivo</span>
+                        </div>
+                    </div>
+                @endif
 
+                @if($apartment->sponsorships->where('name', 'Gold')->first())
+                  <div class="flex items-center px-6 py-3 bg-gradient-to-r from-yellow-500 to-yellow-700 rounded-xl shadow-lg border-2 border-yellow-400 transform hover:scale-105 transition-all duration-300">
+                        <i class="fas fa-crown text-yellow-500 text-2xl mr-3"></i>
                         <div>
                             <span class="text-lg font-bold text-yellow-500">Gold</span>
                             <span class="ml-2 text-sm text-green-400 font-semibold">• Attivo</span>
-                            {{-- contiamo quanti Gold attivi ci sono in un appartamento --}}
-                            @php
+
+                            <div>
+                                {{-- contiamo quanti Gold attivi ci sono in un appartamento --}}
+                                @php
                                 $goldCount = 0;
                                 foreach ($apartment->sponsorships as $sponsorship) {
                                     if ($sponsorship->name == 'Gold') {
@@ -137,42 +172,6 @@
                                 durata totale lo sponsor gold attivo: {{ $goldDuration }} ore
                             </div>
                         </div>
-                    </div>
-                @else
-                    <div class="flex items-center px-6 py-3 bg-neutral-800 rounded-xl shadow-md opacity-50">
-                        <i class="fas fa-medal text-yellow-700 text-2xl mr-3"></i>
-                        <div>
-                            <span class="text-lg font-bold text-yellow-700">Bronze</span>
-                            <span class="ml-2 text-sm text-red-500 font-semibold">• Inattivo</span>
-                        </div>
-                    </div>
-
-                @endif
-
-                @if($apartment->sponsorships->where('name', 'Silver')->first())
-                    <div class="flex items-center px-6 py-3 bg-gradient-to-r from-gray-400 to-gray-600 rounded-xl shadow-lg border-2 border-gray-300 transform hover:scale-105 transition-all duration-300">
-                        <i class="fas fa-medal text-gray-300 text-2xl mr-3"></i>
-                        <div>
-                            <span class="text-lg font-bold text-gray-200">Silver</span>
-                            <span class="ml-2 text-sm text-green-400 font-semibold">• Attivo</span>
-                        </div>
-                    </div>
-                @else
-                    <div class="flex items-center px-6 py-3 bg-neutral-800 rounded-xl shadow-md opacity-50">
-                        <i class="fas fa-medal text-gray-400 text-2xl mr-3"></i>
-                        <div>
-                            <span class="text-lg font-bold text-gray-400">Silver</span>
-                            <span class="ml-2 text-sm text-red-500 font-semibold">• Inattivo</span>
-                        </div>
-                    </div>
-                @endif
-
-                @if($apartment->sponsorships->where('name', 'Gold')->first())
-                  <div class="flex items-center px-6 py-3 bg-gradient-to-r from-yellow-500 to-yellow-700 rounded-xl shadow-lg border-2 border-yellow-400 transform hover:scale-105 transition-all duration-300">
-                        <i class="fas fa-crown text-yellow-500 text-2xl mr-3"></i>
-                        <div>
-                            <span class="text-lg font-bold text-yellow-500">Gold</span>
-                            <span class="ml-2 text-sm text-green-400 font-semibold">• Attivo</span>
                         </div>
                     </div>
                 @else
