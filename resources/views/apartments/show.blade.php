@@ -237,7 +237,9 @@
                         @foreach ($views as $view)
                             <tr>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    {{ $view->created_at->format('d-m-Y H:i:s') }}
+                                    <span class="date-to-format" data-date="{{ $view->created_at }}">
+                                        {{ $view->created_at }}
+                                    </span>
                                 </td>
                                 {{-- <td class="px-6 py-4 whitespace-nowrap">
                                     {{ $view->ip_address }}
@@ -259,7 +261,7 @@
         <h2 class="text-2xl font-bold text-yellow-500 mb-6">Messaggi ricevuti</h2>
         @foreach ($messages->sortByDesc('created_at') as $message)
             <div class="border-b border-gray-600 py-4">
-                <p class="text-lg text-gray-200 font-semibold mb-2">Data: <span class="text-yellow-500">{{ $message->created_at }}</span></p>
+                <p class="text-lg text-gray-200 font-semibold mb-2">Data: <span class="text-yellow-500 date-to-format" data-date="{{ $message->created_at }}">{{ $message->created_at }}</span></p>
                 <p class="text-lg text-gray-200 font-semibold mb-2">Inviato da: <span class="text-blue-400">{{ $message->email_sender }}</span></p>
                 <p class="text-md text-gray-300 italic">{{ $message->message }}</p>
             </div>
@@ -277,6 +279,27 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
+    function formatDate(dateString) {
+        const options = {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: false
+        };
+        return new Date(dateString).toLocaleString('it-IT', options);
+    }
+
+    // Formatta tutte le date quando il documento è caricato
+    document.addEventListener('DOMContentLoaded', function() {
+        const dateElements = document.querySelectorAll('.date-to-format');
+        dateElements.forEach(element => {
+            const originalDate = element.dataset.date;
+            element.textContent = formatDate(originalDate);
+        });
+    });
+
     // Funzione per generare date fittizie
     function generateFakeData() {
         const now = new Date();
