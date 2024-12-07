@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ApartmentApi;
 use App\Http\Controllers\ImageUploadController;
 use App\Http\Controllers\Api\ReceiverController as EmailReceiverController;
+use App\Http\Controllers\NotificationController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -19,6 +20,11 @@ use App\Http\Controllers\Api\ReceiverController as EmailReceiverController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+// Notification con Auth
+Route::middleware('auth:sanctum')->get('/notifications', [NotificationController::class, 'index']);
+// debugging
+// Route::get('/notifications/{id}', [NotificationController::class, 'index']);
 
 Route::get('geocode', function (Request $request) {
     $apiKey = 'SooRbYbji9V5qUxAh3i2ijnD8m9ZWVZ7';
