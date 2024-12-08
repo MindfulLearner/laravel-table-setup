@@ -296,7 +296,9 @@
         const dateElements = document.querySelectorAll('.date-to-format');
         dateElements.forEach(element => {
             const originalDate = element.dataset.date;
-            element.textContent = formatDate(originalDate);
+            const formattedDate = formatDate(originalDate);
+
+            element.textContent = formattedDate.replace(',', ', ore');
         });
     });
 
@@ -304,7 +306,7 @@
     const views = @json($views);
     const viewsData = views.map((view, index) => ({
         ...view,
-        cumulative_count: index + 1 // Aggiunge il conteggio progressivo
+        cumulative_count: index + 1
     })).sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
 
     // Prepara i dati per il grafico
@@ -312,8 +314,7 @@
         const date = new Date(view.created_at);
         return date.toLocaleTimeString('it-IT', {
             hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit'
+            minute: '2-digit'
         });
     });
 
