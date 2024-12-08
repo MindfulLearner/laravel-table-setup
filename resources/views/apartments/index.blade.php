@@ -10,9 +10,9 @@
 @endif
 <div class="py-12">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <div class="bg-gradient-to-r from-black via-[#013E49] to-black overflow-hidden shadow-lg sm:rounded-lg p-6">
-            <div class="text-yellow-500 text-3xl font-bold border-b-4 border-yellow-500 pb-4 mb-6">
-                {{ __("Accesso eseguito!") }}
+        <div class="bg-gradient-to-r from-black via-[#013E49] to-black overflow-hidden shadow-lg sm:rounded-lg p-10">
+            <div class="text-white text-center text-3xl font-bold border-b-4 border-yellow-500 pb-4 mb-8">
+                {{ __("Appartamenti") }}
             </div>
             @if (isset($successPayment))
                 <p class="text-white text-2xl font-bold">
