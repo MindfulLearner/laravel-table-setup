@@ -66,15 +66,25 @@
 
                             {{-- durata totale lo sponsor bronze attivo --}}
                             @php
-                                $bronzeDuration = 0;
+                                $bronzeEndDate = null;
                                 foreach ($apartment->sponsorships as $sponsorship) {
                                     if ($sponsorship->name == 'Bronze') {
-                                        $bronzeDuration += $sponsorship->duration;
+                                        $startDate = new DateTime($sponsorship->pivot->start_date);
+                                        $endDate = clone $startDate;
+                                        $endDate->modify('+' . $sponsorship->duration . ' hours');
+
+                                        if (!$bronzeEndDate || $endDate > $bronzeEndDate) {
+                                            $bronzeEndDate = $endDate;
+                                        }
                                     }
                                 }
                             @endphp
                             <div>
-                                durata totale lo sponsor bronze attivo: {{ $bronzeDuration }} ore
+                                @if($bronzeEndDate)
+                                    Terminerà il {{ $bronzeEndDate->format('d/m/Y') }} alle ore {{ $bronzeEndDate->format('H:i') }}
+                                @else
+                                    Nessuna sponsorizzazione attiva
+                                @endif
                             </div>
                         </div>
 
@@ -115,15 +125,25 @@
 
                             {{-- durata totale lo sponsor silver attivo --}}
                             @php
-                                $silverDuration = 0;
+                                $silverEndDate = null;
                                 foreach ($apartment->sponsorships as $sponsorship) {
                                     if ($sponsorship->name == 'Silver') {
-                                        $silverDuration += $sponsorship->duration;
+                                        $startDate = new DateTime($sponsorship->pivot->start_date);
+                                        $endDate = clone $startDate;
+                                        $endDate->modify('+' . $sponsorship->duration . ' hours');
+
+                                        if (!$silverEndDate || $endDate > $silverEndDate) {
+                                            $silverEndDate = $endDate;
+                                        }
                                     }
                                 }
                             @endphp
                             <div>
-                                durata totale lo sponsor silver attivo: {{ $silverDuration }} ore
+                                @if($silverEndDate)
+                                    Terminerà il {{ $silverEndDate->format('d/m/Y') }} alle ore {{ $silverEndDate->format('H:i') }}
+                                @else
+                                    Nessuna sponsorizzazione attiva
+                                @endif
                             </div>
                         </div>
                         </div>
@@ -161,15 +181,25 @@
 
                             {{-- durata totale lo sponsor gold attivo --}}
                             @php
-                                $goldDuration = 0;
+                                $goldEndDate = null;
                                 foreach ($apartment->sponsorships as $sponsorship) {
                                     if ($sponsorship->name == 'Gold') {
-                                        $goldDuration += $sponsorship->duration;
+                                        $startDate = new DateTime($sponsorship->pivot->start_date);
+                                        $endDate = clone $startDate;
+                                        $endDate->modify('+' . $sponsorship->duration . ' hours');
+
+                                        if (!$goldEndDate || $endDate > $goldEndDate) {
+                                            $goldEndDate = $endDate;
+                                        }
                                     }
                                 }
                             @endphp
                             <div>
-                                durata totale lo sponsor gold attivo: {{ $goldDuration }} ore
+                                @if($goldEndDate)
+                                    Terminerà il {{ $goldEndDate->format('d/m/Y') }} alle ore {{ $goldEndDate->format('H:i') }}
+                                @else
+                                    Nessuna sponsorizzazione attiva
+                                @endif
                             </div>
                         </div>
                         </div>
