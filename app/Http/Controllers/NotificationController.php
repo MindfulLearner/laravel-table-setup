@@ -16,7 +16,7 @@ class NotificationController extends Controller
 
         foreach ($apartments as $apartment) {
             foreach ($apartment->messages as $message) {
-                if ($message['created_at'] > now()->subMinutes(5)) {
+                if ($message['created_at'] > now()->subMinutes(10)) {
                     $newMessages[] = $message;
                 }
             }

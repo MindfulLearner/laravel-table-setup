@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\ApartmentApi;
 use App\Http\Controllers\ImageUploadController;
 use App\Http\Controllers\Api\ReceiverController as EmailReceiverController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -54,6 +55,8 @@ Route::delete('/delete/{image_string}', [ImageUploadController::class, 'destroy'
 //emailreceiver
 Route::post('/emailreceiver', [EmailReceiverController::class, '__invoke'])->name('emailreceiver');
 
+// api logout
+Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
 
 // Read

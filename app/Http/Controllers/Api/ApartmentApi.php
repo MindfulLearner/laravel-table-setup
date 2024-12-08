@@ -148,7 +148,7 @@ class ApartmentApi extends Controller
 
         if (!Cache::has($cacheKey)) {
             //per far veder che funziona il controllo, imposto un tempo di 20 secondi
-            Cache::put($cacheKey, true, 20);
+            Cache::put($cacheKey, true, 5);
             $views = new View();
             $views->ip_address = $ip;
             $views->apartment_id = $id;
