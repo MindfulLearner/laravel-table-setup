@@ -60,6 +60,8 @@
                             placeholder="Inserisci il titolo dell'appartamento"
                             class="p-4 mt-2 block w-full bg-black text-gray-200 border-gray-500 rounded-lg shadow-sm focus:border-yellow-500 focus:ring focus:ring-yellow-300 focus:ring-opacity-50 transition"
                             required
+                            oninvalid="this.setCustomValidity('Per favore, inserisci un titolo.')"
+                            oninput="this.setCustomValidity('')"
                         />
                     </div>
 
@@ -76,6 +78,8 @@
                                 class="p-4 mt-2 block w-full bg-black text-gray-200 border-gray-500 rounded-lg shadow-sm focus:border-yellow-500 focus:ring focus:ring-yellow-300 focus:ring-opacity-50 transition"
                                 required
                                 min="0"
+                                oninvalid="this.setCustomValidity('Per favore, inserisci un numero di stanze valido.')"
+                                oninput="this.setCustomValidity('')"
                             />
                         </div>
 
@@ -91,6 +95,8 @@
                                 class="p-4 mt-2 block w-full bg-black text-gray-200 border-gray-500 rounded-lg shadow-sm focus:border-yellow-500 focus:ring focus:ring-yellow-300 focus:ring-opacity-50 transition"
                                 required
                                 min="0"
+                                oninvalid="this.setCustomValidity('Per favore, inserisci un numero di letti valido.')"
+                                oninput="this.setCustomValidity('')"
                             />
                         </div>
 
@@ -106,6 +112,8 @@
                                 class="p-4 mt-2 block w-full bg-black text-gray-200 border-gray-500 rounded-lg shadow-sm focus:border-yellow-500 focus:ring focus:ring-yellow-300 focus:ring-opacity-50 transition"
                                 required
                                 min="0"
+                                oninvalid="this.setCustomValidity('Per favore, inserisci un numero di bagni valido.')"
+                                oninput="this.setCustomValidity('')"
                             />
                         </div>
                     </div>
@@ -140,6 +148,8 @@
                             required
                             min="0"
                             step="0.01"
+                            oninvalid="this.setCustomValidity('Per favore, inserisci un prezzo valido.')"
+                            oninput="this.setCustomValidity('')"
                         />
                     </div>
 
@@ -155,6 +165,8 @@
                             placeholder="Inserisci l'indirizzo"
                             class="p-4 mt-2 block w-full bg-black text-gray-200 border-gray-500 rounded-lg shadow-sm focus:border-yellow-500 focus:ring focus:ring-yellow-300 focus:ring-opacity-50 transition"
                             required
+                            oninvalid="this.setCustomValidity('Per favore, inserisci un indirizzo valido.')"
+                            oninput="this.setCustomValidity('')"
                         />
                         <div id="suggestions" class="absolute bg-black border border-gray-500 rounded-lg mt-1 z-10 hidden text-gray-200"></div>
                     </div>
@@ -226,6 +238,8 @@
                                 placeholder="Scrivi qui la descrizione dell'appartamento..."
                                 class="p-4 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring-yellow-500 h-32 resize-none bg-black text-gray-200"
                                 required
+                                oninvalid="this.setCustomValidity('Per favore, inserisci una descrizione.')"
+                                oninput="this.setCustomValidity('')"
                             >{{ old('description') }}</textarea>
                         </div>
                     </div>

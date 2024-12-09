@@ -65,6 +65,40 @@ class ImagesSeeder extends Seeder
             "https://images.pexels.com/photos/271800/pexels-photo-271800.jpeg"
           ];
 
+          $firstApartmentImages = [
+            "https://a0.muscache.com/im/pictures/05368ed7-e85d-4205-a52e-999c9d361690.jpg?im_w=720&im_format=avif",
+            "https://a0.muscache.com/im/pictures/00914ffd-8295-4c15-aecf-3789a9276259.jpg?im_w=720&im_format=avif",
+            "https://a0.muscache.com/im/pictures/72d99846-cf40-4b08-9447-170b4acbe950.jpg?im_w=720&im_format=avif",
+            "https://a0.muscache.com/im/pictures/de082a8c-0e44-450d-a4ef-3211162ae117.jpg?im_w=1200&im_format=avif",
+            "https://a0.muscache.com/im/pictures/9c74757a-0c63-4f77-8661-9e8312ece6e7.jpg?im_w=720&im_format=avif",
+            "https://a0.muscache.com/im/pictures/6c35ea22-7658-49c7-962a-acb905e665cf.jpg?im_w=720&im_format=avif"
+          ];
+
+          foreach ($firstApartmentImages as $image) {
+            Image::create([
+                'image_path' => $image,
+                'description' => $faker->sentence(),
+                'apartment_id' => 1,
+            ]);
+          }
+
+        $secondoApartmentImages = [
+                "https://a0.muscache.com/im/pictures/miso/Hosting-896390170139549133/original/71b252df-5841-48f0-8fb4-4fd644a662da.jpeg?im_w=1200&im_format=avif",
+                "https://a0.muscache.com/im/pictures/miso/Hosting-896390170139549133/original/fa53ea99-922a-4dec-b597-30a12d85795d.jpeg?im_w=1200&im_format=avif",
+                "https://a0.muscache.com/im/ml/photo_enhancement/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6ODk2MzkwMTcwMTM5NTQ5MTMz/original/7e091010-3a86-4a06-a707-8f894c54cee2.jpeg?im_w=1200&im_format=avif",
+                "https://a0.muscache.com/im/ml/photo_enhancement/pictures/miso/Hosting-896390170139549133/original/3c82d6e1-b8a1-4d37-9df7-d0c6f028de90.jpeg?im_w=1200&im_format=avif"
+            ];
+
+            foreach ($secondoApartmentImages as $image) {
+                Image::create([
+                    'image_path' => $image,
+                    'description' => $faker->sentence(),
+                    'apartment_id' => 2,
+                ]);
+            }
+
+
+
         foreach (Apartment::all() as $apartment) {
             $apartmentId = $apartment->id;
 

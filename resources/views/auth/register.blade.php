@@ -10,14 +10,14 @@
                 <!-- Name -->
                 <div>
                     <x-input-label for="name" :value="__('Nome')" class="block text-sm font-medium text-white" />
-                    <x-text-input id="name" class="mt-1 block w-full px-4 py-2 border focus:focus:ring-white dark:focus:ring-white border-neutral-500 rounded-md shadow-sm !bg-black text-white focus:border-none" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
+                    <x-text-input id="name" class="mt-1 block w-full px-4 py-2 border focus:focus:ring-white dark:focus:ring-white border-neutral-500 rounded-md shadow-sm !bg-black text-white focus:border-none" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" oninvalid="this.setCustomValidity('Inserisci il tuo nome')" oninput="this.setCustomValidity('')" />
                     <x-input-error :messages="$errors->get('name')" class="mt-2 text-sm text-red-600" />
                 </div>
 
                 <!-- Email Address -->
                 <div>
                     <x-input-label for="email" :value="__('Email')" class="block text-sm font-medium text-white" />
-                    <x-text-input id="email" class="mt-1 block w-full px-4 py-2 border focus:focus:ring-white dark:focus:ring-white border-neutral-500 rounded-md shadow-sm !bg-black text-white focus:border-none" type="email" name="email" :value="old('email')" required autocomplete="username" />
+                    <x-text-input id="email" class="mt-1 block w-full px-4 py-2 border focus:focus:ring-white dark:focus:ring-white border-neutral-500 rounded-md shadow-sm !bg-black text-white focus:border-none" type="email" name="email" :value="old('email')" required autocomplete="username" oninvalid="this.setCustomValidity('Inserisci un indirizzo email valido')" oninput="this.setCustomValidity('')" />
                     <x-input-error :messages="$errors->get('email')" class="mt-2 text-sm text-red-600" />
                 </div>
 
@@ -28,7 +28,7 @@
                     <x-text-input id="password" class="mt-1 block w-full px-4 py-2 border focus:focus:ring-white dark:focus:ring-white border-neutral-500 rounded-md shadow-sm !bg-black text-white focus:border-none"
                                   type="password"
                                   name="password"
-                                  required autocomplete="new-password" />
+                                  required autocomplete="new-password" oninvalid="this.setCustomValidity('Inserisci una password')" oninput="this.setCustomValidity('')" />
 
                     <x-input-error :messages="$errors->get('password')" class="mt-2 text-sm text-red-600" />
                 </div>
@@ -39,7 +39,7 @@
 
                     <x-text-input id="password_confirmation" class="mt-1 block w-full px-4 py-2 border focus:focus:ring-white dark:focus:ring-white border-neutral-500 rounded-md shadow-sm !bg-black text-white focus:border-none"
                                   type="password"
-                                  name="password_confirmation" required autocomplete="new-password" />
+                                  name="password_confirmation" required autocomplete="new-password" oninvalid="this.setCustomValidity('Conferma la password')" oninput="this.setCustomValidity('')" />
 
                     <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2 text-sm text-red-600" />
                 </div>

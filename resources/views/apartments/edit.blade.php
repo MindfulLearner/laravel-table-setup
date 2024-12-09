@@ -59,6 +59,8 @@
                             placeholder="Inserisci un titolo..."
                             class="p-4 mt-2 block w-full bg-black text-gray-200 border-gray-500 rounded-lg shadow-sm focus:border-yellow-500 focus:ring focus:ring-yellow-300 focus:ring-opacity-50 transition"
                             required
+                            oninvalid="this.setCustomValidity('Per favore, inserisci un titolo.')"
+                            oninput="this.setCustomValidity('')"
                         />
                     </div>
 
@@ -74,6 +76,8 @@
                                 placeholder="Inserisci il numero di stanze..."
                                 class="p-4 mt-2 block w-full bg-black text-gray-200 border-gray-500 rounded-lg shadow-sm focus:border-yellow-500 focus:ring focus:ring-yellow-300 focus:ring-opacity-50 transition"
                                 required
+                                oninvalid="this.setCustomValidity('Per favore, inserisci il numero di stanze.')"
+                                oninput="this.setCustomValidity('')"
                             />
                         </div>
 
@@ -88,6 +92,8 @@
                                 placeholder="Inserisci il numero di letti..."
                                 class="p-4 mt-2 block w-full bg-black text-gray-200 border-gray-500 rounded-lg shadow-sm focus:border-yellow-500 focus:ring focus:ring-yellow-300 focus:ring-opacity-50 transition"
                                 required
+                                oninvalid="this.setCustomValidity('Per favore, inserisci il numero di letti.')"
+                                oninput="this.setCustomValidity('')"
                             />
                         </div>
 
@@ -102,6 +108,8 @@
                                 placeholder="Inserisci il numero di bagni..."
                                 class="p-4 mt-2 block w-full bg-black text-gray-200 border-gray-500 rounded-lg shadow-sm focus:border-yellow-500 focus:ring focus:ring-yellow-300 focus:ring-opacity-50 transition"
                                 required
+                                oninvalid="this.setCustomValidity('Per favore, inserisci il numero di bagni.')"
+                                oninput="this.setCustomValidity('')"
                             />
                         </div>
                     </div>
@@ -136,6 +144,8 @@
                                 required
                                 min="0"
                                 step="0.01"
+                                oninvalid="this.setCustomValidity('Per favore, inserisci un prezzo.')"
+                                oninput="this.setCustomValidity('')"
                             />
                         </div>
 
@@ -149,6 +159,8 @@
                             value="{{ old('address', $apartment->address) }}"
                             class="p-4 mt-2 block w-full bg-black text-gray-200 border-gray-500 rounded-lg shadow-sm focus:border-yellow-500 focus:ring focus:ring-yellow-300 focus:ring-opacity-50 transition"
                             required
+                            oninvalid="this.setCustomValidity('Per favore, inserisci un indirizzo.')"
+                            oninput="this.setCustomValidity('')"
                         />
                         <div id="suggestions" class="absolute bg-black border border-gray-500 rounded-lg mt-1 z-10 hidden text-gray-200"></div>
                     </div>
@@ -227,6 +239,8 @@
                                     name="image_description[]"
                                     class="w-full max-w-xs bg-black text-gray-200 border-blue-500 rounded-lg shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-300 focus:ring-opacity-50 mt-2"
                                     placeholder="Descrizione dell'immagine"
+                                    oninvalid="this.setCustomValidity('Per favore, inserisci una descrizione.')"
+                                    oninput="this.setCustomValidity('')"
                                 >
                             </div>
                         </div>
@@ -492,6 +506,8 @@ function previewImageNonCover(event) {
                     name="image_description[]"
                     class="w-full max-w-xs bg-black text-gray-200 border-blue-500 rounded-lg shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-300 focus:ring-opacity-50 mt-2"
                     placeholder="Descrizione dell'immagine"
+                    oninvalid="this.setCustomValidity('Per favore, inserisci una descrizione.')"
+                    oninput="this.setCustomValidity('')"
                 >
                 <button class="ml-2 bg-red-500 text-white px-4 py-2 rounded-md shadow hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 delete-row">
                     Elimina

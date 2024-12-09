@@ -7,6 +7,8 @@ use App\Models\Apartment;
 use Faker\Generator as Faker;
 use Illuminate\Support\Facades\Http;
 
+use function PHPSTORM_META\map;
+
 class ApartmentsTableSeeder extends Seeder
 {
     public function run(Faker $faker): void
@@ -60,6 +62,52 @@ class ApartmentsTableSeeder extends Seeder
             "https://a0.muscache.com/im/ml/photo_enhancement/pictures/miso/Hosting-49964422/original/eb4cf7a0-a94f-4d15-a8e2-c875554a91be.jpeg?im_w=720&im_format=avif",
             "https://images.pexels.com/photos/271800/pexels-photo-271800.jpeg"
           ];
+
+          $firstApartmentCoverImage = "https://a0.muscache.com/im/pictures/c89164d3-b5a3-46d5-b355-62238c241170.jpg?im_w=1200&im_format=avif";
+
+          // genrate 2 presetted apartments
+            $apartment = [
+                'user_id' => 1,
+              'title' => "Regina Di Laglio - Parcheggio gratuito, Giardino, Vista lago",
+                'rooms' => 2,
+                'beds' => 2,
+                'bathrooms' => 2,
+                'square_meters' => 100,
+                'description' => "Regina di Laglio è un accogliente e incantevole appartamento con una camera da letto con splendida vista lago sul lago di Como. A pochi passi da di George Clooney. Goditi la comodità di un parcheggio coperto gratuito e di un bel giardino privato. Svegliati con una colazione gratuita servita nella famosa caffetteria e concediti cibo locale nei ristoranti locali nelle vicinanze. Molto vicino al miglior servizio di taxi boat e al traghetto per Bellagio / Varenna. Non vediamo l'ora di darti il benvenuto!",
+                'latitude' => 45.4988148,
+                'longitude' => 9.4230444,
+                'address' => "Via Ignazio Candiani 2, 20066 Melzo",
+                'cover_image' => $firstApartmentCoverImage,
+                'price' => 120,
+                'is_visible' => true,
+            ];
+
+            $secondoApartmentCoverImage = "https://a0.muscache.com/im/ml/photo_enhancement/pictures/miso/Hosting-896390170139549133/original/db18a3fc-627a-4bc0-90a8-e2b8359e29ed.jpeg?im_w=1200&im_format=avif";
+
+
+            Apartment::create($apartment);
+
+          // genrate 2 presetted apartments
+          $apartment = [
+              'user_id' => 1,
+                'title' => "Villa Niobe | Appartamento esclusivo con spiaggia privata",
+              'rooms' => 2,
+              'beds' => 2,
+              'bathrooms' => 2,
+              'square_meters' => 100,
+               'description' => "Situata a Stresa in uno dei punti panoramici più incantevoli sul lungolago, all'interno di una meravigliosa villa liberty circondata da un rigoglioso giardino e con una spiaggia privata attrezzata, questa esclusiva dimora gode di una vista mozzafiato, arredi eleganti e ampi spazi come una luminosa zona giorno con una superba terrazza con vista sul lago, 2 divani, TV e un grande tavolo da pranzo, una cucina attrezzata, 3 camere da letto doppie, 3 bagni, con WiFi gratuito e parcheggio incluso.",
+              'latitude' => 45.5043174,
+              'longitude' => 9.1752495,
+              'address' => "Via Antonio Carnevali 107, Milano",
+              'cover_image' => $secondoApartmentCoverImage,
+              'price' => 100,
+              'is_visible' => true,
+          ];
+
+          Apartment::create($apartment);
+
+
+
 
 
         for ($i = 0; $i < 50; $i++) {
